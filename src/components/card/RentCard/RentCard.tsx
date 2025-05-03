@@ -5,7 +5,7 @@ import React from "react";
 
 const RentCard = () => {
   return (
-    <div className={`border border-primary rounded ${poppins.className}`}>
+    <div className={`rounded shadow-xl ${poppins.className}`}>
       <div className="">
         <Image
           src="https://i.ibb.co.com/tMCphvsc/63cd122a9bfa45fb9f3beb5eeca56f05-Whats-App-Image2025-04-28at5-31-52-PM-1.jpg"
