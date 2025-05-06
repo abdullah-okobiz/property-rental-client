@@ -15,7 +15,7 @@ const BlogTabs = ({ blogs, features }: any) => {
       : blogs.filter((blog: any) => blog.feature?.featureName === activeTab);
 
   return (
-    <div className="w-full  px-4 sm:px-6 lg:px-8 py-6">
+    <div className="max-w-6xl m-auto  px-4 sm:px-6 lg:px-8 py-6">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       <BlogList blogs={filteredBlogs} />
     </div>
