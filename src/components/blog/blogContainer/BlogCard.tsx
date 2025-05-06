@@ -15,7 +15,7 @@ const BlogCard = ({ blog }: any) => {
           alt="image"
           width={300}
           height={300}
-          className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+          className="w-full  object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
         />
       </div>
       <div className="bg-white text-gray-500">
@@ -31,7 +31,7 @@ const BlogCard = ({ blog }: any) => {
           <Link href={`/blogs/${blog._id}`}>
             <button className="flex items-center cursor-pointer gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full text-sm font-medium relative overflow-hidden group">
               <span className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span className="relative z-10 transition-colors duration-900 group-hover:text-white">Read more</span>
+              <span className="relative z-10 transition-colors duration-1300 group-hover:text-white">Read more</span>
               <svg
                 className="w-4 h-4 relative z-10 text-blue-600 group-hover:text-white transition-transform duration-200 group-hover:translate-x-1"
                 fill="none"

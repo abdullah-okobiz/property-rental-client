@@ -11,7 +11,7 @@ type TabsProps = {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded-full cursor-pointer whitespace-nowrap transition ${
+            className={`px-5 py-2 rounded-full cursor-pointer whitespace-nowrap transition ${
               activeTab === tab
                 ? 'bg-blue-600 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
