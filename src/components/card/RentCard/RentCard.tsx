@@ -1,62 +1,52 @@
 import { poppins } from "@/app/font";
-import { Bed, BedSingle, MapPin, UserRound } from "lucide-react";
+
 import Image from "next/image";
 import React from "react";
+import { PiMapPin } from "react-icons/pi";
 
-const RentCard = () => {
+const RentCard = ({ rent }) => {
+  const { title, coverImage, amenities, price, location } = rent;
   return (
-    <div className={`border border-primary rounded ${poppins.className}`}>
-      <div className="">
+    <div className={`rounded shadow-lg ${poppins.className}`}>
+      <div className="h-[280px]">
         <Image
-          src="https://i.ibb.co.com/tMCphvsc/63cd122a9bfa45fb9f3beb5eeca56f05-Whats-App-Image2025-04-28at5-31-52-PM-1.jpg"
+          src={coverImage}
           alt="image"
           width={300}
           height={300}
           className="w-full h-full rounded-t"
         />
-
-        <div>
-          <p>
-            <span>৳</span>
-            <span>2400</span>
-            <span>night</span>
-          </p>
-        </div>
       </div>
 
-      <div className="px-4 py-2">
-        <h2 className="line-clamp-1">Ac private Room At Mirpur-1</h2>
-        <p>
-          <span>
-            <MapPin />
+      <div className="px-4 py-4">
+        <h2 className="line-clamp-1 text-primary font-medium text-lg">
+          {title}
+        </h2>
+        <p className="flex items-center gap-2 mt-2">
+          <span className="p-1 bg-primary/10 text-primary rounded">
+            <PiMapPin className="text-lg" />
           </span>
-          <span className="line-clamp-1">
-            Sony Hall Gol Chattar, Mirpur Road, Section 1, Mirpur, Dhaka
-          </span>
+          <span className="line-clamp-1 text-[#262626]/60">{location}</span>
         </p>
+        <p className=" mt-2">
+          <span className="font-medium text-xl">৳ {price}</span>
 
+          <span>/night</span>
+        </p>
         <div>
-          <p>
-            <span>
-              <Bed />
-            </span>
-            <span>2</span>
-            <span>bedroom</span>
-          </p>
-          <p>
-            <span>
-              <BedSingle />
-            </span>
-            <span>3</span>
-            <span>bed</span>
-          </p>
-          <p>
-            <span>
-              <UserRound />
-            </span>
-            <span>5</span>
-            <span>guest</span>
-          </p>
+          {amenities?.map((amenity) => (
+            <p key={amenity._id} className="flex items-center gap-2">
+              <span>
+                <Image
+                  src={amenity.amenitiesImage}
+                  alt=""
+                  width={40}
+                  height={40}
+                />
+              </span>
+              <span>{amenity.amenitiesLabel}</span>
+            </p>
+          ))}
         </div>
       </div>
     </div>

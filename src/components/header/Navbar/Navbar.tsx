@@ -1,6 +1,6 @@
 import React from "react";
-import logo from "@/assets/logo/stayverz.png";
-import Image from "next/image";
+// import logo from "@/assets/logo/stayverz.png";
+// import Image from "next/image";
 import { menuList } from "@/utilits/menuList";
 import Link from "next/link";
 import { HiOutlineUser } from "react-icons/hi";
@@ -10,7 +10,8 @@ const Navbar = () => {
     <div className="Container py-6">
       <div className="flex items-center justify-between">
         <div>
-          <Image src={logo} alt="logo" width={120} height={120} />
+          {/* <Image src={logo} alt="logo" width={120} height={120} /> */}
+          <h2 className="text-2xl font-semibold text-[#F15927]">Homzystay</h2>
         </div>
 
         <div className="lg:flex hidden items-center justify-center xl:gap-8 gap-6">

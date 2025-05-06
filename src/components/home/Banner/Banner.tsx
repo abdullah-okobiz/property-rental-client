@@ -18,6 +18,7 @@ interface BannerProps {
 
 const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
   const swiperRef = useRef<SwiperClass | null>(null);
+  console.log("try to find banner", banners);
   return (
     <div className="relative Container">
       <Swiper
@@ -34,6 +35,7 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
             <div className="2xl:h-[700px] xl:h-[500px] lg:h-[400px] h-[250px] rounded  relative">
               <Image
                 src={apiBaseUrl + banner.bannerImage || ""}
+                // src="https://i.ibb.co.com/BH68QtdS/slider-1.webp"
                 alt="Banner"
                 width={1600}
                 height={600}
