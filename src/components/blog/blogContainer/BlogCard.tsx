@@ -9,15 +9,17 @@ const BlogCard = ({ blog }: any) => {
 
     <Link href={`/blogs/${blog._id}`}> 
     <div className=" rounded-2xl cursor-pointer overflow-hidden shadow-md hover:shadow-xl transition duration-300">
-      <div className="aspect-w-16 aspect-h-9 bg-gray-100 mb-4 group">
-        <img
-          src={`${apiBaseUrl}${blog.blogImage}` ?? ""}
-          alt="image"
-          width={300}
-          height={300}
-          className="w-full  object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-        />
-      </div>
+    <div className="aspect-w-16 aspect-h-9 bg-gray-100 mb-4 group relative">
+      <img
+        src={`${apiBaseUrl}${blog.blogImage}` ?? ""}
+        alt="image"
+        width={300}
+        height={300}
+        className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+      />
+  
+     <div className="absolute inset-0 bg-gray-400 bg-opacity-40 opacity-20 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+   </div>
       <div className="bg-white text-gray-500">
         <a > {formatDate(blog.createdAt)}</a>
       </div>

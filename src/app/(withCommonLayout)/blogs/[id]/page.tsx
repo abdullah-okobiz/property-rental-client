@@ -1,7 +1,7 @@
 import BlogDetails from "@/components/blog/blogContainer/BlogDetails";
 import { IBlog } from "@/components/blog/types/Blog";
 import { blogDetails } from "@/services/blog";
-import { CloudCog } from "lucide-react";
+
 import { Fragment } from "react";
 
 interface BlogDetailsPageProps {
