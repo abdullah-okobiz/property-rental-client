@@ -6,7 +6,7 @@ import { contactSubmitFormApi } from '@/services/contact';
 
 const { TextArea } = Input;
 
-// Define the shape of your form state
+
 interface ContactFormValues {
   firstName: string;
   subject: string;
@@ -44,7 +44,7 @@ const ContactForm = () => {
     formData.append('email', formValues.email);
     formData.append('phone', formValues.phone);
     formData.append('message', formValues.message);
-      console.log("form data == ", formData)
+   
     try {
        const result = await contactSubmitFormApi(formData)
        console.log("result ", result)
@@ -65,7 +65,7 @@ const ContactForm = () => {
   return (
     <form onSubmit={handleSubmit}>
        <Flex vertical gap={20}>
-      <div className='grid grid-cols-2 gap-4 mb-5 bg-[#FFFFFF]'>
+      <div className='grid grid-cols-2 gap-4 mb-5 bg-[#FFFFFF]  py-10 px-4 md:px-8"'>
         <Input
           name="firstName"
           placeholder="Name"
