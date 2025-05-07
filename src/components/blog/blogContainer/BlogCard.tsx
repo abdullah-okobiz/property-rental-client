@@ -15,7 +15,7 @@ const BlogCard = ({ blog }: any) => {
         alt="image"
         width={300}
         height={300}
-        className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+        className="w-full h-64 object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
       />
   
      <div className="absolute inset-0 bg-gray-400 bg-opacity-40 opacity-20 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none"></div>
