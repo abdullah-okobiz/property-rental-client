@@ -7,6 +7,7 @@ const BlogCard = ({ blog }: any) => {
 
   return (
 
+    
     <Link href={`/blogs/${blog._id}`}> 
     <div className=" rounded-2xl cursor-pointer overflow-hidden shadow-md hover:shadow-xl transition duration-300">
     <div className="aspect-w-16 aspect-h-9 bg-gray-100 mb-4 group relative">
