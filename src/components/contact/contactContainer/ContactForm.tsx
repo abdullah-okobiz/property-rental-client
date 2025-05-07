@@ -72,7 +72,7 @@ const ContactForm = () => {
           value={formValues.firstName}
           onChange={handleChange}
           variant="underlined"
-          style={{ paddingTop: '12px', paddingBottom: '12px' }}
+          style={{ paddingTop: '12px', paddingBottom: '12px',fontSize:'16px'}}
         />
         <Input
           name="subject"
@@ -80,7 +80,7 @@ const ContactForm = () => {
           value={formValues.subject}
           onChange={handleChange}
           variant="underlined"
-          style={{ paddingTop: '12px', paddingBottom: '12px' }}
+          style={{ paddingTop: '12px', paddingBottom: '12px',fontSize:'16px' }}
         />
         <Input
           name="email"
@@ -88,7 +88,7 @@ const ContactForm = () => {
           value={formValues.email}
           onChange={handleChange}
           variant="underlined"
-          style={{ paddingTop: '12px', paddingBottom: '12px' }}
+          style={{ paddingTop: '12px', paddingBottom: '12px',fontSize:'16px'}}
         />
         <Input
           name="phone"
@@ -96,13 +96,13 @@ const ContactForm = () => {
           value={formValues.phone}
           onChange={handleChange}
           variant="underlined"
-          style={{ paddingTop: '12px', paddingBottom: '12px' }}
+          style={{ paddingTop: '12px', paddingBottom: '12px' ,fontSize:'16px'}}
         />
         <div className="col-span-2">
           <TextArea
             name="message"
             maxLength={100}
-            placeholder="Send Message"
+            placeholder="Your Message"
             value={formValues.message}
             onChange={handleChange}
             rows={2}
@@ -113,6 +113,7 @@ const ContactForm = () => {
               borderBottom: '1px solid #d9d9d9',
               borderRadius: '0',
               boxShadow: 'none',
+              fontSize:'16px'
             }}
           />
         </div>
@@ -122,7 +123,11 @@ const ContactForm = () => {
           type="primary"
           htmlType="submit"
           loading={loading}
-          className='bg-primary'
+          style={{
+            backgroundColor: '#F66C0E',
+            color: 'white',
+            padding:'14px'
+          }}
         >
           {loading ? 'Sending...' : 'Send Message'}
         </Button>
