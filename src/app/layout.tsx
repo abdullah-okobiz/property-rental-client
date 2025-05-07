@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
+import 'antd/dist/reset.css';
 import { lato } from "./font";
 import NextTopLoader from "nextjs-toploader";
 

@@ -1,11 +1,19 @@
+import ContactForm from "@/components/contact/contactContainer/ContactForm";
+import ContactHeader from "@/components/contact/contactContainer/ContactHeader";
+import ContactInfo from "@/components/contact/contactContainer/ContactInfo";
 import React from "react";
 
-const page = () => {
+const Contact = () => {
   return (
-    <div>
-      <h2>this is contact page</h2>
+    <div className="isolate bg-white px-6 py-4  lg:px-8">
+       <ContactHeader/>
+       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:py-10 ">
+          <ContactInfo/>
+          <ContactForm/>
+       </div>
+
     </div>
   );
 };
 
-export default page;
+export default Contact;
