@@ -4,10 +4,13 @@ interface AboutTextProps {
   
   const AboutText = ({ description }: AboutTextProps) => {
     return (
-      <div
-        className="prose max-w-none"
+    <div>
+      <h1 className="tracking-wider font-extrabold text-xl text-black"> About Homzystay</h1>
+        <div
+        className="prose w-full text-justify"
         dangerouslySetInnerHTML={{ __html: description }}
       />
+    </div>
     )
   }
   

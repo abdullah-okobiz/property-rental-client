@@ -5,7 +5,7 @@ const ContactInfo = () => {
     <div className="bg-[#F3F2F1] py-10 px-4 md:px-8">
       <div className="max-w-2xl mx-auto text-start mb-10">
         <h1 className="text-3xl font-semibold text-black mb-2">Contact Information</h1>
-        <p className="text-gray-600 text-[18px]">Say something to start a live chat!</p>
+        <p className="text-gray-600 text-[18px] tracking-wider">Say something to start a live chat!</p>
       </div>
 
       <div className="w-full mx-auto flex flex-col gap-6">

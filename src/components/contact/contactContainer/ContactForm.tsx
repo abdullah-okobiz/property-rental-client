@@ -72,6 +72,7 @@ const ContactForm = () => {
           value={formValues.firstName}
           onChange={handleChange}
           variant="underlined"
+          style={{ paddingTop: '12px', paddingBottom: '12px' }}
         />
         <Input
           name="subject"
@@ -79,6 +80,7 @@ const ContactForm = () => {
           value={formValues.subject}
           onChange={handleChange}
           variant="underlined"
+          style={{ paddingTop: '12px', paddingBottom: '12px' }}
         />
         <Input
           name="email"
@@ -86,6 +88,7 @@ const ContactForm = () => {
           value={formValues.email}
           onChange={handleChange}
           variant="underlined"
+          style={{ paddingTop: '12px', paddingBottom: '12px' }}
         />
         <Input
           name="phone"
@@ -93,6 +96,7 @@ const ContactForm = () => {
           value={formValues.phone}
           onChange={handleChange}
           variant="underlined"
+          style={{ paddingTop: '12px', paddingBottom: '12px' }}
         />
         <div className="col-span-2">
           <TextArea
@@ -101,7 +105,15 @@ const ContactForm = () => {
             placeholder="Send Message"
             value={formValues.message}
             onChange={handleChange}
-            rows={3}
+            rows={2}
+            style={{
+              borderTop: 'none',
+              borderLeft: 'none',
+              borderRight: 'none',
+              borderBottom: '1px solid #d9d9d9',
+              borderRadius: '0',
+              boxShadow: 'none',
+            }}
           />
         </div>
       </div>
