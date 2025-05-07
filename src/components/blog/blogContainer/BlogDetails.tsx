@@ -17,11 +17,11 @@ const BlogDetails: React.FC<BlogDetailsProps> = ({ data }) => {
   return (
     <div className="max-w-6xl mx-auto  py-10">
     
-      <div className="relative overflow-hidden rounded-2xl shadow-md mb-6 group">
+      <div className="relative overflow-hidden rounded-2xl shadow-md mb-6 ">
         <img
           src={`${apiBaseUrl}${data.blogImage}` ?? ""}
           alt={data.blogTitle}
-          className="w-full h-[70vh] object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+          className="w-full h-[70vh] object-cover"
         />
        
       </div>
