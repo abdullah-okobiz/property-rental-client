@@ -1,17 +1,17 @@
 import React from "react";
-// import logo from "@/assets/logo/stayverz.png";
-// import Image from "next/image";
+import logo from "@/assets/logo/stayverz.png";
+import Image from "next/image";
 import { menuList } from "@/utilits/menuList";
 import Link from "next/link";
 import { HiOutlineUser } from "react-icons/hi";
 import { poppins } from "@/app/font";
 const Navbar = () => {
   return (
-    <div className="Container py-6">
+    <div className="Container py-4 md:py-6">
       <div className="flex items-center justify-between">
         <div>
-          {/* <Image src={logo} alt="logo" width={120} height={120} /> */}
-          <h2 className="text-2xl font-semibold text-[#F15927]">Homzystay</h2>
+          <Image src={logo} alt="logo" width={120} height={120} className="w-[80px] md:w-[70px] " />
+          {/* <h2 className="text-2xl font-semibold text-[#F15927]">Homzystay</h2> */}
         </div>
 
         <div className="lg:flex hidden items-center justify-center xl:gap-8 gap-6">
