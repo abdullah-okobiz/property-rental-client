@@ -11,10 +11,12 @@
       ],
       "floorPlan":
       {
-        "bedRoomCount": 4,
-        "bathCount": 3,
-        "bedCount": 2,
-        "guestCount": 1
+        "unitCount": 4,
+        "drawing": 4,
+        "dinning": 2,
+        "balconyCount": 1,
+        "bedroomCount": 1,
+        "bathroomCount": 1
         },
       "price": 4550,
       "location": "Bashundhara, Dhaka"
