@@ -4,7 +4,7 @@ import RentCard from "@/components/card/RentCard/RentCard";
 import SectionTitle from "@/utilits/SectionTitle";
 import { useEffect, useState } from "react";
 
-const RentSection = () => {
+const FlatsSection = () => {
   const [rents, setRents] = useState([]);
   useEffect(() => {
     fetch("rentData.json")
@@ -16,10 +16,10 @@ const RentSection = () => {
 
   console.log("find rent data", rents);
   return (
-    <div className="Container py-12">
+    <div className="Container pb-12">
       <div>
         <SectionTitle
-          title="Choose From Our Diverse Range of Properties"
+          title="Choose From Our Diverse Range of Flats"
           subTitle="From individual stays to family getaways, our properties cater to all your accommodation needs."
         />
       </div>
@@ -41,4 +41,4 @@ const RentSection = () => {
   );
 };
 
-export default RentSection;
+export default FlatsSection;

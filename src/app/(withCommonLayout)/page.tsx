@@ -1,4 +1,6 @@
 import Banner from "@/components/home/Banner/Banner";
+import FlatsSection from "@/components/home/FlatsSection/FlatsSection";
+
 import RentSection from "@/components/home/RentSection/RentSection";
 import SearchContainer from "@/components/home/search/searchContainer/SearchContainer";
 import { getAllBanners } from "@/services/banners";
@@ -8,7 +10,6 @@ import React from "react";
 const page = async () => {
   const { data: banners } = await getAllBanners();
   const { data: rents } = await getAllRents();
-
   return (
     <div>
       <div className="relative">
@@ -18,6 +19,7 @@ const page = async () => {
         </div>
       </div>
       <RentSection />
+      <FlatsSection />
     </div>
   );
 };
