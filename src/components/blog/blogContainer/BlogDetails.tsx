@@ -15,9 +15,9 @@ const BlogDetails: React.FC<BlogDetailsProps> = ({ data }) => {
   
 
   return (
-    <div className="max-w-6xl mx-auto  py-10">
+    <div className="max-w-6xl mx-auto  py-10 px-3 md:px-6 ">
     
-      <div className="relative overflow-hidden rounded-2xl shadow-md mb-6 ">
+      <div className="relative overflow-hidden rounded-2xl shadow-sm mb-6 p-2">
         <img
           src={`${apiBaseUrl}${data.blogImage}` ?? ""}
           alt={data.blogTitle}
@@ -26,6 +26,7 @@ const BlogDetails: React.FC<BlogDetailsProps> = ({ data }) => {
        
       </div>
 
+      <div className='p-4'>
       <h1 className="text-3xl font-bold text-gray-900 mb-2">
         {data.blogTitle}
       </h1>
@@ -39,6 +40,7 @@ const BlogDetails: React.FC<BlogDetailsProps> = ({ data }) => {
         className="prose prose-blue max-w-none text-gray-700"
         dangerouslySetInnerHTML={{ __html: data.blogDescription }}
       />
+      </div>
     </div>
   );
 };

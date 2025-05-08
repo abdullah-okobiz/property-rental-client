@@ -6,7 +6,7 @@ type TabsProps = {
   
   const Tabs = ({ tabs, activeTab, setActiveTab }: TabsProps) => {
     return (
-      <div className="flex  justify-baseline md:gap-5 flex-wrap sm:flex-nowrap overflow-x-auto pb-2 mb-6">
+      <div className="flex  justify-baseline gap-4 md:gap-5 flex-wrap sm:flex-nowrap overflow-x-auto pb-2 mb-6">
         {tabs.map((tab) => (
           <button
             key={tab}
