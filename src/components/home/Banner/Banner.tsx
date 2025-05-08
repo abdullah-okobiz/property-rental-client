@@ -11,7 +11,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { apiBaseUrl } from "@/config/config";
 import { Swiper as SwiperClass } from "swiper";
-import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+// import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
 interface BannerProps {
   banners: TBanner[];
 }
@@ -20,9 +20,9 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
   const swiperRef = useRef<SwiperClass | null>(null);
   console.log("try to find banner", banners);
   return (
-    <div className="relative Container">
+    <div className="relative mt-[-15px]">
       <Swiper
-        spaceBetween={50}
+        spaceBetween={1}
         slidesPerView={1}
         modules={[Navigation, Autoplay]}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
@@ -32,14 +32,14 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
       >
         {banners?.map((banner: TBanner) => (
           <SwiperSlide key={banner._id}>
-            <div className="2xl:h-[700px] xl:h-[500px] lg:h-[400px] h-[250px] rounded  relative">
+            <div className="2xl:h-[500px] xl:h-[400px] lg:h-[400px] h-[280px]  relative">
               <Image
                 src={apiBaseUrl + banner.bannerImage || ""}
                 // src="https://i.ibb.co.com/BH68QtdS/slider-1.webp"
                 alt="Banner"
                 width={1600}
                 height={600}
-                className="w-full h-full rounded"
+                className="w-full h-full"
               />
             </div>
           </SwiperSlide>
@@ -47,7 +47,7 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
       </Swiper>
 
       {/* Custom Navigation Buttons */}
-      <button
+      {/* <button
         className="custom-prev flex items-center justify-center border-2 border-primary hover:border-[#fff] p-2 rounded-full text-primary hover:bg-primary hover:text-[#fff] duration-300 cursor-pointer absolute xl:left-46 lg:left-28 md:left-24 left-8 top-1/2 transform -translate-y-1/2  z-10"
         onClick={() => swiperRef.current?.slidePrev()}
       >
@@ -58,7 +58,7 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
         onClick={() => swiperRef.current?.slideNext()}
       >
         <MdArrowForwardIos className="text-2xl" />
-      </button>
+      </button> */}
     </div>
   );
 };

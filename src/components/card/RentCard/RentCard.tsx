@@ -26,14 +26,14 @@ const RentCard = ({ rent }) => {
       </div>
 
       <div className="px-4 py-4">
-        <h2 className="line-clamp-1 text-primary font-medium text-lg">
-          {title}
-        </h2>
+        <h2 className="line-clamp-1  font-medium text-base">{title}</h2>
         <p className="flex items-center gap-2 mt-2">
           <span className="p-1 bg-primary/10 text-primary rounded">
             <PiMapPin className="text-lg" />
           </span>
-          <span className="line-clamp-1 text-[#262626]/60">{location}</span>
+          <span className="line-clamp-1 text-[#262626]/60 text-sm">
+            {location}
+          </span>
         </p>
         <p className=" mt-4">
           <span className="font-medium text-xl">৳ {price}</span>
