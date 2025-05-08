@@ -19,7 +19,7 @@ const Navbar = () => {
             <div key={menu.id}>
               <Link href={menu.link}>
                 <li
-                  className={`list-none text-base font-medium ${poppins.className}`}
+                  className={`list-none text-base font-medium cursor-pointer ${poppins.className}`}
                 >
                   {menu.title}
                 </li>
@@ -31,13 +31,13 @@ const Navbar = () => {
         <div
           className={`flex items-center justify-center gap-2 font-medium text-sm ${poppins.className}`}
         >
-          <button className="flex items-center gap-1 border border-primary px-4 py-2 rounded">
+          <button className="flex cursor-pointer items-center gap-1 border border-primary px-4 py-2 rounded">
             <span className="p-1 rounded-full bg-primary text-[#fff]">
               <HiOutlineUser />
             </span>{" "}
             <span>Login</span>
           </button>
-          <button className="px-6 py-2 bg-primary rounded text-[#fff] text-base hidden md:block">
+          <button className="px-6 py-2 cursor-pointer bg-primary rounded text-[#fff] text-base hidden md:block">
             Sign Up
           </button>
         </div>

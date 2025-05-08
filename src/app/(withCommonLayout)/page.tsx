@@ -12,6 +12,7 @@ const page = async () => {
   return (
     <div>
       <Banner banners={banners} />
+      
       <RentSection />
     </div>
   );
