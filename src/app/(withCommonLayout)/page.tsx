@@ -10,7 +10,7 @@ const page = async () => {
 
   console.log("try to find all rents",rents)
   return (
-    <div>
+    <div className="py-4">
       <Banner banners={banners} />
       
       <RentSection />
