@@ -2,22 +2,32 @@ import { Tabs } from 'antd';
 import RentSearchInputField from './RentSearchInputField';
 import LandSearchInputField from './LandSearchInputField';
 import FlatSearchInputField from './FlatSearchInputField';
+import { Fragment } from 'react';
 const { TabPane } = Tabs;
 const SearchTabs = () => {
     return (
-        <div>
+        <Fragment>
             <Tabs defaultActiveKey="rent" type="card">
-                <TabPane tab="Rent" key="rent">
-                    <RentSearchInputField/>
+                <TabPane
+                    tab={<div className="text-white bg-[#F2693C] px-4 py-2 rounded">Rent</div>}
+                    key="rent"
+                >
+                    <RentSearchInputField />
                 </TabPane>
-                <TabPane tab="Land" key="land">
-                  <LandSearchInputField/>
+                <TabPane
+                    tab={<div className="text-white bg-[#F2693C] px-4 py-2 rounded">Land</div>}
+                    key="land"
+                >
+                    <LandSearchInputField />
                 </TabPane>
-                <TabPane tab="Flat" key="flat">
-                   <FlatSearchInputField/>
+                <TabPane
+                    tab={<div className="text-white bg-[#F2693C] px-4 py-2 rounded">Flat</div>}
+                    key="flat"
+                >
+                    <FlatSearchInputField />
                 </TabPane>
             </Tabs>
-        </div>
+        </Fragment>
     )
 }
 export default SearchTabs

@@ -9,11 +9,14 @@ const page = async () => {
   const { data: banners } = await getAllBanners();
   const { data: rents } = await getAllRents();
 
-  console.log("try to find all rents",rents)
   return (
     <div>
-      <Banner banners={banners} />
-      <SearchContainer/>
+      <div className="relative">
+        <Banner banners={banners} />
+        <div className="w-full px-10 absolute left-1/2 bottom-[-30px] -translate-x-1/2 z-10">
+          <SearchContainer />
+        </div>
+      </div>
       <RentSection />
     </div>
   );

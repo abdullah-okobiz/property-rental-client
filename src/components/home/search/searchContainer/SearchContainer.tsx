@@ -3,10 +3,8 @@ import SearchTabs from "./SearchTabs"
 
 const SearchContainer =()=>{
     return (
-        <section className="w-full mx-0 ">
-            <SearchHeader/>
+        <section className="Container">
             <SearchTabs/>
-
         </section>
     )
 }
