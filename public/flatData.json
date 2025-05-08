@@ -12,8 +12,8 @@
       "floorPlan":
       {
         "unitCount": 4,
-        "drawing": 4,
-        "dinning": 2,
+        "drawing": false,
+        "dinning": true,
         "balconyCount": 1,
         "bedroomCount": 1,
         "bathroomCount": 1
@@ -33,10 +33,12 @@
       ],
       "floorPlan":
       {
-        "bedRoomCount": 2,
-        "bathCount": 1,
-        "bedCount": 3,
-        "guestCount": 5
+        "unitCount": 4,
+        "drawing": true,
+        "dinning": false,
+        "balconyCount": 1,
+        "bedroomCount": 1,
+        "bathroomCount": 1
         },
       "price": 2080,
       "location": "House 2B, Road 2, Bashundhara Residential Area, North Agrabad, Agrabad, Chattogram"
@@ -53,10 +55,12 @@
       ],
       "floorPlan":
       {
-        "bedRoomCount": 2,
-        "bathCount": 1,
-        "bedCount": 2,
-        "guestCount": 2
+        "unitCount": 4,
+        "drawing": false,
+        "dinning": false,
+        "balconyCount": 1,
+        "bedroomCount": 1,
+        "bathroomCount": 1
         },
       "price": 1300,
       "location": "Aspen, CO"
@@ -73,10 +77,12 @@
       ],
       "floorPlan":
       {
-        "bedRoomCount": 2,
-        "bathCount": 1,
-        "bedCount": 4,
-        "guestCount": 2
+        "unitCount": 4,
+        "drawing": true,
+        "dinning": true,
+        "balconyCount": 1,
+        "bedroomCount": 1,
+        "bathroomCount": 1
         },
       "price": 3000,
       "location": "Aftabnagar, Dhaka"
@@ -93,10 +99,12 @@
       ],
       "floorPlan":
       {
-        "bedRoomCount": 1,
-        "bathCount": 5,
-        "bedCount": 4,
-        "guestCount": 2
+        "unitCount": 4,
+        "drawing": true,
+        "dinning": false,
+        "balconyCount": 1,
+        "bedroomCount": 1,
+        "bathroomCount": 1
         },
       "price": 6520,
       "location": "Dhanmondi Lake Road, Dhaka"
@@ -113,10 +121,12 @@
       ],
       "floorPlan":
       {
-        "bedRoomCount": 1,
-        "bathCount": 2,
-        "bedCount": 2,
-        "guestCount": 2
+        "unitCount": 4,
+        "drawing": false,
+        "dinning": false,
+        "balconyCount": 1,
+        "bedroomCount": 1,
+        "bathroomCount": 1
         },
       "price": 5000,
       "location": "Aftabnagar, Dhaka"
@@ -133,10 +143,12 @@
       ],
       "floorPlan":
       {
-        "bedRoomCount": 4,
-        "bathCount": "",
-        "bedCount": 2,
-        "guestCount": 1
+        "unitCount": 4,
+        "drawing": false,
+        "dinning": false,
+        "balconyCount": 1,
+        "bedroomCount": 1,
+        "bathroomCount": 1
         },
       "price": 8500,
       "location": "Dhanmondi Lake Road, Dhaka"
@@ -153,10 +165,12 @@
       ],
       "floorPlan":
       {
-        "bedRoomCount": "",
-        "bathCount": "",
-        "bedCount": 2,
-        "guestCount": 1
+        "unitCount": 4,
+        "drawing": false,
+        "dinning": false,
+        "balconyCount": 1,
+        "bedroomCount": 1,
+        "bathroomCount": 1
         },
       "price": 5000,
       "location": "Boston, MA"

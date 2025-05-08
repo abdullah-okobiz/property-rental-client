@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const FlatsSection = () => {
   const [rents, setRents] = useState([]);
   useEffect(() => {
-    fetch("rentData.json")
+    fetch("flatData.json")
       .then((res) => res.json())
       .then((data) => {
         setRents(data);
@@ -30,9 +30,9 @@ const FlatsSection = () => {
         ))}
       </div>
 
-      <div className="flex items-center justify-center py-8">
+      <div className="flex items-center justify-center py-8 text-[#fff]">
         <button
-          className={`bg-primary px-6 py-3 rounded font-semibold text-[#fff] cursor-pointer focus:outline-none ${poppins.className}`}
+          className={`bg-primary px-6 py-3 rounded font-medium cursor-pointer  ${poppins.className}`}
         >
           Load more..
         </button>
