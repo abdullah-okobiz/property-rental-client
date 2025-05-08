@@ -1,11 +1,17 @@
+import AboutCardContainer from "@/components/about/aboutContainer/AboutCardContainer";
+import AboutHeader from "@/components/about/aboutContainer/AboutHeader";
+import AboutTextAndVideoContainer from "@/components/about/aboutTextAndVideo/AboutTextAndVideoContainer";
 import React from "react";
 
-const page = () => {
+const about = () => {
   return (
-    <div>
-      <h2>this is about page</h2>
+    <div className="py-10 md:py-20">
+       <AboutHeader/>
+       <AboutCardContainer/>
+       <AboutTextAndVideoContainer/>
+
     </div>
   );
 };
 
-export default page;
+export default about;
