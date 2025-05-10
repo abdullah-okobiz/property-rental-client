@@ -18,8 +18,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <NextTopLoader showSpinner={false} color="#F15927" />
-      <body className={`${lato.className}} antialiased`}>{children}</body>
+      <body className={`${lato.className}} antialiased`}>
+        <NextTopLoader showSpinner={false} color="#F15927" />
+        {children}
+      </body>
     </html>
   );
 }
