@@ -7,10 +7,12 @@ import Link from "next/link";
 import { HiOutlineUser } from "react-icons/hi";
 import { poppins } from "@/app/font";
 import SignupModal from "@/components/modals/SignUpModal";
+import LoginModal from "@/components/modals/LoginModal";
 
 const Navbar = () => {
   const [isSticky, setIsSticky] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showLoginModal,setShowLoginModal]=useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,7 +57,9 @@ const Navbar = () => {
             <div
               className={`flex items-center justify-center gap-2 font-medium text-sm ${poppins.className}`}
             >
-              <button className="flex cursor-pointer items-center gap-1 border border-primary px-4 py-1 rounded">
+              <button 
+                onClick={() => setShowLoginModal(true)}
+               className="flex cursor-pointer items-center gap-1 border border-primary px-4 py-1 rounded">
                 <span className="p-1 rounded-full bg-primary text-[#fff]">
                   <HiOutlineUser />
                 </span>
@@ -71,6 +75,7 @@ const Navbar = () => {
         </div>
       </div>
       <SignupModal open={showModal} onClose={() => setShowModal(false)} />
+      <LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)}/>
     </>
   );
 };
