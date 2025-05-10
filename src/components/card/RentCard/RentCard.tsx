@@ -8,6 +8,10 @@ import { LuBed } from "react-icons/lu";
 import { MdOutlineKingBed } from "react-icons/md";
 import { PiMapPin } from "react-icons/pi";
 
+// interface Props {
+//   rent: TRoomDetails;
+// }
+
 const RentCard = ({ rent }) => {
   const { title, coverImage, floorPlan, price, location } = rent;
   return (
