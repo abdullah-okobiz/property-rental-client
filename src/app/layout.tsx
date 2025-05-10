@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
-import 'antd/dist/reset.css';
+import "antd/dist/reset.css";
 import { lato } from "./font";
 import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
-  title: "Rental",
+  title: "Homgystay",
   description:
     "Rental is one of the best property dealing website in local market of Bangladesh",
 };
