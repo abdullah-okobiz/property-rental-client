@@ -8,7 +8,7 @@ const BlogMainContainer = async () => {
 
 
   return (
-    <div  className=" w-full p-4">
+    <div  className="Container p-4">
       <BlogTabs blogs={blogs} features={features} />
     </div>
   );
