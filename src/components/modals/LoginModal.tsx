@@ -84,7 +84,7 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
                 </div>
             </div>
         </Modal>
-        <SignupModal open={showModal} onClose={() => setShowModal(false)} />
+        {/* <SignupModal open={showModal} onClose={() => setShowModal(false)} /> */}
         </>
     );
 };
