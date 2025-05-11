@@ -1,0 +1,60 @@
+import AuthApis from "@/app/apis/auth.apis";
+
+
+const { loginApi, refreshTokenApi, logoutApi, signupApi } = AuthApis;
+
+const AuthServices = {
+  processLogin: async (payload: { email: string, password: string }) => {
+    try {
+      const response = await loginApi(payload);
+      return response?.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("Unknown error occurred in processLogin");
+      }
+    }
+  },
+
+  processLogout: async () => {
+    try {
+      const response = await logoutApi();
+      return response?.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("Unknown error occurred in processLogout");
+      }
+    }
+  },
+
+  processRefreshToken: async () => {
+    try {
+      const response = await refreshTokenApi();
+      return response?.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("Unknown error occurred in processRefreshToken");
+      }
+    }
+  },
+
+  processSignup: async (payload: { name: string, email: string, password: string, role: 'guest' | 'host' }) => {
+    try {
+      const response = await signupApi(payload);
+      return response?.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("Unknown error occurred in processSignup");
+      }
+    }
+  }
+};
+
+export default AuthServices;

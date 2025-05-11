@@ -1,12 +1,18 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import "./globals.css";
-import "antd/dist/reset.css";
-import { lato } from "./font";
-import NextTopLoader from "nextjs-toploader";
+import NextTopLoader from "nextjs-toploader"; 
+import { ReactNode } from "react";
+import { Lato } from "next/font/google"; 
+import AuthProvider from "@/providers/AuthProvider";
+
+// Create QueryClient instance
+const queryClient = new QueryClient();
+
+// const lato = Lato({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Homgystay",
+  title: "Homzystay",
   description:
     "Rental is one of the best property dealing website in local market of Bangladesh",
 };
@@ -14,12 +20,17 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">
       <NextTopLoader showSpinner={false} color="#F15927" />
-      <body className={`${lato.className}} antialiased`}>{children}</body>
+      {/* <body className={`${lato.className} antialiased`}> */}
+      <body className={`antialiased`}>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>{children}</AuthProvider>
+        </QueryClientProvider>
+      </body>
     </html>
   );
 }
