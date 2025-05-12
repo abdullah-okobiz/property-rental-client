@@ -36,8 +36,8 @@ axiosClient.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const res = await axiosClient.post("/refresh");  // Refresh token API
-        const newAccessToken = res?.data?.accessToken;
+        const res = await axiosClient.post("/refresh");  
+        const newAccessToken = res?.data?.accessToken ;
 
         if (newAccessToken) {
           // Save new token and retry original request

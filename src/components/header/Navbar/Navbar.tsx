@@ -8,12 +8,24 @@ import { HiOutlineUser } from "react-icons/hi";
 import { poppins } from "@/app/font";
 import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
+import useAccess from "@/hooks/useAccess";
+import useAuth from "@/hooks/useAuth";
 
 const Navbar = () => {
+  // const { user } = useAccess();
+  // console.log("user info  === ", user)
   const [isSticky, setIsSticky] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showLoginModal,setShowLoginModal]=useState(false)
-
+  const {
+    user,
+    login,
+    logout,
+    isAuthenticated,
+    refreshToken,
+    setUser
+  } = useAuth();
+    console.log("all user data === ", user,login,logout,isAuthenticated)
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);

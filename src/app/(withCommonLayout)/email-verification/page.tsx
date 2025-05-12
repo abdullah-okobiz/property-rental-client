@@ -30,7 +30,7 @@ const EmailVerification = () => {
       } else {
         messageApi.error("Access token is missing.");
       }
-      console.log("res verify  ==== ",res)
+  
       messageApi.success(res?.data?.message || "Email verified successfully!");
       form.resetFields();
     },
