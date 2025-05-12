@@ -16,7 +16,7 @@ const Navbar = () => {
   // console.log("user info  === ", user)
   const [isSticky, setIsSticky] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [showLoginModal,setShowLoginModal]=useState(false)
+  const [showLoginModal, setShowLoginModal] = useState(false)
   const {
     user,
     login,
@@ -25,7 +25,7 @@ const Navbar = () => {
     refreshToken,
     setUser
   } = useAuth();
-    console.log("all user data === ", user,login,logout,isAuthenticated)
+  console.log("all user data === ", user)
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
@@ -69,25 +69,66 @@ const Navbar = () => {
             <div
               className={`flex items-center justify-center gap-2 font-medium text-sm ${poppins.className}`}
             >
-              <button 
-                onClick={() => setShowLoginModal(true)}
-               className="flex cursor-pointer items-center gap-1 border border-primary px-4 py-1 rounded">
-                <span className="p-1 rounded-full bg-primary text-[#fff]">
-                  <HiOutlineUser />
-                </span>
-                <span>Login</span>
-              </button>
-              <button
-                onClick={() => setShowModal(true)}
-                className="px-6 py-2 cursor-pointer bg-primary rounded !text-[#fff] hidden md:block">
-                Sign Up
-              </button>
+              {isAuthenticated && user?.isVerified ? (
+                user.role === "guest" ? (
+                  <>
+                    <button
+                      className="px-4 py-2 bg-primary text-white rounded"
+                      onClick={() => {
+                        console.log("Switch to host");
+                        // implement host switching logic or route
+                      }}
+                    >
+                      Switch to Host
+                    </button>
+                    <button
+                      className="p-2 border rounded-full border-primary"
+                      onClick={() => {
+                        console.log("Open profile menu");
+                      
+                      }}
+                    >
+                      <HiOutlineUser className="text-primary" />
+                    </button>
+                  </>
+                ) : (
+               
+                  <button
+                    className="p-2 border rounded-full border-primary"
+                    onClick={() => {
+                      console.log("Open profile menu");
+                    }}
+                  >
+                    <HiOutlineUser className="text-primary" />
+                  </button>
+                )
+              ) : (
+            
+                <>
+                  <button
+                    onClick={() => setShowLoginModal(true)}
+                    className="flex cursor-pointer items-center gap-1 border border-primary px-4 py-1 rounded"
+                  >
+                    <span className="p-1 rounded-full bg-primary text-[#fff]">
+                      <HiOutlineUser />
+                    </span>
+                    <span>Login</span>
+                  </button>
+                  <button
+                    onClick={() => setShowModal(true)}
+                    className="px-6 py-2 cursor-pointer bg-primary rounded !text-[#fff] hidden md:block"
+                  >
+                    Sign Up
+                  </button>
+                </>
+              )}
             </div>
+
           </div>
         </div>
       </div>
       <SignupModal open={showModal} onClose={() => setShowModal(false)} />
-      <LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)}/>
+      <LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
     </>
   );
 };
