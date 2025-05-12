@@ -1,6 +1,8 @@
 import { poppins } from "@/app/font";
+import { TRoomDetails } from "@/types";
 
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { BsPeople } from "react-icons/bs";
 import { LiaBathSolid } from "react-icons/lia";
@@ -8,26 +10,28 @@ import { LuBed } from "react-icons/lu";
 import { MdOutlineKingBed } from "react-icons/md";
 import { PiMapPin } from "react-icons/pi";
 
-// interface Props {
-//   rent: TRoomDetails;
-// }
+interface Props {
+  rent: TRoomDetails;
+}
 
-const RentCard = ({ rent }) => {
+const RentCard: React.FC<Props> = ({ rent }) => {
   const { title, coverImage, floorPlan, price, location } = rent;
   return (
     <div
       className={`rounded shadow-sm hover:shadow-md group cursor-pointer border border-transparent hover:border-primary/30 duration-300 ${poppins.className}`}
     >
-      <div className="h-[280px] overflow-hidden relative group">
-        <Image
-          src={coverImage}
-          alt="image"
-          width={300}
-          height={300}
-          className="w-full h-full rounded-t object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        <div className="absolute top-[-100%] left-0 w-full h-full bg-[#fff]/16 transition-all duration-700 group-hover:top-0"></div>
-      </div>
+      <Link href={`rent/${1}`}>
+        <div className="h-[280px] overflow-hidden relative group">
+          <Image
+            src={coverImage}
+            alt="image"
+            width={300}
+            height={300}
+            className="w-full h-full rounded-t object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+          <div className="absolute top-[-100%] left-0 w-full h-full bg-[#fff]/16 transition-all duration-700 group-hover:top-0"></div>
+        </div>
+      </Link>
 
       <div className="px-4 py-4">
         <h2 className="line-clamp-1  font-medium text-base">{title}</h2>
@@ -55,7 +59,7 @@ const RentCard = ({ rent }) => {
         <div className="flex items-center flex-wrap gap-2 my-2 text-sm text-[#262626]/60">
           {floorPlan && (
             <>
-              {floorPlan.bedRoomCount !== "" && (
+              {floorPlan.bedRoomCount > 0 && (
                 <div className="flex items-center gap-2">
                   <span>
                     <MdOutlineKingBed />
@@ -73,11 +77,11 @@ const RentCard = ({ rent }) => {
                   </span>
                   <span>
                     {floorPlan.bathCount} Bath
-                    {floorPlan.bathCount > 1 ? "s" : ""}
+                    {Number(floorPlan.bathCount) > 1 ? "s" : ""}
                   </span>
                 </div>
               )}
-              {floorPlan.bedCount !== "" && (
+              {floorPlan.bedCount > 0 && (
                 <div className="flex items-center gap-2">
                   <span>
                     <LuBed />
@@ -87,7 +91,7 @@ const RentCard = ({ rent }) => {
                   </span>
                 </div>
               )}
-              {floorPlan.guestCount !== "" && (
+              {floorPlan.guestCount > 0 && (
                 <div className="flex items-center gap-2">
                   <span>
                     <BsPeople />

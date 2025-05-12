@@ -11,7 +11,7 @@ const Land = () => {
         />
         <h2 className="text-3xl font-bold mb-2 text-gray-800">Coming Soon</h2>
         <p className="text-gray-500">
-          We're working hard to launch this page. Please check back later!
+          We re working hard to launch this page. Please check back later!
         </p>
       </div>
     </div>
