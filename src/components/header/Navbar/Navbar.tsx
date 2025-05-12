@@ -1,31 +1,28 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import logo from "@/assets/logo/stayverz.png";
 import Image from "next/image";
-import { menuList } from "@/utilits/menuList";
 import Link from "next/link";
 import { HiOutlineUser } from "react-icons/hi";
+import { Dropdown, Menu } from "antd";
+
+import logo from "@/assets/logo/stayverz.png";
+import { menuList } from "@/utilits/menuList";
 import { poppins } from "@/app/font";
 import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
-import useAccess from "@/hooks/useAccess";
 import useAuth from "@/hooks/useAuth";
 
 const Navbar = () => {
-  // const { user } = useAccess();
-  // console.log("user info  === ", user)
   const [isSticky, setIsSticky] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false)
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
   const {
     user,
-    login,
     logout,
-    isAuthenticated,
-    refreshToken,
-    setUser
+    isAuthenticated
   } = useAuth();
-  console.log("all user data === ", user)
+
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
@@ -34,14 +31,34 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const profileMenu = (
+    <Menu>
+      <Menu.Item key="profile">
+        <Link href="/profile">Profile</Link>
+      </Menu.Item>
+      <Menu.Item key="switch-role">
+        <button className="cursor-pointer" onClick={() => console.log("Switch role clicked")}>
+          Switch Role
+        </button>
+      </Menu.Item>
+      <Menu.Item key="settings">
+        <Link href="/settings">Settings</Link>
+      </Menu.Item>
+      <Menu.Item key="logout">
+        <button className="cursor-pointer" onClick={logout}>Logout</button>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <>
       <div
         className={`w-full top-0 z-50 transition-all ease-in-out transform duration-300 ${isSticky ? "fixed bg-white shadow-md" : "relative"
           }`}
       >
-        <div className="Container py-2 md:py-2 shadow-sm ">
+        <div className="Container py-2 md:py-2 shadow-sm">
           <div className="flex items-center justify-between">
+            {/* Logo */}
             <div>
               <Image
                 src={logo}
@@ -52,6 +69,7 @@ const Navbar = () => {
               />
             </div>
 
+            {/* Menu */}
             <div className="lg:flex hidden items-center justify-center xl:gap-8 gap-6">
               {menuList?.map((menu) => (
                 <div key={menu.id}>
@@ -66,12 +84,13 @@ const Navbar = () => {
               ))}
             </div>
 
+            {/* User Section */}
             <div
               className={`flex items-center justify-center gap-2 font-medium text-sm ${poppins.className}`}
             >
               {isAuthenticated && user?.isVerified ? (
-                user.role === "guest" ? (
-                  <>
+                <>
+                  {user.role === "guest" && (
                     <button
                       className="px-4 py-2 bg-primary text-white rounded"
                       onClick={() => {
@@ -81,29 +100,16 @@ const Navbar = () => {
                     >
                       Switch to Host
                     </button>
+                  )}
+                  <Dropdown placement="bottomLeft"  overlay={profileMenu} trigger={["hover"]}>
                     <button
                       className="p-2 border rounded-full border-primary"
-                      onClick={() => {
-                        console.log("Open profile menu");
-                      
-                      }}
                     >
                       <HiOutlineUser className="text-primary" />
                     </button>
-                  </>
-                ) : (
-               
-                  <button
-                    className="p-2 border rounded-full border-primary"
-                    onClick={() => {
-                      console.log("Open profile menu");
-                    }}
-                  >
-                    <HiOutlineUser className="text-primary" />
-                  </button>
-                )
+                  </Dropdown>
+                </>
               ) : (
-            
                 <>
                   <button
                     onClick={() => setShowLoginModal(true)}
@@ -123,10 +129,11 @@ const Navbar = () => {
                 </>
               )}
             </div>
-
           </div>
         </div>
       </div>
+
+      {/* Modals */}
       <SignupModal open={showModal} onClose={() => setShowModal(false)} />
       <LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
     </>
