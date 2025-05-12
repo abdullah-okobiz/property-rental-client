@@ -3,7 +3,7 @@ import axiosClient from "@/lib/axios.config";
 
 const AuthApis = {
   loginApi: (payload: { email: string; password: string }) => {
-    return axiosClient.post("/admin/login", payload);
+    return axiosClient.post("/login", payload);
   },
 
   logoutApi: () => {

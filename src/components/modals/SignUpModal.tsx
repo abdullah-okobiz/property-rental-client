@@ -37,7 +37,6 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
   const { mutate, isPending } = useMutation({
     mutationFn: processSignup,
     onSuccess: (data:any) => {
-
       messageApi.success(data?.message || "Signup successful!");
       form.resetFields();
       onClose();
