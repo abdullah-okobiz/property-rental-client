@@ -16,6 +16,9 @@ const AuthApis = {
 
   signupApi: (payload: { name: string; email: string; password: string; role: 'guest' | 'host' }) => {
     return axiosClient.post("/signup", payload);
+  },
+  verifyEmailOtpApi:(payload:{email: string; otp: string;})=>{
+    return axiosClient.post("/verify", payload);
   }
 };
 

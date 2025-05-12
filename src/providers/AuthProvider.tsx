@@ -30,7 +30,6 @@ const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<ExtendedJwtPayload | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  // Initial auth check (runs once)
   useEffect(() => {
     const checkToken = async () => {
       const accessToken = localStorage.getItem("accessToken");
@@ -47,17 +46,17 @@ const AuthProvider = ({ children }: Props) => {
             setIsAuthenticated(true);
           }
         } catch {
-          await refreshToken(); // Token malformed
+          await refreshToken();
         }
       } else {
-        await refreshToken(); // No token
+        await refreshToken(); 
       }
     };
 
     checkToken();
   }, []);
 
-  // Login function
+
   const login = ({ accessToken }: { accessToken: string }) => {
     localStorage.setItem("accessToken", accessToken);
     const decoded = jwtDecode<ExtendedJwtPayload>(accessToken);
@@ -65,7 +64,6 @@ const AuthProvider = ({ children }: Props) => {
     setIsAuthenticated(true);
   };
 
-  // Refresh token
   const refreshToken = async () => {
     try {
       const res = await processRefreshToken();
@@ -95,7 +93,7 @@ const AuthProvider = ({ children }: Props) => {
     logout,
     refreshToken,
   };
-
+console.log("value ===== ",value)
   return (
     <AuthContext.Provider value={value}>
       {children}

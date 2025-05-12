@@ -6,6 +6,7 @@ import hostImage from "../../../public/images/home.png";
 import guestImage from "../../../public/images/guest.png";
 import { useMutation } from "@tanstack/react-query";
 import AuthServices from "@/services/auth/auth.service";
+import { useRouter } from "next/navigation";
 
 
 interface SignupModalProps {
@@ -27,18 +28,24 @@ const hostandGuest = [
 const { processSignup } = AuthServices;
 
 const SignupModal = ({ open, onClose }: SignupModalProps) => {
+  const router = useRouter(); 
+  const [messageApi, contextHolder] = message.useMessage();
   const [role, setRole] = useState<"host" | "guest">("guest");
   const [form] = Form.useForm();
 
+
   const { mutate, isPending } = useMutation({
     mutationFn: processSignup,
-    onSuccess: () => {
-      message.success("Signup successful!");
+    onSuccess: (data:any) => {
+      console.log("data ==== ", data)
+      messageApi.success(data?.message || "Signup successful!");
       form.resetFields();
       onClose();
+      router.push(`/email-verification?email=${data?.data?.email}`);
+
     },
     onError: (error: any) => {
-      message.error(
+      messageApi.error(
         error?.response?.data?.message || "Signup failed. Please try again."
       );
     },
@@ -52,6 +59,8 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
   };
 
   return (
+    <>
+    {contextHolder}  
     <Modal
       title={
         <div className="pb-4 border-b border-gray-200 text-start text-lg font-semibold">
@@ -139,6 +148,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
         </Form>
       </div>
     </Modal>
+    </>
   );
 };
 
