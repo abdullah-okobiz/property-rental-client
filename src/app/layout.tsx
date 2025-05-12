@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-
+import { Metadata } from "next";
 import "./globals.css";
-import "antd/dist/reset.css";
 import { lato } from "./font";
-import NextTopLoader from "nextjs-toploader";
+import NextTopLoader from "nextjs-toploader"; 
+import { ReactNode } from "react";
+import Providers from "@/providers/Providers";
 
 export const metadata: Metadata = {
-  title: "Homgystay",
+  title: "Homzystay",
   description:
     "Rental is one of the best property dealing website in local market of Bangladesh",
 };
@@ -14,13 +14,16 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={`${lato.className}} antialiased`}>
-        <NextTopLoader showSpinner={false} color="#F15927" />
-        {children}
+     
+      <body className={`${lato.className} antialiased`}>
+          <Providers>
+          <NextTopLoader showSpinner={false} color="#F15927" />
+            {children}
+          </Providers>
       </body>
     </html>
   );

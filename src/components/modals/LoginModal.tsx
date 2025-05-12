@@ -1,92 +1,126 @@
 "use client";
 
-import { Input, Modal, Button } from "antd";
+import { Input, Modal, Button, message } from "antd";
 import { useState } from "react";
 import SignupModal from "./SignUpModal";
+import AuthServices from "@/services/auth/auth.service";
+import { useMutation } from "@tanstack/react-query";
+import useAuth from "@/hooks/useAuth";
 
 interface LoginModalProps {
-    open: boolean;
-    onClose: () => void;
+  open: boolean;
+  onClose: () => void;
 }
 
 const initialForm = {
-    phone: "",
-    password: "",
+  email: "",
+  password: "",
 };
 
 const LoginModal = ({ open, onClose }: LoginModalProps) => {
-    const [showModal, setShowModal] = useState(false);
-    const [formData, setFormData] = useState(initialForm);
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState(initialForm);
+  const [messageApi, contextHolder] = message.useMessage();
+  const { login } = useAuth();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = () => {
-        console.log(formData); 
+  const { mutate: loginUser, isPending } = useMutation({
+    mutationFn: AuthServices.processLogin,
+    onSuccess: (data: any) => {
+      const accessToken = data?.accessToken;
+      if (accessToken) {
+        login({ accessToken });
+        messageApi.success( data?.message || "Login successful!");
         onClose();
         setFormData(initialForm);
-    };
+      } else {
+        messageApi.error("No access token received.");
+      }
+    },
+    onError: (error: any) => {
+      messageApi.error(
+        error?.response?.data?.message || "Login failed. Please try again."
+      );
+    },
+  });
 
-    return (
-        <> 
-        <Modal
-            title={
-                <div className="pb-4 border-b  border-gray-200 text-center text-lg font-semibold">
-                    Welcome to HomeZay Stay
-                </div>
-            }
-            open={open}
-            onCancel={onClose}
-            footer={null}
-            centered
-        >
-            <div className="space-y-4">
-                <div className="space-y-4">
-                    <div className="py-3">
-                        <Input
-                            name="phone"
-                            placeholder="Enter your phone number"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            size="large"
-                        />
-                    </div>
-                    <div className="py-3">
-                        <Input.Password
-                            name="password"
-                            placeholder="Password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            size="large"
-                        />
-                    </div>
-                    <Button
-                        block
-                        size="large"
-                        type="primary"
-                        className="!bg-primary mt-4"
-                        onClick={handleSubmit}
-                    >
-                        Continue
-                    </Button>
-                    <div className="text-center">
-                            <h3>Already have an account? <Button
-                                onClick={() => {
-                                    onClose(); 
-                                    setTimeout(() => setShowModal(true), 300);
-                                }}
-                            >
-                                SignUp
-                            </Button>  </h3>
-                        </div>
-                </div>
-            </div>
-        </Modal>
-        <SignupModal open={showModal} onClose={() => setShowModal(false)} />
-        </>
-    );
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = () => {
+    const { email, password } = formData;
+    if (!email || !password) {
+      return messageApi.warning("Please fill in both fields.");
+    }
+
+    loginUser({  email, password });
+  };
+
+  return (
+    <>
+      {contextHolder}
+      <Modal
+        title={
+          <div className="pb-4 border-b border-gray-200 text-center text-lg font-semibold">
+            Welcome to HomeZay Stay
+          </div>
+        }
+        open={open}
+        onCancel={onClose}
+        footer={null}
+        centered
+      >
+        <div className="space-y-4">
+          <div className="py-3">
+            <Input
+              name="email"
+              placeholder=" Your email address "
+              value={formData.email}
+              onChange={handleChange}
+              size="large"
+            />
+          </div>
+          <div className="py-3">
+            <Input.Password
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              size="large"
+            />
+          </div>
+          <Button
+            block
+            size="large"
+            type="primary"
+            className="!bg-primary mt-4"
+            onClick={handleSubmit}
+            loading={isPending}
+          >
+            Continue
+          </Button>
+          <div className="text-center">
+            <h3>
+              Don’t have an account?{" "}
+              <Button
+                type="link"
+                onClick={() => {
+                  onClose();
+                  setTimeout(() => setShowModal(true), 300);
+                }}
+              >
+                SignUp
+              </Button>
+            </h3>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Uncomment when needed */}
+      {/* <SignupModal open={showModal} onClose={() => setShowModal(false)} /> */}
+    </>
+  );
 };
 
 export default LoginModal;
