@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect, ReactNode } from "react";
 import { jwtDecode, JwtPayload } from "jwt-decode";
@@ -8,7 +8,6 @@ import AuthContext from "@/contexts/AuthContext";
 const { processRefreshToken } = AuthServices;
 
 interface ExtendedJwtPayload extends JwtPayload {
-  // Add any custom fields your JWT may contain
   name?: string;
   email?: string;
   role?: string;
@@ -17,7 +16,7 @@ interface ExtendedJwtPayload extends JwtPayload {
 interface AuthContextType {
   user: ExtendedJwtPayload | null;
   setUser: (user: ExtendedJwtPayload | null) => void;
-  login: (tokens: { accessToken: string }) => void;
+  login: (tokens: { accessToken: string })=> void;
   isAuthenticated: boolean;
   logout: () => void;
   refreshToken: () => Promise<void>;
@@ -31,38 +30,46 @@ const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<ExtendedJwtPayload | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
+  // Initial auth check (runs once)
   useEffect(() => {
-    (async () => {
+    const checkToken = async () => {
       const accessToken = localStorage.getItem("accessToken");
+
       if (accessToken) {
         try {
           const decoded = jwtDecode<ExtendedJwtPayload>(accessToken);
-          if (decoded.exp && decoded.exp * 1000 > Date.now()) {
+          const isExpired = decoded.exp && decoded.exp * 1000 < Date.now();
+
+          if (isExpired) {
+            await refreshToken();
+          } else {
             setUser(decoded);
             setIsAuthenticated(true);
-          } else {
-            await refreshToken();
           }
         } catch {
-          await refreshToken();
+          await refreshToken(); // Token malformed
         }
       } else {
-        await refreshToken();
+        await refreshToken(); // No token
       }
-    })();
+    };
+
+    checkToken();
   }, []);
 
+  // Login function
   const login = ({ accessToken }: { accessToken: string }) => {
     localStorage.setItem("accessToken", accessToken);
-    const data = jwtDecode<ExtendedJwtPayload>(accessToken);
-    setUser(data);
+    const decoded = jwtDecode<ExtendedJwtPayload>(accessToken);
+    setUser(decoded);
     setIsAuthenticated(true);
   };
 
+  // Refresh token
   const refreshToken = async () => {
     try {
       const res = await processRefreshToken();
-      const { accessToken } = res;
+      const { accessToken }:any = res;
       localStorage.setItem("accessToken", accessToken);
       const decoded = jwtDecode<ExtendedJwtPayload>(accessToken);
       setUser(decoded);
@@ -73,6 +80,7 @@ const AuthProvider = ({ children }: Props) => {
     }
   };
 
+  // Logout
   const logout = () => {
     localStorage.removeItem("accessToken");
     setUser(null);
@@ -89,9 +97,7 @@ const AuthProvider = ({ children }: Props) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, setUser, login, isAuthenticated, logout, refreshToken }}
-    >
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

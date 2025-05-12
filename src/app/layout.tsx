@@ -1,15 +1,9 @@
 import { Metadata } from "next";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import "./globals.css";
+import { lato } from "./font";
 import NextTopLoader from "nextjs-toploader"; 
 import { ReactNode } from "react";
-import { Lato } from "next/font/google"; 
-import AuthProvider from "@/providers/AuthProvider";
-
-// Create QueryClient instance
-const queryClient = new QueryClient();
-
-// const lato = Lato({ subsets: ["latin"] });
+import Providers from "@/providers/Providers";
 
 export const metadata: Metadata = {
   title: "Homzystay",
@@ -24,12 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <NextTopLoader showSpinner={false} color="#F15927" />
-      {/* <body className={`${lato.className} antialiased`}> */}
-      <body className={`antialiased`}>
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>{children}</AuthProvider>
-        </QueryClientProvider>
+     
+      <body className={`${lato.className} antialiased`}>
+          <Providers>
+          <NextTopLoader showSpinner={false} color="#F15927" />
+            {children}
+          </Providers>
       </body>
     </html>
   );

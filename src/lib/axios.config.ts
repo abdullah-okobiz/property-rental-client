@@ -1,9 +1,10 @@
+"use client"
 import axios from "axios";
 
 import { apiBaseUrl } from "@/config/config";
 import useAuth from "@/hooks/useAuth";
 
-const { logout } = useAuth();
+// const { logout } = useAuth();
 
 const axiosClient = axios.create({
   baseURL: apiBaseUrl,
@@ -46,7 +47,7 @@ axiosClient.interceptors.response.use(
         }
       } catch (refreshError) {
         // In case refresh fails, logout the user
-        logout();
+        // logout();
         return Promise.reject(refreshError);
       }
     }
