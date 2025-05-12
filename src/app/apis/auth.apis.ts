@@ -19,6 +19,9 @@ const AuthApis = {
   },
   verifyEmailOtpApi:(payload:{email: string; otp: string;})=>{
     return axiosClient.post("/verify", payload);
+  },
+  otpResendApi:(payload:{email:string})=>{
+    return axiosClient.post("/resend", payload);
   }
 };
 

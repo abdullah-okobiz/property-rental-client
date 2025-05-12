@@ -95,7 +95,7 @@ const AuthProvider = ({ children }: Props) => {
   };
 console.log("value ===== ",value)
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={value as any}>
       {children}
     </AuthContext.Provider>
   );

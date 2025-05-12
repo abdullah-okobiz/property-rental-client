@@ -1,7 +1,7 @@
 import AuthApis from "@/app/apis/auth.apis";
 
 
-const { loginApi, refreshTokenApi, logoutApi, signupApi,verifyEmailOtpApi } = AuthApis;
+const { loginApi, refreshTokenApi, logoutApi, signupApi,verifyEmailOtpApi,otpResendApi } = AuthApis;
 
 const AuthServices = {
   processLogin: async (payload: { email: string, password: string }) => {
@@ -60,6 +60,20 @@ const AuthServices = {
         const response = await verifyEmailOtpApi(payload)
         return response
     } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("Unknown error occurred in processSignup");
+      }
+      
+    }
+  },
+  processResendOtp: async (payload:{email:string})=>{
+     try {
+      const response = await  otpResendApi(payload)
+      return response
+      
+     }  catch (error) {
       if (error instanceof Error) {
         throw error;
       } else {
