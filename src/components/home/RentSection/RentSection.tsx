@@ -1,19 +1,15 @@
 "use client";
 import { poppins } from "@/app/font";
 import RentCard from "@/components/card/RentCard/RentCard";
+import { IRent } from "@/types";
 import SectionTitle from "@/utilits/SectionTitle";
-import { useEffect, useState } from "react";
+import React from "react";
 
-const RentSection = () => {
-  const [rents, setRents] = useState([]);
-  useEffect(() => {
-    fetch("rentData.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setRents(data);
-      });
-  }, []);
+interface Props {
+  rents: IRent[];
+}
 
+const RentSection: React.FC<Props> = ({ rents }) => {
   console.log("find rent data", rents);
   return (
     <div className="Container pt-28">
@@ -25,8 +21,8 @@ const RentSection = () => {
       </div>
 
       <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
-        {rents?.map((rent,index) => (
-          <RentCard key={index} rent={rent}></RentCard>
+        {rents?.slice(0, 8).map((rent) => (
+          <RentCard key={rent._id} rent={rent}></RentCard>
         ))}
       </div>
 

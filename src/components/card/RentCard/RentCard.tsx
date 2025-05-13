@@ -1,5 +1,5 @@
 import { poppins } from "@/app/font";
-import { TRoomDetails } from "@/types";
+import { IRent } from "@/types";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +11,7 @@ import { MdOutlineKingBed } from "react-icons/md";
 import { PiMapPin } from "react-icons/pi";
 
 interface Props {
-  rent: TRoomDetails;
+  rent: IRent;
 }
 
 const RentCard: React.FC<Props> = ({ rent }) => {

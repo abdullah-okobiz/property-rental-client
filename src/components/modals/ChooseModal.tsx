@@ -1,6 +1,14 @@
 import React from "react";
+interface Choose {
+  whyChooseUsTitle: string;
+  whyChooseUsDescription: string;
+}
 
-const ChooseModal = ({ closeModal, choose }) => {
+interface ChooseModalProps {
+  closeModal: () => void;
+  choose: Choose;
+}
+const ChooseModal: React.FC<ChooseModalProps> = ({ closeModal, choose }) => {
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black/50 z-[999] w-full"
