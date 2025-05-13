@@ -22,6 +22,7 @@ const Navbar = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const { user, isAuthenticated } = useAuth();
+  console.log("user ", user)
 
   const { mutate: logout } = useMutation({
     mutationFn: processLogout,
@@ -81,6 +82,7 @@ const Navbar = () => {
 
   return (
     <>
+
       <div
         className={`w-full top-0 z-50 transition-all ease-in-out transform duration-300 ${
           isSticky ? "fixed bg-white shadow-md" : "relative"

@@ -1,3 +1,4 @@
+import NavBar from "./components/hostNav/NavBar";
 
 
  
@@ -9,6 +10,7 @@ export default function HostLayout({
 }>) {
   return (
     <div className="">
+      <NavBar/>
      
       {children}
      

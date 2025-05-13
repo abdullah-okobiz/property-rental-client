@@ -1,11 +1,12 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Form, Input, Button, message } from "antd";
 import { useMutation } from "@tanstack/react-query";
 import AuthServices from "@/services/auth/auth.service";
 import { useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
 
 const { processVerifyEmailOtp, processResendOtp } = AuthServices;
 
@@ -13,6 +14,8 @@ const EmailVerification = () => {
   const { login } = useAuth();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
+  const router = useRouter();
+
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -25,14 +28,33 @@ const EmailVerification = () => {
   } = useMutation({
     mutationFn: processVerifyEmailOtp,
     onSuccess: (res: any) => {
-      if (res?.data?.accessToken) {
-        login({ accessToken: res.data.accessToken });
+      const accessToken = res?.data?.accessToken;
+
+      if (accessToken) {
+        try {
+          const decoded: any = jwtDecode(accessToken);
+          const role = decoded?.role;
+
+          login({ accessToken });
+
+          messageApi.success(res?.data?.message || "Email verified successfully!");
+          form.resetFields();
+
+          if (role === "host") {
+            router.replace("/host-dashboard");
+          } else if (role === "guest") {
+            router.replace("/");
+          } else {
+            router.replace("/");
+          }
+
+        } catch (error) {
+          console.error("Invalid token", error);
+          messageApi.error("Invalid token.");
+        }
       } else {
         messageApi.error("Access token is missing.");
       }
-  
-      messageApi.success(res?.data?.message || "Email verified successfully!");
-      form.resetFields();
     },
     onError: (error: any) => {
       messageApi.error(
@@ -45,11 +67,10 @@ const EmailVerification = () => {
     mutate: resendOtp,
     isPending: isResending,
   } = useMutation({
-    mutationFn: () => processResendOtp({ email: email as string  }),
+    mutationFn: () => processResendOtp({ email: email as string }),
     onSuccess: (res: any) => {
-     
       messageApi.success(res?.data?.message || "OTP resent to your email!");
-      startCooldown(30); 
+      startCooldown(30);
     },
     onError: (error: any) => {
       messageApi.error(
@@ -71,7 +92,6 @@ const EmailVerification = () => {
   const startCooldown = (seconds: number) => {
     setCooldown(seconds);
   };
-
 
   useEffect(() => {
     if (cooldown > 0) {
