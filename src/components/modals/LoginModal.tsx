@@ -6,6 +6,8 @@ import SignupModal from "./SignUpModal";
 import AuthServices from "@/services/auth/auth.service";
 import { useMutation } from "@tanstack/react-query";
 import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import {jwtDecode } from "jwt-decode"; 
 
 interface LoginModalProps {
   open: boolean;
@@ -18,20 +20,39 @@ const initialForm = {
 };
 
 const LoginModal = ({ open, onClose }: LoginModalProps) => {
+
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(initialForm);
   const [messageApi, contextHolder] = message.useMessage();
-  const { login } = useAuth();
+  const { login,user } = useAuth();
+  console.log("user == ", user)
 
   const { mutate: loginUser, isPending } = useMutation({
     mutationFn: AuthServices.processLogin,
     onSuccess: (data: any) => {
       const accessToken = data?.accessToken;
       if (accessToken) {
-        login({ accessToken });
-        messageApi.success( data?.message || "Login successful!");
-        onClose();
-        setFormData(initialForm);
+        try {
+          const decoded = jwtDecode(accessToken);
+          const role = decoded?.role; 
+          login({ accessToken }); 
+          messageApi.success(data?.message || "Login successful!");
+        
+          if (role === "host") {
+            router.replace("/host-dashboard");
+          } else if (role === "guest") {
+            router.replace("/"); 
+          } else {
+            router.replace("/"); 
+          }
+  
+          onClose();
+          setFormData(initialForm);
+        } catch (error) {
+          console.error("Invalid token", error);
+          messageApi.error("Invalid token.");
+        }
       } else {
         messageApi.error("No access token received.");
       }
@@ -42,7 +63,6 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
       );
     },
   });
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
