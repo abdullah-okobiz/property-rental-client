@@ -1,46 +1,92 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import logo from "@/assets/logo/stayverz.png";
 import Image from "next/image";
-import { menuList } from "@/utilits/menuList";
 import Link from "next/link";
 import { HiOutlineUser } from "react-icons/hi";
+import { Dropdown, message } from "antd";
+
+import logo from "@/assets/logo/stayverz.png";
+import { menuList } from "@/utilits/menuList";
 import { poppins } from "@/app/font";
 import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
-import useAccess from "@/hooks/useAccess";
 import useAuth from "@/hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import AuthServices from "@/services/auth/auth.service";
+
+const { processLogout } = AuthServices;
 
 const Navbar = () => {
-  // const { user } = useAccess();
-  // console.log("user info  === ", user)
   const [isSticky, setIsSticky] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false)
-  const {
-    user,
-    login,
-    logout,
-    isAuthenticated,
-    refreshToken,
-    setUser
-  } = useAuth();
-  console.log("all user data === ", user)
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const { user, isAuthenticated } = useAuth();
+
+  const { mutate: logout } = useMutation({
+    mutationFn: processLogout,
+    onSuccess: () => {
+      message.success("Logout Successful");
+      localStorage.removeItem("accessToken");
+      setTimeout(() => window.location.reload(), 1000);
+    },
+    onError: (error: any) => {
+      message.error(error?.response?.data?.message || "Logout failed");
+    },
+  });
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsSticky(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsSticky(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const switchProfileItems = [
+    {
+      key: "host",
+      label: "Switch to Host",
+      disabled: user?.role === "host",
+      onClick: () => {
+        if (user?.role !== "host") setShowLoginModal(true);
+      },
+    },
+    {
+      key: "guest",
+      label: "Switch to Guest",
+      disabled: user?.role === "guest",
+      onClick: () => {
+        if (user?.role !== "guest") setShowLoginModal(true);
+      },
+    },
+  ];
+
+  const profileItems = [
+    {
+      key: "profile",
+      label: <Link href="/profile">Profile</Link>,
+    },
+    {
+      key: "settings",
+      label: <Link href="/settings">Settings</Link>,
+    },
+    {
+      key: "logout",
+      label: (
+        <button className="cursor-pointer w-full text-left"  onClick={() => logout()}>
+          Logout
+        </button>
+      ),
+    },
+  ];
+
   return (
     <>
       <div
-        className={`w-full top-0 z-50 transition-all ease-in-out transform duration-300 ${isSticky ? "fixed bg-white shadow-md" : "relative"
-          }`}
+        className={`w-full top-0 z-50 transition-all ease-in-out transform duration-300 ${
+          isSticky ? "fixed bg-white shadow-md" : "relative"
+        }`}
       >
-        <div className="Container py-2 md:py-2 shadow-sm ">
+        <div className="Container py-2 md:py-2 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
               <Image
@@ -69,41 +115,32 @@ const Navbar = () => {
             <div
               className={`flex items-center justify-center gap-2 font-medium text-sm ${poppins.className}`}
             >
-              {isAuthenticated && user?.isVerified ? (
-                user.role === "guest" ? (
-                  <>
-                    <button
-                      className="px-4 py-2 bg-primary text-white rounded"
-                      onClick={() => {
-                        console.log("Switch to host");
-                        // implement host switching logic or route
-                      }}
-                    >
-                      Switch to Host
-                    </button>
-                    <button
-                      className="p-2 border rounded-full border-primary"
-                      onClick={() => {
-                        console.log("Open profile menu");
-                      
-                      }}
-                    >
-                      <HiOutlineUser className="text-primary" />
-                    </button>
-                  </>
-                ) : (
-               
-                  <button
-                    className="p-2 border rounded-full border-primary"
-                    onClick={() => {
-                      console.log("Open profile menu");
-                    }}
+              {isAuthenticated && (user as any)?.isVerified? (
+                <>
+                  <Dropdown
+                    menu={{ items: switchProfileItems }}
+                    trigger={["hover"]}
+                    placement="bottomLeft"
                   >
-                    <HiOutlineUser className="text-primary" />
-                  </button>
-                )
+                    <button className="px-4 py-2 bg-primary text-white rounded">
+                      Switch Profile
+                    </button>
+                  </Dropdown>
+
+                  <Dropdown
+                    menu={{ items: profileItems }}
+                    trigger={["hover"]}
+                    placement="bottomLeft"
+                  >
+                    <div className="flex space-x-3 items-center border border-[#DDDDDD] cursor-pointer p-[.5rem] rounded-full">
+                      <button className="p-2 border rounded-full border-primary ">
+                        <HiOutlineUser className="text-primary" />
+                      </button>
+                      <span>{user?.role}</span>
+                    </div>
+                  </Dropdown>
+                </>
               ) : (
-            
                 <>
                   <button
                     onClick={() => setShowLoginModal(true)}
@@ -123,10 +160,11 @@ const Navbar = () => {
                 </>
               )}
             </div>
-
           </div>
         </div>
       </div>
+
+      {/* Modals */}
       <SignupModal open={showModal} onClose={() => setShowModal(false)} />
       <LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
     </>

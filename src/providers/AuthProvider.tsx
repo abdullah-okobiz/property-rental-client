@@ -11,6 +11,7 @@ interface ExtendedJwtPayload extends JwtPayload {
   name?: string;
   email?: string;
   role?: string;
+  isVerified?: boolean; 
 }
 
 interface AuthContextType {
@@ -20,6 +21,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   logout: () => void;
   refreshToken: () => Promise<void>;
+  
 }
 
 interface Props {
@@ -78,7 +80,7 @@ const AuthProvider = ({ children }: Props) => {
     }
   };
 
-  // Logout
+
   const logout = () => {
     localStorage.removeItem("accessToken");
     setUser(null);
@@ -93,7 +95,7 @@ const AuthProvider = ({ children }: Props) => {
     logout,
     refreshToken,
   };
-console.log("value ===== ",value)
+
   return (
     <AuthContext.Provider value={value as any}>
       {children}

@@ -42,8 +42,8 @@ const LandSection = () => {
               1536: { slidesPerView: 4 },
             }}
           >
-            {lands.map((land) => (
-              <SwiperSlide key={land} className="py-2 px-1">
+            {lands.map((land,index) => (
+              <SwiperSlide key={index} className="py-2 px-1">
                 <RentCard rent={land} />
               </SwiperSlide>
             ))}

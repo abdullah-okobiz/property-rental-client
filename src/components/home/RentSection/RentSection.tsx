@@ -25,8 +25,8 @@ const RentSection = () => {
       </div>
 
       <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
-        {rents?.map((rent) => (
-          <RentCard key={rent} rent={rent}></RentCard>
+        {rents?.map((rent,index) => (
+          <RentCard key={index} rent={rent}></RentCard>
         ))}
       </div>
 
