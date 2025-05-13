@@ -25,8 +25,8 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(initialForm);
   const [messageApi, contextHolder] = message.useMessage();
-  const { login,user } = useAuth();
-  console.log("user == ", user)
+  const { login } = useAuth();
+  
 
   const { mutate: loginUser, isPending } = useMutation({
     mutationFn: AuthServices.processLogin,
@@ -34,7 +34,7 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
       const accessToken = data?.accessToken;
       if (accessToken) {
         try {
-          const decoded = jwtDecode(accessToken);
+          const decoded: any = jwtDecode(accessToken);
           const role = decoded?.role; 
           login({ accessToken }); 
           messageApi.success(data?.message || "Login successful!");
@@ -83,7 +83,7 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
       <Modal
         title={
           <div className="pb-4 border-b border-gray-200 text-center text-lg font-semibold">
-            Welcome to HomeZay Stay
+             Welcome to HomeZay Stay
           </div>
         }
         open={open}
