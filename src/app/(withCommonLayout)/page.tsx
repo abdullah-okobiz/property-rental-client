@@ -9,13 +9,14 @@ import SearchContainer from "@/components/home/search/searchContainer/SearchCont
 import { getAllBanners } from "@/services/banners";
 import { getAllBlogs } from "@/services/blog";
 import { getAllChoose } from "@/services/choose";
+import { getAllRents } from "@/services/rents";
 // import { getAllFlats } from "@/services/flats";
 // import { getAllRents } from "@/services/rents";
 import React from "react";
 
 const page = async () => {
   const { data: banners } = await getAllBanners();
-  // const { data: rents } = await getAllRents();
+  const { data: rents } = await getAllRents();
   // const { data: flats } = await getAllFlats();
 
   const { data } = await getAllBlogs();
@@ -28,7 +29,7 @@ const page = async () => {
           <SearchContainer />
         </div>
       </div>
-      <RentSection />
+      <RentSection rents={rents} />
       <FlatsSection />
       <LandSection />
       <BlogSection blogs={data} />

@@ -1,18 +1,16 @@
-"use client";
 import { poppins } from "@/app/font";
 import RentCard from "@/components/card/RentCard/RentCard";
 import SectionTitle from "@/utilits/SectionTitle";
-import { useEffect, useState } from "react";
 
-const RentSection = () => {
-  const [rents, setRents] = useState([]);
-  useEffect(() => {
-    fetch("rentData.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setRents(data);
-      });
-  }, []);
+const RentSection = ({ rents }) => {
+  // const [rents, setRents] = useState([]);
+  // useEffect(() => {
+  //   fetch("rentData.json")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setRents(data);
+  //     });
+  // }, []);
 
   console.log("find rent data", rents);
   return (
