@@ -6,12 +6,11 @@ import React from "react";
 const Contact = () => {
   return (
     <div className="Container py-4 md:py-6 ">
-       <ContactHeader/>
-       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:py-10 ">
-          <ContactInfo/>
-          <ContactForm/>
-       </div>
-
+      <ContactHeader />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:py-10 ">
+        <ContactInfo />
+        <ContactForm />
+      </div>
     </div>
   );
 };

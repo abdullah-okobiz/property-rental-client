@@ -1,25 +1,22 @@
 "use client";
-import RentCard from "@/components/card/RentCard/RentCard";
+
 import SectionTitle from "@/utilits/SectionTitle";
-import React, { useEffect, useState } from "react";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-const LandSection = () => {
-  const [lands, setLands] = useState([]);
-  useEffect(() => {
-    fetch("landData.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setLands(data);
-      });
-  }, []);
-
-  console.log("find rent landData", lands);
+import BlogCard from "../BlogCard";
+import { IBlog } from "../../types";
+import React from "react";
+interface Props {
+  blogs: IBlog[];
+}
+const BlogSection: React.FC<Props> = ({ blogs }) => {
+  console.log("..........blogs", blogs);
   return (
-    <div className="Container pt-8">
+    <div className="Container pt-12">
       <div>
         <SectionTitle
           title="Choose From Our Diverse Range of Lands"
@@ -27,7 +24,7 @@ const LandSection = () => {
         />
       </div>
       <div>
-        <div className="pt-4">
+        <div className="mt-8">
           <Swiper
             modules={[Pagination]}
             spaceBetween={8}
@@ -42,9 +39,9 @@ const LandSection = () => {
               1536: { slidesPerView: 4 },
             }}
           >
-            {lands.map((land,index) => (
-              <SwiperSlide key={index} className="py-2 px-1">
-                <RentCard rent={land} />
+            {blogs?.map((blog) => (
+              <SwiperSlide key={blog._id} className="py-2 px-1">
+                <BlogCard blog={blog} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -55,4 +52,4 @@ const LandSection = () => {
   );
 };
 
-export default LandSection;
+export default BlogSection;

@@ -5,7 +5,6 @@ export type TBanner = {
   updatedAt: string;
 };
 
-
 export type TAmenity = {
   _id: string;
   amenitiesLabel: string;
@@ -29,3 +28,14 @@ export type TRoomDetails = {
   price: number;
   location: string;
 };
+
+export interface IChoose {
+  _id: string;
+  whyChooseUsTitle: string;
+  whyChooseUsDescription: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+

@@ -1,5 +1,5 @@
 import BlogDetails from "@/components/blog/blogContainer/BlogDetails";
-import { IBlog } from "@/components/blog/types/Blog";
+import { IBlog } from "@/components/blog/types";
 import { blogDetails } from "@/services/blog";
 
 import { Fragment } from "react";
