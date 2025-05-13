@@ -1,22 +1,18 @@
 "use client";
 import RentCard from "@/components/card/RentCard/RentCard";
+import { IRent } from "@/types";
 import SectionTitle from "@/utilits/SectionTitle";
-import React, { useEffect, useState } from "react";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-const LandSection = () => {
-  const [lands, setLands] = useState([]);
-  useEffect(() => {
-    fetch("landData.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setLands(data);
-      });
-  }, []);
 
+interface Props {
+  lands: IRent[];
+}
+const LandSection: React.FC<Props> = ({ lands }) => {
   console.log("find rent landData", lands);
   return (
     <div className="Container pt-8">
@@ -42,8 +38,8 @@ const LandSection = () => {
               1536: { slidesPerView: 4 },
             }}
           >
-            {lands.map((land) => (
-              <SwiperSlide key={land} className="py-2 px-1">
+            {lands?.slice(0, 8).map((land) => (
+              <SwiperSlide key={land._id} className="py-2 px-1">
                 <RentCard rent={land} />
               </SwiperSlide>
             ))}

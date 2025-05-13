@@ -38,4 +38,72 @@ export interface IChoose {
   __v: number;
 }
 
+export interface ICategory {
+  _id: string;
+  categoryName: string;
+  feature: string[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 
+export interface IAmenities {
+  _id: string;
+  amenitiesLabel: string;
+  amenitiesImage: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface IFloorPlan {
+  bedroomCount: number;
+  bathCount: number;
+  bedCount: number;
+  guestCount: number;
+  bedRoomCount: number;
+}
+
+export interface IHost {
+  _id: string;
+  avatar: string | null;
+  email: string;
+  isVerified: boolean;
+  accountStatus: string;
+  name: string;
+  password: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  identityDocument: string;
+  isStaff: boolean;
+}
+
+export interface IListingFor {
+  _id: string;
+  featureName: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface IRent {
+  _id: string;
+  title: string;
+  description: string;
+  coverImage: string;
+  images: string[];
+  category: ICategory;
+  amenities: IAmenities[];
+  allowableThings: string[];
+  floorPlan: IFloorPlan;
+  cancellationPolicy: string[];
+  host: IHost;
+  houseRules: string[];
+  listingFor: IListingFor[];
+  location: string;
+  price: number;
+  status: string;
+  __v: number;
+}
