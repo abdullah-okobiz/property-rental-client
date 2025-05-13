@@ -14,6 +14,7 @@ const page = async () => {
   // const { data: rents } = await getAllRents();
   // const { data: flats } = await getAllFlats();
   return (
+    
     <div>
       <div className="relative">
         <Banner banners={banners} />
