@@ -40,7 +40,7 @@ axiosClient.interceptors.response.use(
         const newAccessToken = res?.data?.accessToken ;
 
         if (newAccessToken) {
-          // Save new token and retry original request
+    
           localStorage.setItem("accessToken", newAccessToken);
           originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return axiosClient(originalRequest);
