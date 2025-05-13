@@ -1,18 +1,33 @@
 import { apiBaseUrl } from "@/config/config";
 import { formatDate } from "../util/DateTimeFormate";
-import { truncateText } from "../util/truncateText";
+// import { truncateText } from "../util/truncateText";
 import Link from "next/link";
+import Image from "next/image";
+import { CiCalendarDate } from "react-icons/ci";
+import { BsArrowRight } from "react-icons/bs";
+import { poppins } from "@/app/font";
+import { IBlog } from "../types";
+import React from "react";
 
-const BlogCard = ({ blog }: any) => {
+interface Props {
+  blog: IBlog;
+}
 
+const BlogCard: React.FC<Props> = ({ blog }) => {
   return (
-
-
     <Link href={`/blogs/${blog._id}`}>
-      <div className=" rounded-2xl  cursor-pointer border-0 overflow-hidden shadow-sm hover:shadow-md transition duration-300">
-        <div className="aspect-w-16 aspect-h-9 bg-gray-100 mb-4 group relative">
-          <img
+      <div className=" rounded  cursor-pointer border-0 overflow-hidden group shadow-sm hover:shadow-md transition duration-300">
+        <div className="aspect-w-16 aspect-h-9 bg-gray-100  relative overflow-hidden">
+          {/* <img
             src={`${apiBaseUrl}${blog?.blogImage}` ?? ""}
+            alt="image"
+            width={300}
+            height={300}
+            className="w-full h-64 object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+          /> */}
+
+          <Image
+            src={`${apiBaseUrl}${blog?.blogImage}`}
             alt="image"
             width={300}
             height={300}
@@ -21,17 +36,41 @@ const BlogCard = ({ blog }: any) => {
 
           <div className="absolute inset-0 bg-gray-400 bg-opacity-40 opacity-20 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none"></div>
         </div>
-        <div className="p-2">
-          <div className="bg-white text-gray-500 ">
-            <time > {formatDate(blog.createdAt)}</time>
-          </div>
-          <div className="py-4 bg-white">
-            <Link href={`/blogs/${blog._id}`}>
-              <h3 className="text-xl font-bold text-blue-400 hover:underline mb-4 line-clamp-2 text-justify ">
-                {truncateText(blog.blogTitle, 60)}
-              </h3> </Link>
 
-            <div>
+        <div className="px-4 py-4">
+          <div className="flex items-center gap-1">
+            <span className=" bg-[#FDEEE9] p-1 rounded text-primary">
+              <CiCalendarDate />
+            </span>
+            <time className="text-sm"> {formatDate(blog.createdAt)}</time>
+          </div>
+          <h2 className="text-base font-semibold mt-2">{blog.blogTitle}</h2>
+          <p className="line-clamp-2 mt-2 text-[#262626]/70">
+            {blog.blogDescription}
+          </p>
+          <div className="mt-3">
+            <Link href={`/blogs/${blog._id}`}>
+              <button className="flex items-center group-hover:text-primary duration-300 gap-1 uppercase text-sm font-medium tracking-wider">
+                <span
+                  className={`relative z-10 transition-colors duration-300 ${poppins.className}`}
+                >
+                  Read more
+                </span>
+                <span>
+                  <BsArrowRight className="group-hover:ml-2 duration-300" />
+                </span>
+              </button>
+            </Link>
+          </div>
+
+          {/* <Link href={`/blogs/${blog._id}`}>
+              <h3 className="text-xl font-bold text-blue-400 hover:underline mb-4 line-clamp-1 text-justify ">
+               
+                {blog.blogTitle}
+              </h3>{" "}
+            </Link> */}
+
+          {/* <div>
               <Link href={`/blogs/${blog._id}`}>
                 <button className="relative overflow-hidden rounded-full flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600  text-sm font-medium group cursor-pointer">
                   <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
@@ -45,18 +84,17 @@ const BlogCard = ({ blog }: any) => {
                     strokeWidth="2"
                     viewBox="0 0 24 24"
                   >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 5l7 7-7 7"
+                    />
                   </svg>
                 </button>
               </Link>
-
-
-            </div>
-          </div>
-
+            </div> */}
         </div>
       </div>
-
     </Link>
   );
 };

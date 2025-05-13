@@ -1,25 +1,23 @@
 "use client";
-import RentCard from "@/components/card/RentCard/RentCard";
+
 import SectionTitle from "@/utilits/SectionTitle";
-import React, { useEffect, useState } from "react";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-const LandSection = () => {
-  const [lands, setLands] = useState([]);
-  useEffect(() => {
-    fetch("landData.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setLands(data);
-      });
-  }, []);
 
-  console.log("find rent landData", lands);
+import React from "react";
+import { IChoose } from "@/types";
+import ChooseCard from "@/components/card/ChooseCard/ChooseCard";
+interface Props {
+  chooses: IChoose[];
+}
+const ChooseSection: React.FC<Props> = ({ chooses }) => {
+  console.log("..........blogs", chooses);
   return (
-    <div className="Container pt-8">
+    <div className="Container pt-12">
       <div>
         <SectionTitle
           title="Choose From Our Diverse Range of Lands"
@@ -27,7 +25,7 @@ const LandSection = () => {
         />
       </div>
       <div>
-        <div className="pt-4">
+        <div className="mt-8">
           <Swiper
             modules={[Pagination]}
             spaceBetween={8}
@@ -42,9 +40,9 @@ const LandSection = () => {
               1536: { slidesPerView: 4 },
             }}
           >
-            {lands.map((land) => (
-              <SwiperSlide key={land} className="py-2 px-1">
-                <RentCard rent={land} />
+            {chooses?.map((choose) => (
+              <SwiperSlide key={choose._id} className="py-2 px-1">
+                <ChooseCard choose={choose} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -55,4 +53,4 @@ const LandSection = () => {
   );
 };
 
-export default LandSection;
+export default ChooseSection;
