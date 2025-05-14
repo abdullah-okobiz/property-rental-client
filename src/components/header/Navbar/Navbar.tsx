@@ -25,7 +25,7 @@ const Navbar = () => {
     refreshToken,
     setUser
   } = useAuth();
-  console.log("all user data === ", user)
+  // console.log("all user data === ", user)
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
