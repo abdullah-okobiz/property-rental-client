@@ -4,7 +4,7 @@ import { jwtDecode } from 'jwt-decode'
 
 
 const protectedRoutes: Record<string, string[]> = {
-  host: ['/host-dashboard', '/host-settings'],
+  host: ['/host-dashboard','/create-listing' ],
  
 }
 
