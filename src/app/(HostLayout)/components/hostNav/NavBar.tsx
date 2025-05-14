@@ -3,8 +3,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { HiOutlineUser } from "react-icons/hi";
-import { Dropdown, message } from "antd";
+import { usePathname } from "next/navigation";
+import { HiOutlineUser, HiMenu, HiX } from "react-icons/hi";
+import { Dropdown, Button, Drawer, message, MenuProps } from "antd";
 import { useMutation } from "@tanstack/react-query";
 
 import logo from "@/assets/logo/stayverz.png";
@@ -14,156 +15,226 @@ import AuthServices from "@/services/auth/auth.service";
 
 import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
-import { TabmenuList } from "./nav.utils";
+import { TabMenuList } from "./nav.utils";
 
 const { processLogout } = AuthServices;
 
 const NavBar = () => {
-    const [isSticky, setIsSticky] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [showLoginModal, setShowLoginModal] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-    const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
+  const pathname = usePathname();
 
-    const { mutate: logout } = useMutation({
-        mutationFn: processLogout,
-        onSuccess: () => {
-            message.success("Logout Successful");
-            localStorage.removeItem("accessToken");
-            setTimeout(() => window.location.reload(), 1000);
-        },
-        onError: (error: any) => {
-            message.error(error?.response?.data?.message || "Logout failed");
-        },
-    });
+  const { mutate: logout } = useMutation({
+    mutationFn: processLogout,
+    onSuccess: () => {
+      message.success("Logout Successful");
+      localStorage.removeItem("accessToken");
+      setTimeout(() => window.location.reload(), 1000);
+    },
+    onError: (error) => {
+      message.error(error?.response?.data?.message || "Logout failed");
+    },
+  });
 
-    const handleScroll = useCallback(() => {
-        setIsSticky(window.scrollY > 50);
-    }, []);
+  const handleScroll = useCallback(() => {
+    setIsSticky(window.scrollY > 120);
+  }, []);
 
-    useEffect(() => {
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [handleScroll]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
+  const profileMenu: MenuProps = {
+    items: [
+      {
+        key: "profile",
+        label: <Link href="/profile">Profile</Link>,
+      },
+      {
+        key: "settings",
+        label: <Link href="/settings">Settings</Link>,
+      },
+      {
+        key: "logout",
+        label: <span onClick={() => logout()}>Logout</span>,
+      },
+    ],
+  };
 
+  return (
+    <>
+      <nav
+        className={`w-full top-0 z-50 transition-all duration-300 ${
+          isSticky ? "fixed bg-white shadow-sm" : "relative"
+        }`}
+      >
+        <div className="Container py-2 flex items-center justify-between shadow-md">
+          <Link href="/">
+            <Image src={logo} alt="Stayverz logo" width={80} height={80} />
+          </Link>
 
-    const profileItems = [
-        {
-            key: "profile",
-            label: <Link href="/profile">Profile</Link>,
-        },
-        {
-            key: "settings",
-            label: <Link href="/settings">Settings</Link>,
-        },
-        {
-            key: "logout",
-            label: (
-                <button className="cursor-pointer w-full text-left" onClick={() => logout()}>
-                    Logout
-                </button>
-            ),
-        },
-    ];
+          <div className="hidden lg:flex gap-8 items-center">
+            {TabMenuList.map((menu) => {
+              const isActive =
+                menu.link !== "#"
+                  ? pathname === menu.link
+                  : menu.dropdownItems?.some((item) => pathname === item.href);
 
-    return (
-        <>
-            <nav
-                className={`w-full top-0 z-50 transition-all duration-300 ${isSticky ? "fixed bg-white shadow-md" : "relative"
+              if (menu.dropdownItems) {
+                return (
+                  <Dropdown
+                    key={menu.id}
+                    trigger={["hover"]}
+                    menu={{
+                      items: menu.dropdownItems.map((item) => ({
+                        key: item.key,
+                        label: <Link href={item.href}>{item.label}</Link>,
+                      })),
+                    }}
+                  >
+                    <span
+                      className={`cursor-pointer text-base font-medium ${
+                        isActive
+                          ? "text-primary font-semibold"
+                          : "text-gray-700"
+                      } ${poppins.className}`}
+                    >
+                      {menu.title}
+                    </span>
+                  </Dropdown>
+                );
+              } else {
+                return (
+                  <Link
+                    key={menu.id}
+                    href={menu.link}
+                    className={`text-base font-medium ${
+                      isActive ? "text-primary font-semibold" : "text-gray-700"
+                    } ${poppins.className}`}
+                  >
+                    {menu.title}
+                  </Link>
+                );
+              }
+            })}
+          </div>
+
+          <div className="hidden lg:flex gap-4 items-center">
+            {isAuthenticated && (user as any)?.isVerified ? (
+              <Dropdown menu={profileMenu} trigger={["click"]}>
+                <Button icon={<HiOutlineUser />} shape="round">
+                  {user?.role}
+                </Button>
+              </Dropdown>
+            ) : (
+              <>
+                <Button onClick={() => setShowLoginModal(true)}>
+                  <HiOutlineUser /> Login
+                </Button>
+                <Button type="primary" onClick={() => setShowModal(true)}>
+                  Sign Up
+                </Button>
+              </>
+            )}
+          </div>
+
+          <div className="lg:hidden">
+            <Button
+              icon={mobileOpen ? <HiX /> : <HiMenu />}
+              onClick={() => setMobileOpen(!mobileOpen)}
+            />
+          </div>
+        </div>
+      </nav>
+
+      <Drawer
+        title={<Image src={logo} alt="Stayverz" width={80} height={80} />}
+        placement="left"
+        closable
+        onClose={() => setMobileOpen(false)}
+        open={mobileOpen}
+      >
+        <div className="flex flex-col gap-4">
+          {TabMenuList.map((menu) => {
+            const isActive =
+              menu.link !== "#"
+                ? pathname === menu.link
+                : menu.dropdownItems?.some((item) => pathname === item.href);
+
+            if (menu.dropdownItems) {
+              return (
+                <div key={menu.id}>
+                  <div
+                    className={`font-semibold ${
+                      isActive ? "text-primary " : "text-gray-800"
                     }`}
-            >
-                <div className="Container py-2 md:py-2 shadow-sm">
-                    <div className="flex items-center justify-between">
-                        {/* Logo */}
-                        <Link href="/">
-                            <Image
-                                src={logo}
-                                alt="Stayverz logo"
-                                width={120}
-                                height={120}
-                                className="w-[80px] md:w-[70px]"
-                            />
-                        </Link>
-
-
-                        <ul className="lg:flex hidden items-center justify-center xl:gap-8 gap-6">
-                            {TabmenuList.map((menu) => {
-                                const dropdownMenu = {
-                                    items: menu.dropdownItems?.map((item) => ({
-                                        key: item.key,
-                                        label: <Link href={item.href}>{item.label}</Link>,
-                                    })),
-                                };
-
-                                return (
-                                    <li key={menu.id}>
-                                        {menu.dropdownItems ? (
-                                            <Dropdown menu={dropdownMenu} trigger={["hover"]}>
-                                                <span
-                                                    className={`cursor-pointer text-base font-medium ${poppins.className}`}
-                                                >
-                                                    {menu.title}
-                                                </span>
-                                            </Dropdown>
-                                        ) : (
-                                            <Link
-                                                href={menu.link}
-                                                className={`text-base font-medium cursor-pointer ${poppins.className}`}
-                                            >
-                                                {menu.title}
-                                            </Link>
-                                        )}
-                                    </li>
-                                );
-                            })}
-                        </ul>
-
-
-                        {/* Right-side Actions */}
-                        <div className={`flex items-center gap-2 font-medium text-sm ${poppins.className}`}>
-                            {isAuthenticated && (user as any)?.isVerified ? (
-                                <>
-
-
-                                    <Dropdown menu={{ items: profileItems }} trigger={["hover"]}>
-                                        <div className="flex space-x-3 items-center border border-[#DDDDDD] cursor-pointer p-[.5rem] rounded-full">
-                                            <button className="p-2 border rounded-full border-primary ">
-                                                <HiOutlineUser className="text-primary" />
-                                            </button>
-                                            <span>{user?.role}</span>
-                                        </div>
-                                    </Dropdown>
-                                </>
-                            ) : (
-                                <>
-                                    <button
-                                        onClick={() => setShowLoginModal(true)}
-                                        className="flex cursor-pointer items-center gap-1 border border-primary px-4 py-1 rounded"
-                                    >
-                                        <span className="p-1 rounded-full bg-primary text-[#fff]">
-                                            <HiOutlineUser />
-                                        </span>
-                                        <span>Login</span>
-                                    </button>
-                                    <button
-                                        onClick={() => setShowModal(true)}
-                                        className="px-6 py-2 cursor-pointer bg-primary rounded text-white hidden md:block"
-                                    >
-                                        Sign Up
-                                    </button>
-                                </>
-                            )}
-                        </div>
-                    </div>
+                  >
+                    {menu.title}
+                  </div>
+                  <div className="pl-4 mt-1 flex flex-col gap-2">
+                    {menu.dropdownItems.map((item) => (
+                      <Link
+                        key={item.key}
+                        href={item.href}
+                        className="text-gray-600"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-            </nav>
+              );
+            } else {
+              return (
+                <Link
+                  key={menu.id}
+                  href={menu.link}
+                  className={`text-base font-medium ${
+                    isActive ? "text-primary" : "text-gray-800"
+                  }`}
+                >
+                  {menu.title}
+                </Link>
+              );
+            }
+          })}
 
+          <div className="border-t pt-4 mt-4">
+            {isAuthenticated && (user as any)?.isVerified ? (
+              <Button
+                icon={<HiOutlineUser />}
+                onClick={() => logout()}
+                danger
+                block
+              >
+                Logout ({user?.role})
+              </Button>
+            ) : (
+              <div className="flex flex-col gap-2">
+                <Button onClick={() => setShowLoginModal(true)} block>
+                  Login
+                </Button>
+                <Button type="primary" onClick={() => setShowModal(true)} block>
+                  Sign Up
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      </Drawer>
 
-            <SignupModal open={showModal} onClose={() => setShowModal(false)} />
-            <LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
-        </>
-    );
+      <SignupModal open={showModal} onClose={() => setShowModal(false)} />
+      <LoginModal
+        open={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+      />
+    </>
+  );
 };
 
 export default NavBar;

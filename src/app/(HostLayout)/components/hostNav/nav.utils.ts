@@ -1,38 +1,28 @@
 // nav.utils.ts
-export const TabmenuList = [
-    {
-      id: 1,
-      title: "Today",
-      link: "/today",
-      dropdownItems: [
-       
-      ],
-    },
-    {
-      id: 2,
-      title: "Calender",
-      link: "/calender",
-      dropdownItems: [
-      
-      ],
-    },
-    {
-        id: 3,
-        title: "Earnings",
-        link: "/earnings",
-        dropdownItems: [
-        
-        ],
-      },
-    {
-      id: 4,
-      title: "Menu",
-      link: "#",
-      dropdownItems: [
-        { key: "faq", label: "FAQs", href: "/help/faq" },
-        { key: "contact", label: "Contact Us", href: "/help/contact" },
-        { key: "support", label: "Support", href: "/help/support" },
-      ],
-    },
-  ];
-  
+export const TabMenuList = [
+  {
+    id: 1,
+    title: "Today",
+    link: "/host-dashboard/",
+  },
+  {
+    id: 2,
+    title: "Calender",
+    link: "/host-dashboard/calender",
+  },
+  {
+    id: 3,
+    title: "Earnings",
+    link: "/host-dashboard/earnings",
+  },
+  {
+    id: 4,
+    title: "Menu",
+    link: "#",
+    dropdownItems: [
+      { key: "faq", label: "FAQs", href: "/host-dashboard/help/faq" },
+      { key: "contact", label: "Contact Us", href: "/host-dashboard/help/contact" },
+      { key: "support", label: "Support", href: "/host-dashboard/help/support" },
+    ],
+  },
+];

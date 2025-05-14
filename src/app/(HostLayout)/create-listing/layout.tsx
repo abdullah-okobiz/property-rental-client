@@ -1,17 +1,16 @@
-import NavBar from "./components/hostNav/NavBar";
+import NavBar from "../components/hostNav/NavBar";
 
 
  
 
-export default function HostLayout({
+export default function CreateListLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div className="">
+    <div>
       <NavBar/>
-     
       {children}
      
     </div>

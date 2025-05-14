@@ -1,11 +1,11 @@
+import Today from "../components/today/Today";
 
 
-
-const HostDashBoard =()=>{
-    return (
-        <div>
-            dashboard host layout 
-        </div>
-    )
-}
-export default HostDashBoard
+const HostDashBoard = () => {
+  return (
+    <div className="Container py-6">
+      <Today />
+    </div>
+  );
+};
+export default HostDashBoard;
