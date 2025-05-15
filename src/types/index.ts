@@ -107,3 +107,4 @@ export interface IRent {
   status: string;
   __v: number;
 }
+
