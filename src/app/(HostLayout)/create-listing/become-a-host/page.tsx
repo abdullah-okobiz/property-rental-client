@@ -1,9 +1,10 @@
- 
+import React from 'react'
 
-const BecomeAHost = () => {
+function MainListingInitialization() {
   return (
-    <div>BecomeAHost</div>
+    <div>MainListingInitialization</div>
+    
   )
 }
 
-export default BecomeAHost
+export default MainListingInitialization
