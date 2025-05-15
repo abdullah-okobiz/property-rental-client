@@ -31,8 +31,6 @@ const ProfilePage = async () => {
 
   const decoded = jwtDecode<DecodedToken>(token);
 
-  // console.log("This are decoded>>>" , decoded);
-
   const user = {
     name: decoded.name,
     email: decoded.email,
@@ -119,7 +117,7 @@ const ProfilePage = async () => {
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Work</p>
                     <p className="text-gray-800">
-                      {userProfile?.data?.worksAt}
+                      {user?.work}
                     </p>
                   </div>
                 </div>
@@ -128,20 +126,20 @@ const ProfilePage = async () => {
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Location</p>
                     <p className="text-gray-800">
-                      {userLocation?.data?.location}
+                      {user?.location}
                     </p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-500 mb-1">Language</p>
                     <p className="text-gray-800">
-                      {userLanguage?.data?.languages?.join(", ")}
+                      {user.language}
                     </p>
                   </div>
                 </div>
               </div>
 
               <div className="text-gray-800">
-                {userBio?.data?.intro ? userBio?.data?.intro : "Nothing to say"}
+                {user?.about ? user?.about : "Nothing to say"}
               </div>
             </div>
           </div>
