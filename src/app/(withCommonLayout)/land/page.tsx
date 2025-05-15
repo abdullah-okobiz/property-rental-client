@@ -1,18 +1,34 @@
-import React from "react";
-import { AiOutlineClockCircle } from "react-icons/ai";
+"use server";
+import RentCard from "@/components/card/RentCard/RentCard";
+import LandCategory from "@/components/land/LandCategory/LandCategory";
+import { getAllCategory } from "@/services/category";
 
-const Land = () => {
+import { getAllFeature } from "@/services/feature";
+import { getAllLands } from "@/services/land";
+import { IListingFor, IRent } from "@/types";
+
+const Land = async () => {
+  const { data: features } = await getAllFeature();
+
+  const featuresRent = features.find(
+    (feature: IListingFor) => feature.featureName === "Land"
+  );
+
+  const featuresRentID = featuresRent?._id;
+
+  const { data: rentCategories } = await getAllCategory(featuresRentID);
+  const { data: lands } = await getAllLands();
+  console.log("find features", featuresRentID);
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 bg-gray-50">
-      <div className="bg-white shadow-md rounded-2xl p-8 text-center max-w-md w-full border border-gray-100">
-        <AiOutlineClockCircle
-          size={64}
-          className="text-yellow-500 mb-4 mx-auto"
-        />
-        <h2 className="text-3xl font-bold mb-2 text-gray-800">Coming Soon</h2>
-        <p className="text-gray-500">
-          We re working hard to launch this page. Please check back later!
-        </p>
+    <div className="Container mt-16">
+      <LandCategory rentCategories={rentCategories} />
+
+      <div>
+        <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
+          {lands?.slice(0, 8).map((rent: IRent) => (
+            <RentCard key={rent._id} rent={rent}></RentCard>
+          ))}
+        </div>
       </div>
     </div>
   );
