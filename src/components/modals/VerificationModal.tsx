@@ -11,7 +11,7 @@ const VerificationModal = () => {
   return (
     <div>
       {/* Trigger Button */}
-      <div className="mt-6 text-center">
+      <div className="text-center">
         <div
           onClick={handleOpenModal}
           className="mt-4 text-blue-600 hover:text-blue-800 text-sm underline cursor-pointer"

@@ -1,6 +1,10 @@
 "use client";
 
+import { getUser } from "@/services/auth/auth.service";
+import { identityVerification } from "@/services/verification";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const VerificationForm = () => {
   const [step, setStep] = useState(1);
@@ -25,19 +29,52 @@ const VerificationForm = () => {
     setPassportImage(e.target.files[0]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (step === 1) {
       setStep(2);
+      return;
+    }
+
+    const formData = new FormData();
+
+    let documentTypeEnumValue = "";
+    if (selectedOption === "NID") {
+      documentTypeEnumValue = "nid";
+    } else if (selectedOption === "Driving License") {
+      documentTypeEnumValue = "drivingLicense";
+    } else if (selectedOption === "Passport") {
+      documentTypeEnumValue = "passport";
+    }
+
+    formData.append("documentType", documentTypeEnumValue);
+
+    if (documentTypeEnumValue === "passport") {
+      if (!passportImage) {
+        toast.error("Please upload your passport image.");
+        return;
+      }
+      formData.append("documents", passportImage);
     } else {
-      // Handle form submission with all data
-      console.log({
-        documentType: selectedOption,
-        frontImage,
-        backImage,
-        passportImage,
-      });
-      // You would typically send this data to your API here
+      if (!frontImage || !backImage) {
+        toast.error("Please upload both front and back images.");
+        return;
+      }
+      formData.append("documents", frontImage);
+      formData.append("documents", backImage);
+    }
+
+    try {
+      const token = await getUser();
+      if (!token) {
+        toast.error("Authentication failed. Please log in again.");
+        return;
+      }
+      await identityVerification(formData, token);
+      toast.success("Verification submitted successfully!");
+    } catch (err) {
+      toast.error("Something went wrong while submitting verification.");
     }
   };
 
@@ -48,25 +85,6 @@ const VerificationForm = () => {
   return (
     <div className="flex items-center justify-center bg-gray-50 py-20">
       <div>
-        {/* Stepper indicator */}
-        {/* <div className="flex justify-between mb-6">
-          <div className={`flex items-center ${step >= 1 ? 'text-blue-600' : 'text-gray-400'}`}>
-            <div className={`rounded-full h-8 w-8 flex items-center justify-center ${step >= 1 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>
-              1
-            </div>
-            <span className="ml-2">Document Type</span>
-          </div>
-          <div className="flex-1 flex items-center justify-center">
-            <div className={`h-1 w-full mx-2 ${step >= 2 ? 'bg-blue-600' : 'bg-gray-200'}`}></div>
-          </div>
-          <div className={`flex items-center ${step >= 2 ? 'text-blue-600' : 'text-gray-400'}`}>
-            <div className={`rounded-full h-8 w-8 flex items-center justify-center ${step >= 2 ? 'bg-blue-600 text-white' : 'bg-gray-200'}`}>
-              2
-            </div>
-            <span className="ml-2">Upload</span>
-          </div>
-        </div> */}
-
         <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
           Identity Verification
         </h2>

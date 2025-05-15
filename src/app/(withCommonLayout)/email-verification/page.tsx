@@ -3,7 +3,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { Form, Input, Button, message } from "antd";
 import { useMutation } from "@tanstack/react-query";
-import AuthServices from "@/services/auth/auth.service";
+import {AuthServices} from "@/services/auth/auth.service";
 import { useEffect, useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import { jwtDecode } from "jwt-decode";

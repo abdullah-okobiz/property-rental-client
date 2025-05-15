@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import logo from "@/assets/logo/stayverz.png";
 import { poppins } from "@/app/font";
 import useAuth from "@/hooks/useAuth";
-import AuthServices from "@/services/auth/auth.service";
+import {AuthServices} from "@/services/auth/auth.service";
 
 import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";

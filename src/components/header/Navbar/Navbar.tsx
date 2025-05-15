@@ -12,7 +12,7 @@ import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
 import useAuth from "@/hooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
-import AuthServices from "@/services/auth/auth.service";
+import {AuthServices} from "@/services/auth/auth.service";
 
 const { processLogout } = AuthServices;
 

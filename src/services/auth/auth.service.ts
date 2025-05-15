@@ -3,7 +3,7 @@ import AuthApis from "@/app/apis/auth.apis";
 
 const { loginApi, refreshTokenApi, logoutApi, signupApi,verifyEmailOtpApi,otpResendApi } = AuthApis;
 
-const AuthServices = {
+export const AuthServices = {
   processLogin: async (payload: { email: string, password: string }) => {
     try {
       const response = await loginApi(payload);
@@ -84,4 +84,9 @@ const AuthServices = {
   }
 };
 
-export default AuthServices;
+export const getUser = async () => {
+  const token = localStorage.getItem("accessToken");
+  return token;
+};
+
+// export default AuthServices;
