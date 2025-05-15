@@ -15,6 +15,7 @@ const useAccess = () => {
   return {
     isAuthenticated: !!user,
     user,
+    token
   };
 };
 
