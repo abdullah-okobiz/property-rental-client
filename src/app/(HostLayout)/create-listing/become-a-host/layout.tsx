@@ -10,14 +10,12 @@ export default function BecomeAHostLayout({ children }: { children: React.ReactN
       <div className="flex flex-col min-h-screen">
         <NavBar />
 
-        {/* Main content area with scroll */}
         <main className="flex-grow max-w-2xl w-full mx-auto p-4">
           {children}
         </main>
 
-        {/* Sticky footer navigation */}
-        <div className="sticky bottom-0 bg-white border-t p-4 shadow-md z-50">
-          <div className="max-w-2xl mx-auto">
+        <div className="sticky bottom-0 bg-white border border-t-gray-300 p-4 shadow-md z-50">
+          <div className="max-w-6xl mx-auto">
             <StepNavigation />
           </div>
         </div>

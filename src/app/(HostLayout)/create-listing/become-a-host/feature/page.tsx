@@ -49,8 +49,8 @@ export default function FeaturePage() {
 
   return (
     <div className="min-h-[calc(80vh-100px)] flex items-center justify-center">
-      <div className="w-full max-w-4xl space-y-6">
-        <h2 className="text-xl font-semibold mb-6 text-center">
+      <div className="w-full max-w-6xl space-y-6">
+        <h2 className="text-xl font-semibold tracking-wide mb-6 text-center">
           Which of these best describes your place?
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">

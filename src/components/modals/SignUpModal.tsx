@@ -28,7 +28,7 @@ const hostandGuest = [
 const { processSignup } = AuthServices;
 
 const SignupModal = ({ open, onClose }: SignupModalProps) => {
-  const router = useRouter(); 
+  const router = useRouter();
   const [messageApi, contextHolder] = message.useMessage();
   const [role, setRole] = useState<"host" | "guest">("guest");
   const [form] = Form.useForm();
@@ -36,7 +36,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
 
   const { mutate, isPending } = useMutation({
     mutationFn: processSignup,
-    onSuccess: (data:any) => {
+    onSuccess: (data: any) => {
       messageApi.success(data?.message || "Signup successful!");
       form.resetFields();
       onClose();
@@ -59,94 +59,101 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
 
   return (
     <>
-    {contextHolder}  
-    <Modal
-      title={
-        <div className="pb-4 border-b border-gray-200 text-start text-lg font-semibold">
-          Welcome to HomeZay Stay
-        </div>
-      }
-      open={open}
-      onCancel={onClose}
-      footer={null}
-      centered
-    >
-      <div className="space-y-4 py-2">
-        <div className="w-full flex justify-center items-center gap-4 mb-6">
-          {hostandGuest.map((type, index) => {
-            const isSelected = role === type.name.toLowerCase();
-            return (
-              <div
-                key={index}
-                className={`
-                  w-full cursor-pointer flex justify-center items-center py-4 px-2 
-                  rounded border-gray-300 ring-1 
-                  ${isSelected ? "border border-primary ring-1" : ""}
-                `}
-                onClick={() =>
-                  setRole(type.name.toLowerCase() as "host" | "guest")
-                }
-              >
-                <div className="flex flex-col gap-2 justify-center items-center">
-                  <img src={type.imgSrc} alt="image" className="w-[70px]" />
-                  <h4 className="text-[14px] tracking-tight font-bold text-gray-600">
-                    Sign Up as {type.name}
-                  </h4>
+      {contextHolder}
+      <Modal
+        title={
+          <div className="pb-4 border-b border-gray-200 text-start text-lg font-semibold">
+            Welcome to HomeZay Stay
+          </div>
+        }
+        open={open}
+        onCancel={onClose}
+        footer={null}
+        centered
+      >
+        <div className="space-y-4 py-2">
+          <div className="w-full flex justify-center items-center gap-4 mb-6">
+            {hostandGuest.map((type, index) => {
+              const isSelected = role === type.name.toLowerCase();
+              return (
+                <div
+                  key={index}
+                  className={`
+                      relative w-full cursor-pointer flex justify-center items-center py-4 px-2 
+                      rounded ring-0 border border-gray-200 
+                      ${isSelected ? " border-primary ring-0" : ""}
+                    `}
+                  onClick={() =>
+                    setRole(type.name.toLowerCase() as "host" | "guest")
+                  }
+                >
+               
+                  {isSelected && (
+                    <div className="absolute top-2 right-2 w-5 h-5 border rounded border-gray-300 flex items-center justify-center bg-white">
+                      <span className="text-red-500 text-xs font-bold leading-none">✔</span>
+                    </div>
+                  )}
+
+                  <div className="flex flex-col gap-2 justify-center items-center">
+                    <img src={type.imgSrc} alt="image" className="w-[70px]" />
+                    <h4 className="text-[14px] tracking-tight font-bold text-gray-600">
+                      Sign Up as {type.name}
+                    </h4>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
 
-        <Form
-          layout="vertical"
-          form={form}
-          onFinish={handleSubmit}
-          className="space-y-4"
-        >
-          <Form.Item
-            name="name"
-            rules={[{ required: true, message: "Please enter your name" }]}
+          <Form
+            layout="vertical"
+            form={form}
+            onFinish={handleSubmit}
+            className="space-y-4"
           >
-            <Input placeholder="Full Name" size="large" />
-          </Form.Item>
-
-          <Form.Item
-            name="email"
-            rules={[{ required: true, message: "Please enter your email" }]}
-          >
-            <Input placeholder="Email" size="large" />
-          </Form.Item>
-
-          <Form.Item
-            name="password"
-            rules={[{ required: true, message: "Please enter a password" }]}
-          >
-            <Input.Password placeholder="Password" size="large" />
-          </Form.Item>
-
-          <p className="text-xs text-gray-500 leading-snug pt-1">
-            By selecting <span className="font-medium">Continue</span>, I agree to Homezay stay's{" "}
-            <a href="#" className="text-blue-500 underline">Terms of Service</a> and acknowledge the{" "}
-            <a href="#" className="text-blue-500 underline">Privacy Policy</a>.
-          </p>
-
-          <Form.Item>
-            <Button
-              block
-              size="large"
-              type="primary"
-              htmlType="submit"
-              className="!bg-primary mt-4"
-              loading={isPending}
-              disabled={isPending}
+            <Form.Item
+              name="name"
+              rules={[{ required: true, message: "Please enter your name" }]}
             >
-              Continue as {role}
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
-    </Modal>
+              <Input placeholder="Full Name" size="large" />
+            </Form.Item>
+
+            <Form.Item
+              name="email"
+              rules={[{ required: true, message: "Please enter your email" }]}
+            >
+              <Input placeholder="Email" size="large" />
+            </Form.Item>
+
+            <Form.Item
+              name="password"
+              rules={[{ required: true, message: "Please enter a password" }]}
+            >
+              <Input.Password placeholder="Password" size="large" />
+            </Form.Item>
+
+            <p className="text-xs text-gray-500 leading-snug pt-1">
+              By selecting <span className="font-medium">Continue</span>, I agree to Homezay stay's{" "}
+              <a href="#" className="text-blue-500 underline">Terms of Service</a> and acknowledge the{" "}
+              <a href="#" className="text-blue-500 underline">Privacy Policy</a>.
+            </p>
+
+            <Form.Item>
+              <Button
+                block
+                size="large"
+                type="primary"
+                htmlType="submit"
+                className="!bg-primary mt-4"
+                loading={isPending}
+                disabled={isPending}
+              >
+                Continue as {role}
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </Modal>
     </>
   );
 };

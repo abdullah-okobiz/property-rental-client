@@ -1,4 +1,5 @@
 'use client';
+
 import { usePathname, useRouter } from 'next/navigation';
 import { stepRoutes } from '../listing-utils/steps';
 
@@ -20,24 +21,29 @@ export default function StepNavigation({ onNextSubmit }: StepNavigationProps) {
 
   const handleNext = async () => {
     if (onNextSubmit) {
-      await onNextSubmit(); 
+      await onNextSubmit();
     }
     if (!isLast) router.push(stepRoutes[currentIndex + 1]);
   };
 
   return (
-    <div className="flex justify-between mt-6">
+    <div className="flex justify-between items-center mt-6">
       <button
         onClick={handleBack}
         disabled={isFirst}
-        className="px-4 py-2  cursor-pointer bg-gray-200 rounded disabled:opacity-50"
+        className="px-4 py-2 bg-gray-200 text-gray-800 cursor-pointer rounded disabled:opacity-50"
       >
         Back
       </button>
+
+      <span className="text-md font-medium text-gray-900">
+        Step {currentIndex + 1} / {stepRoutes.length}
+      </span>
+
       <button
         onClick={handleNext}
         disabled={isLast}
-        className="px-4 py-2  cursor-pointer bg-blue-600 text-white rounded disabled:opacity-50"
+        className="px-4 md:px-6 py-2  cursor-pointer bg-primary text-white rounded disabled:opacity-50"
       >
         Next
       </button>

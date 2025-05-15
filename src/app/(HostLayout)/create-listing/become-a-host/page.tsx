@@ -1,8 +1,11 @@
 import React from 'react'
+import StepLayout from '../components/StepLayout'
 
 function MainListingInitialization() {
   return (
-    <div>MainListingInitialization</div>
+    <div>
+      <StepLayout/>
+    </div>
     
   )
 }
