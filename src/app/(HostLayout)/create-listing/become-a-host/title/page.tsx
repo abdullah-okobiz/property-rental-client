@@ -1,23 +1,25 @@
- 
 'use client';
 
-import { useState } from 'react';
-import StepNavigation from '../../components/stepNavigation/StepNavigation';
+import { useEffect, useState } from 'react';
 import { useListingContext } from '@/contexts/ListingContext';
 
+import { useListingStepContext } from '@/contexts/ListingStepContext';
+import CategoryServices from '@/services/category/category.services';
 
 export default function TitlePage() {
   const [title, setTitle] = useState('');
   const { listingId, featureType } = useListingContext();
+  const { setOnNextSubmit } = useListingStepContext();
 
   const handleSubmit = async () => {
     if (!listingId || !featureType) return;
-    await fetch(`/host/${featureType}/${listingId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title }),
-    });
+   const res= await CategoryServices.updateListingTitle(featureType, listingId, title);
+   console.log("result title ",res)
   };
+
+  useEffect(() => {
+    setOnNextSubmit(handleSubmit);
+  }, [title, listingId, featureType]);
 
   return (
     <div>
@@ -28,8 +30,6 @@ export default function TitlePage() {
         onChange={e => setTitle(e.target.value)}
         className="border p-2 rounded w-full"
       />
-
-      <StepNavigation onNextSubmit={handleSubmit} />
     </div>
   );
 }
