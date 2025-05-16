@@ -3,36 +3,58 @@
 import { useListingContext } from "@/contexts/ListingContext";
 import { useEffect, useState } from "react";
 import { Building2, Home, Landmark } from "lucide-react";
+import FeatureServices from "@/services/feature/feature.services";
+
+
+type Feature = {
+  _id: string;
+  featureName: string;
+};
 
 export default function FeaturePage() {
-  const [features, setFeatures] = useState([]);
+  const [features, setFeatures] = useState<Feature[]>([]);
   const { setFeatureId, setFeatureType, setListingId } = useListingContext();
   const [selected, setSelected] = useState<string | null>(null);
 
+
   useEffect(() => {
-    fetch("http://localhost:5000/api/v1/admin/feature")
-      .then((res) => res.json())
-      .then((data) => setFeatures(data.data));
+    const fetchData = async () => {
+      try {
+        const data:any = await FeatureServices.fetchFeatures();
+        setFeatures(data.data);
+      } catch (err) {
+        console.error("Error fetching features", err);
+      }
+    };
+    fetchData();
   }, []);
 
+
   useEffect(() => {
-    if (!selected) return;
+    const createListing = async () => {
+      if (!selected) return;
 
-    const selectedFeature: any = features.find((f: any) => f._id === selected);
-    if (!selectedFeature) return;
+      const selectedFeature = features.find((feature) => feature._id === selected);
+      if (!selectedFeature) return;
 
-    const name = selectedFeature.featureName.toLowerCase();
-    setFeatureId(selected);
-    setFeatureType(name);
+      const name:any= selectedFeature.featureName.toLowerCase();
 
-    fetch(`http://localhost:5000/api/v1/host/${name}/new`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ listingFor: [selected] }),
-    })
-      .then((res) => res.json())
-      .then((data) => setListingId(data.data._id));
-  }, [selected]);
+      setFeatureId(selected);
+      setFeatureType(name);
+
+      try {
+        const listingRes:any = await FeatureServices.createListing({
+          featureType: name,
+          featureId: selected,
+        });
+        setListingId(listingRes.data._id);
+      } catch (err) {
+        console.error("Error creating listing", err);
+      }
+    };
+
+    createListing();
+  }, [selected, features, setFeatureId, setFeatureType, setListingId]);
 
   const getIcon = (name: string) => {
     switch (name.toLowerCase()) {
@@ -54,18 +76,17 @@ export default function FeaturePage() {
           Which of these best describes your place?
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {features.map((f: any) => (
+          {features.map((feature) => (
             <div
-              key={f._id}
-              onClick={() => setSelected(f._id)}
-              className={`relative cursor-pointer border rounded-2xl p-4 flex flex-col items-center gap-3 transition-all duration-200 ${
-                selected === f._id
+              key={feature._id}
+              onClick={() => setSelected(feature._id)}
+              className={`relative cursor-pointer border rounded-2xl p-4 flex flex-col items-center gap-3 transition-all duration-200 ${selected === feature._id
                   ? "border-primary ring-0 ring-primary"
                   : "border-gray-200"
-              }`}
+                }`}
             >
               <div className="absolute top-2 right-2 w-5 h-5 border-1 rounded border-gray-300 flex items-center justify-center bg-white">
-                {selected === f._id && (
+                {selected === feature._id && (
                   <span className="text-primary text-xs font-bold leading-none">
                     ✔
                   </span>
@@ -73,8 +94,8 @@ export default function FeaturePage() {
               </div>
 
               <div className="flex flex-col items-center space-y-2">
-                {getIcon(f.featureName)}
-                <span className="font-medium">{f.featureName}</span>
+                {getIcon(feature.featureName)}
+                <span className="font-medium">{feature.featureName}</span>
               </div>
             </div>
           ))}

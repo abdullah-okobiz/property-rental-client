@@ -1,39 +1,61 @@
-'use client';
+"use client";
 
-import { useListingContext } from '@/contexts/ListingContext';
-import { useEffect, useState } from 'react';
+import { useListingContext } from "@/contexts/ListingContext";
+import { useEffect, useState } from "react";
+import CategoryServices from "@/services/category/category.services";
 
+
+type Category = {
+  _id: string;
+  categoryName: string;
+};
 
 export default function CategoryPage() {
   const { featureId, listingId, featureType } = useListingContext();
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+
 
   useEffect(() => {
-    if (!featureId) return;
-    fetch(`http://localhost:5000/api/v1/admin/category?feature_id=${featureId}`)
-      .then(res => res.json())
-      .then(data => setCategories(data.data));
+    const fetchCategories = async () => {
+      if (!featureId) return;
+
+      try {
+        const res: any = await CategoryServices.fetchCategories(featureId);
+        setCategories(res.data);
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      }
+    };
+
+    fetchCategories();
   }, [featureId]);
 
-  const handleCategorySelect = (catId: string) => {
-    fetch(`http://localhost:5000/api/v1/host/${featureType}/${listingId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ category: catId }),
-    });
+
+  const handleCategorySelect = async (catId: string) => {
+    if (!featureType || !listingId) return;
+
+    try {
+      await CategoryServices.setListingCategory({
+        featureType,
+        listingId,
+        categoryId: catId,
+      });
+    } catch (err) {
+      console.error("Error setting listing category:", err);
+    }
   };
 
   return (
     <div>
       <h2 className="text-xl mb-4 font-semibold">Select a Category</h2>
       <ul className="space-y-2">
-        {categories.map((c: any) => (
-          <li key={c._id}>
+        {categories.map((category) => (
+          <li key={category._id}>
             <button
-              className="px-4 py-2 bg-gray-100 rounded w-full text-left"
-              onClick={() => handleCategorySelect(c._id)}
+              className="px-4 py-2 bg-gray-100 rounded w-full text-left hover:bg-gray-200 transition"
+              onClick={() => handleCategorySelect(category._id)}
             >
-              {c.categoryName}
+              {category.categoryName}
             </button>
           </li>
         ))}
