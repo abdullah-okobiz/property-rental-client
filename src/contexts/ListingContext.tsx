@@ -25,6 +25,11 @@ export const ListingProvider = ({ children }: { children: ReactNode }) => {
   const [listingId, setListingId] = useState<string | null>(null);
   const [featureType, setFeatureType] = useState<'rent' | 'flat' | 'land' | null>(null);
   const [featureId, setFeatureId] = useState<string | null>(null);
+  console.log("listing id = ", listingId,
+    "feature type",
+    featureType,
+    "feature id = ",
+    featureId,)
 
   return (
     <ListingContext.Provider

@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { stepRoutes } from '../listing-utils/steps';
 
 type StepNavigationProps = {
-  onNextSubmit?: () => Promise<void>; // page-specific submit handler
+  onNextSubmit?: () => Promise<void>; 
 };
 
 export default function StepNavigation({ onNextSubmit }: StepNavigationProps) {

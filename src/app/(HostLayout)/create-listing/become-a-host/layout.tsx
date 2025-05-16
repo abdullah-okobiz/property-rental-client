@@ -1,15 +1,15 @@
-// app/create-listing/become-a-host/layout.tsx
+
 
 import { ListingProvider } from "@/contexts/ListingContext";
 import StepNavigation from "../components/stepNavigation/StepNavigation";
-import NavBar from "../../components/hostNav/NavBar";
+
+import TopNavWithAction from "../components/TopNavWithAction";
 
 export default function BecomeAHostLayout({ children }: { children: React.ReactNode }) {
   return (
     <ListingProvider>
       <div className="flex flex-col min-h-screen">
-        <NavBar />
-
+          <TopNavWithAction/>
         <main className="flex-grow max-w-2xl w-full mx-auto p-4">
           {children}
         </main>
