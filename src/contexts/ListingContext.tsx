@@ -28,8 +28,7 @@ export const ListingProvider = ({ children }: { children: ReactNode }) => {
   console.log("listing id = ", listingId,
     "feature type",
     featureType,
-    "feature id = ",
-    featureId,)
+    "feature id = ",)
 
   return (
     <ListingContext.Provider
