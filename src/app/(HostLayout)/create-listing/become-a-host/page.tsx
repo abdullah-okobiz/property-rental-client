@@ -1,9 +1,13 @@
- 
+import React from 'react'
+import StepLayout from '../components/StepLayout'
 
-const BecomeAHost = () => {
+function MainListingInitialization() {
   return (
-    <div>BecomeAHost</div>
+    <div>
+      <StepLayout/>
+    </div>
+    
   )
 }
 
-export default BecomeAHost
+export default MainListingInitialization
