@@ -5,6 +5,7 @@ import StepNavigation from "../components/stepNavigation/StepNavigation";
 
 import TopNavWithAction from "../components/TopNavWithAction";
 import { ListingStepProvider } from "@/contexts/ListingStepContext";
+import 'leaflet/dist/leaflet.css';
 
 export default function BecomeAHostLayout({ children }: { children: React.ReactNode }) {
   return (

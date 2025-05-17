@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Input, Typography } from 'antd';
 import { useListingContext } from '@/contexts/ListingContext';
-
 import { useListingStepContext } from '@/contexts/ListingStepContext';
 import CategoryServices from '@/services/category/category.services';
+
+const { Title, Text } = Typography;
 
 export default function TitlePage() {
   const [title, setTitle] = useState('');
@@ -13,8 +15,8 @@ export default function TitlePage() {
 
   const handleSubmit = async () => {
     if (!listingId || !featureType) return;
-   const res= await CategoryServices.updateListingTitle(featureType, listingId, title);
-   console.log("result title ",res)
+    const res = await CategoryServices.updateListingTitle(featureType, listingId, title);
+    console.log("result title ", res);
   };
 
   useEffect(() => {
@@ -22,14 +24,17 @@ export default function TitlePage() {
   }, [title, listingId, featureType]);
 
   return (
-    <div>
-      <h1 className="text-xl font-semibold mb-4">Enter Listing Title</h1>
-      <input
-        type="text"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-        className="border p-2 rounded w-full"
-      />
+    <div className="min-h-[calc(100vh-150px)] flex items-center justify-center">
+      <div className="w-full max-w-2xl space-y-4 px-4">
+        <Title level={3}>Enter Listing Title</Title>
+        <Text type="secondary">Give your listing a short and catchy title.</Text>
+        <Input
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          placeholder="e.g. Cozy 2-bedroom apartment near Gulshan"
+          size="large"
+        />
+      </div>
     </div>
   );
 }
