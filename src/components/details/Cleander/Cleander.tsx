@@ -13,7 +13,7 @@ const Cleander = ({ dateRange, setDateRange }) => {
     (1000 * 3600 * 24);
 
   return (
-    <div className="overflow-x-hidden w-2/3">
+    <div className="overflow-x-hidden">
       <h2 className="text-xl font-medium">
         <span>{numberOfNights}</span> nights in{" "}
         <span>Cozy Non-ac room at Mugda</span>
