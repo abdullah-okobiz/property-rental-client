@@ -201,7 +201,8 @@ const ProfileEditForm = () => {
     if (field === "language") {
       setTempLanguages(profileData.languages);
     } else {
-      setTempValue(profileData[field as keyof ProfileData] || "");
+      const value = profileData[field as keyof ProfileData];
+      setTempValue(Array.isArray(value) ? value.join(", ") : value || "");
     }
   };
 
@@ -439,7 +440,7 @@ const ProfileEditForm = () => {
                     ))
                   ) : (
                     <div className="p-4 text-center text-gray-500">
-                      No languages found matching "{languageSearch}"
+                      No languages found matching {languageSearch}
                     </div>
                   )}
                 </div>
