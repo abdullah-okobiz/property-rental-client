@@ -18,6 +18,8 @@ const images = [
   "https://i.ibb.co.com/5WHJn96T/b71df2d60c704214ba969731c242eba6-a292f390.jpg",
   "https://i.ibb.co.com/S4PgQXSm/01bfd90306904f31a9f47a20bdfa1c56-IMG20250503172040.jpg",
   "https://i.ibb.co.com/BKjk30jg/rent3.jpg",
+  // "https://i.ibb.co.com/BKjk30jg/rent3.jpg",
+  // "https://i.ibb.co.com/BKjk30jg/rent3.jpg",
 ];
 
 const page = () => {
