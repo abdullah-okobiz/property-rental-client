@@ -9,9 +9,15 @@ const CleanderAndResever = () => {
     endDate: addDays(new Date(), 0),
   });
   return (
-    <div className="mt-20">
-      <Cleander dateRange={dateRange} setDateRange={setDateRange} />
-      <Reserve dateRange={dateRange} setDateRange={setDateRange} />
+    <div className="mt-20 flex">
+      <div className="w-2/3">
+        <Cleander dateRange={dateRange} setDateRange={setDateRange} />
+      </div>
+      <div className="w-1/3">
+        <div className="sticky top-0">
+          <Reserve dateRange={dateRange} setDateRange={setDateRange} />
+        </div>
+      </div>
     </div>
   );
 };
