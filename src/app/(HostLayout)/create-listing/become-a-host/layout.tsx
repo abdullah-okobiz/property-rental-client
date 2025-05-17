@@ -1,0 +1,25 @@
+
+
+import { ListingProvider } from "@/contexts/ListingContext";
+import StepNavigation from "../components/stepNavigation/StepNavigation";
+
+import TopNavWithAction from "../components/TopNavWithAction";
+
+export default function BecomeAHostLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <ListingProvider>
+      <div className="flex flex-col min-h-screen">
+          <TopNavWithAction/>
+        <main className="flex-grow max-w-2xl w-full mx-auto p-4">
+          {children}
+        </main>
+
+        <div className="sticky bottom-0 bg-white border border-t-gray-300 p-4 shadow-md z-50">
+          <div className="max-w-6xl mx-auto">
+            <StepNavigation />
+          </div>
+        </div>
+      </div>
+    </ListingProvider>
+  );
+}

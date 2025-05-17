@@ -76,14 +76,21 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
                 <div
                   key={index}
                   className={`
-                  w-full cursor-pointer flex justify-center items-center py-4 px-2 
-                  rounded border-gray-300 ring-1 
-                  ${isSelected ? "border border-primary ring-1" : ""}
-                `}
+                      relative w-full cursor-pointer flex justify-center items-center py-4 px-2 
+                      rounded ring-0 border border-gray-200 
+                      ${isSelected ? " border-primary ring-0" : ""}
+                    `}
                   onClick={() =>
                     setRole(type.name.toLowerCase() as "host" | "guest")
                   }
                 >
+               
+                  {isSelected && (
+                    <div className="absolute top-2 right-2 w-5 h-5 border rounded border-gray-300 flex items-center justify-center bg-white">
+                      <span className="text-red-500 text-xs font-bold leading-none">✔</span>
+                    </div>
+                  )}
+
                   <div className="flex flex-col gap-2 justify-center items-center">
                     <img src={type.imgSrc} alt="image" className="w-[70px]" />
                     <h4 className="text-[14px] tracking-tight font-bold text-gray-600">
@@ -123,16 +130,9 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
             </Form.Item>
 
             <p className="text-xs text-gray-500 leading-snug pt-1">
-              By selecting <span className="font-medium">Continue</span>, I
-              agree to Homezay stay's{" "}
-              <a href="#" className="text-blue-500 underline">
-                Terms of Service
-              </a>{" "}
-              and acknowledge the{" "}
-              <a href="#" className="text-blue-500 underline">
-                Privacy Policy
-              </a>
-              .
+              By selecting <span className="font-medium">Continue</span>, I agree to Homezay stay's{" "}
+              <a href="#" className="text-blue-500 underline">Terms of Service</a> and acknowledge the{" "}
+              <a href="#" className="text-blue-500 underline">Privacy Policy</a>.
             </p>
 
             <Form.Item>
