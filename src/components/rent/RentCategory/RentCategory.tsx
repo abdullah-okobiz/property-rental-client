@@ -1,17 +1,30 @@
 "use client";
-import { poppins } from "@/app/font";
+
+import { useRouter, useSearchParams } from "next/navigation";
 import { ICategory } from "@/types";
-import React, { useState } from "react";
+import { poppins } from "@/app/font";
 
 interface Props {
   rentCategories: ICategory[];
+  selectedCategoryId: string;
 }
 
-const RentCategory: React.FC<Props> = ({ rentCategories }) => {
-  const [selectedCategoryId, setSelectedCategoryId] = useState("all");
+const RentCategory: React.FC<Props> = ({
+  rentCategories,
+  selectedCategoryId,
+}) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleSelect = (categoryId: string) => {
-    setSelectedCategoryId(categoryId);
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (categoryId === "all") {
+      newParams.delete("category");
+    } else {
+      newParams.set("category", categoryId);
+    }
+
+    router.push(`/rent?${newParams.toString()}`);
   };
 
   const allCategories = [
@@ -28,8 +41,7 @@ const RentCategory: React.FC<Props> = ({ rentCategories }) => {
           <div key={category._id}>
             <p
               onClick={() => handleSelect(category._id)}
-              className={`
-                border 
+              className={`border 
                 ${
                   isSelected
                     ? "border-primary bg-primary text-white"
