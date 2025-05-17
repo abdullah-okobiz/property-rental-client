@@ -6,17 +6,17 @@ export const menuList = [
   },
   {
     id: "02",
-    title: "Rent",
+    title: "Rent Listing",
     link: "/rent",
   },
   {
     id: "03",
-    title: "Flat",
+    title: "Flat Listing",
     link: "/flat",
   },
   {
     id: "04",
-    title: "Land",
+    title: "Land Listing",
     link: "/land",
   },
   {

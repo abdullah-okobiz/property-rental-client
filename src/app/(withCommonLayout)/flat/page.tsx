@@ -7,7 +7,11 @@ import { getAllFeature } from "@/services/feature";
 import { getAllFlats } from "@/services/flats";
 import { IListingFor, IRent } from "@/types";
 
-const Flat = async () => {
+interface flatProps {
+  searchParams: { category?: string };
+}
+
+const Flat = async ({ searchParams }: flatProps) => {
   const { data: features } = await getAllFeature();
 
   const featuresRent = features.find(
@@ -17,11 +21,18 @@ const Flat = async () => {
   const featuresRentID = featuresRent?._id;
 
   const { data: rentCategories } = await getAllCategory(featuresRentID);
-  const { data: flats } = await getAllFlats();
-  console.log("find features", featuresRentID);
+
+  const categoryId = searchParams.category;
+
+  const { data: flats } = await getAllFlats({
+    category: categoryId !== "all" ? categoryId : undefined,
+  });
   return (
     <div className="Container mt-16">
-      <FlatCategory rentCategories={rentCategories} />
+      <FlatCategory
+        rentCategories={rentCategories}
+        selectedCategoryId={categoryId || "all"}
+      />
 
       <div>
         <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">

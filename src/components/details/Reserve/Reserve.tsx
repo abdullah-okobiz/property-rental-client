@@ -6,6 +6,7 @@ import GuestsModal from "@/components/modals/GuestsModal";
 import { IoIosArrowDown } from "react-icons/io";
 import { format } from "date-fns";
 import Link from "next/link";
+
 const Reserve = ({ dateRange, setDateRange }) => {
   // this is for cleander
   const [showPicker, setShowPicker] = useState(false);

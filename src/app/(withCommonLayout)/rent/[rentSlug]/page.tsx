@@ -11,6 +11,7 @@ import defualtUser from "@/assets/user/avatar.png";
 import Image from "next/image";
 import RentDetails from "@/components/details/RentDetails/RentDetails";
 import CleanderAndResever from "@/components/details/CleanderAndResever/CleanderAndResever";
+import HostInformation from "@/components/details/HostInformation/HostInformation";
 
 const images = [
   "https://i.ibb.co.com/7dfpZVVL/58579f3a2fed460cba15532daa5a0897-dhaka-hotel-bluebird-ltd-photo-19-1.jpg",
@@ -113,8 +114,12 @@ const page = () => {
         </div>
       </div>
 
-      <div>
+      <div className="">
         <CleanderAndResever />
+      </div>
+
+      <div className="py-6 border-b border-[#262626]/30 pb-6 lg:w-[60%]">
+        <HostInformation />
       </div>
     </div>
   );

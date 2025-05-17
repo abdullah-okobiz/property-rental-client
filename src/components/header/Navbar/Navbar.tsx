@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
@@ -12,7 +13,7 @@ import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
 import useAuth from "@/hooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
-import {AuthServices} from "@/services/auth/auth.service";
+import { AuthServices } from "@/services/auth/auth.service";
 
 const { processLogout } = AuthServices;
 
@@ -22,7 +23,7 @@ const Navbar = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   const { user, isAuthenticated } = useAuth();
-  console.log("user ", user)
+  console.log("user ", user);
 
   const { mutate: logout } = useMutation({
     mutationFn: processLogout,
@@ -73,7 +74,10 @@ const Navbar = () => {
     {
       key: "logout",
       label: (
-        <button className="cursor-pointer w-full text-left"  onClick={() => logout()}>
+        <button
+          className="cursor-pointer w-full text-left"
+          onClick={() => logout()}
+        >
           Logout
         </button>
       ),
@@ -82,7 +86,6 @@ const Navbar = () => {
 
   return (
     <>
-
       <div
         className={`w-full top-0 z-50 transition-all ease-in-out transform duration-300 ${
           isSticky ? "fixed bg-white shadow-md" : "relative"
@@ -117,7 +120,7 @@ const Navbar = () => {
             <div
               className={`flex items-center justify-center gap-2 font-medium text-sm ${poppins.className}`}
             >
-              {isAuthenticated && (user as any)?.isVerified? (
+              {isAuthenticated && (user as any)?.isVerified ? (
                 <>
                   <Dropdown
                     menu={{ items: switchProfileItems }}
@@ -168,7 +171,10 @@ const Navbar = () => {
 
       {/* Modals */}
       <SignupModal open={showModal} onClose={() => setShowModal(false)} />
-      <LoginModal open={showLoginModal} onClose={() => setShowLoginModal(false)} />
+      <LoginModal
+        open={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+      />
     </>
   );
 };

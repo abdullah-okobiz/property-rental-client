@@ -1,17 +1,29 @@
 "use client";
 import { poppins } from "@/app/font";
 import { ICategory } from "@/types";
-import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
   rentCategories: ICategory[];
+  selectedCategoryId: string;
 }
 
-const LandCategory: React.FC<Props> = ({ rentCategories }) => {
-  const [selectedCategoryId, setSelectedCategoryId] = useState("all");
+const LandCategory: React.FC<Props> = ({
+  rentCategories,
+  selectedCategoryId,
+}) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleSelect = (categoryId: string) => {
-    setSelectedCategoryId(categoryId);
+    const newParams = new URLSearchParams(searchParams.toString());
+    if (categoryId === "all") {
+      newParams.delete("category");
+    } else {
+      newParams.set("category", categoryId);
+    }
+
+    router.push(`/land?${newParams.toString()}`);
   };
 
   const allCategories = [
