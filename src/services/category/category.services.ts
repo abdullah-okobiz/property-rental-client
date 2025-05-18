@@ -1,10 +1,11 @@
-
 import CategoryApis from "@/app/apis/category.apis";
 
 const {
   getCategoriesByFeatureId,
   updateCategoryForListing,
   updateTitleForListing,
+  updateDescriptionForListing,
+  updateLocationForListing,
 } = CategoryApis;
 
 const CategoryServices = {
@@ -46,6 +47,38 @@ const CategoryServices = {
   ) => {
     try {
       const res = await updateTitleForListing(featureType, listingId, title);
+      return res.data;
+    } catch (error) {
+      throw new Error("Failed to update listing title");
+    }
+  },
+  updateListingDescription: async (
+    featureType: string,
+    listingId: string,
+    description: string
+  ) => {
+    try {
+      const res = await updateDescriptionForListing(
+        featureType,
+        listingId,
+        description
+      );
+      return res.data;
+    } catch (error) {
+      throw new Error("Failed to update listing title");
+    }
+  },
+  updateListingLocation: async (
+    featureType: string,
+    listingId: string,
+    location: string
+  ) => {
+    try {
+      const res = await updateLocationForListing(
+        featureType,
+        listingId,
+        location
+      );
       return res.data;
     } catch (error) {
       throw new Error("Failed to update listing title");
