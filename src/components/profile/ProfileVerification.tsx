@@ -27,7 +27,8 @@ const ProfileVerification = () => {
 
       try {
         const decoded = jwtDecode<DecodedToken>(token);
-        setIsVerified(decoded.isVerified);
+        console.log("Decoded token:", decoded);
+        setIsVerified(decoded.accountStatus);
       } catch (error) {
         console.error("Invalid token:", error);
         setIsVerified(false);
