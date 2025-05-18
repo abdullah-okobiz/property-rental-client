@@ -108,7 +108,6 @@ export default function LocationStep() {
     setOnNextSubmit(handleSubmit);
   }, [location, center, listingId, featureType]);
 
-  // Detect current location
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -161,11 +160,13 @@ export default function LocationStep() {
           zoom={13}
           scrollWheelZoom
           className="absolute inset-0 z-0"
-          whenReady={(event) => {
-            const mapInstance = event.target;
-            mapRef.current = mapInstance;
-            const initCenter = mapInstance.getCenter();
+          whenReady={() => {
+            if (!mapRef.current) return;
+            const initCenter = mapRef.current.getCenter();
             handleMapMoveEnd([initCenter.lat, initCenter.lng]);
+          }}
+          ref={(instance) => {
+            if (instance) mapRef.current = instance;
           }}
         >
           <TileLayer
