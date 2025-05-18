@@ -3,7 +3,7 @@
 import { Input, Modal, Button, message } from "antd";
 import { useState } from "react";
 import SignupModal from "./SignUpModal";
-import {AuthServices} from "@/services/auth/auth.service";
+import { AuthServices } from "@/services/auth/auth.service";
 import { useMutation } from "@tanstack/react-query";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
@@ -136,7 +136,7 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
       </Modal>
 
       {/* Uncomment when needed */}
-      <SignupModal open={showModal} onClose={() => setShowModal(false)} />
+      {/* <SignupModal open={showModal} onClose={() => setShowModal(false)} /> */}
     </>
   );
 };
