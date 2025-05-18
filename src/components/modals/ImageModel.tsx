@@ -5,12 +5,18 @@ import { IoIosArrowBack } from "react-icons/io";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import { apiBaseUrl } from "@/config/config";
 
-const ImageModel = ({ images,setOpenGallery }) => {
+interface Props {
+  images: string[];
+  setOpenGallery: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ImageModel: React.FC<Props> = ({ images, setOpenGallery }) => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  const openLightbox = (index) => {
+  const openLightbox = (index: number) => {
     setLightboxIndex(index);
     setLightboxOpen(true);
   };
@@ -18,9 +24,7 @@ const ImageModel = ({ images,setOpenGallery }) => {
   return (
     <div className="">
       {/* Back Button */}
-      <div 
-      onClick={() => setOpenGallery(false)}
-      className="mb-4 mx-4 mt-8">
+      <div onClick={() => setOpenGallery(false)} className="mb-4 mx-4 mt-8">
         <div className="px-1 py-1 border inline-flex rounded cursor-pointer">
           <IoIosArrowBack className="text-2xl" />
         </div>
@@ -34,7 +38,7 @@ const ImageModel = ({ images,setOpenGallery }) => {
           onClick={() => openLightbox(0)}
         >
           <Image
-            src={images[0]}
+            src={apiBaseUrl + images[0]}
             alt="Main Image"
             width={810}
             height={420}
@@ -51,7 +55,7 @@ const ImageModel = ({ images,setOpenGallery }) => {
               onClick={() => openLightbox(index)}
             >
               <Image
-                src={img}
+                src={apiBaseUrl + img}
                 alt={`Image ${index + 1}`}
                 width={400}
                 height={205}
@@ -67,7 +71,7 @@ const ImageModel = ({ images,setOpenGallery }) => {
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
-        slides={images.map((img) => ({ src: img }))}
+        slides={images.map((img) => ({ src: apiBaseUrl + img }))}
         plugins={[Zoom]}
       />
     </div>

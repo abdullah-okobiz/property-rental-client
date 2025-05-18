@@ -3,6 +3,7 @@ import { poppins } from "@/app/font";
 import RentCard from "@/components/card/RentCard/RentCard";
 import { IRent } from "@/types";
 import SectionTitle from "@/utilits/SectionTitle";
+import Link from "next/link";
 interface Props {
   flats: IRent[];
 }
@@ -34,11 +35,13 @@ const FlatsSection: React.FC<Props> = ({ flats }) => {
       </div>
 
       <div className="flex items-center justify-center py-8 text-[#fff]">
-        <button
-          className={`bg-primary px-6 py-3 rounded font-medium cursor-pointer  ${poppins.className}`}
-        >
-          Load more..
-        </button>
+        <Link href="/flat">
+          <button
+            className={`bg-primary px-6 py-3 rounded font-medium cursor-pointer  ${poppins.className}`}
+          >
+            Load more..
+          </button>
+        </Link>
       </div>
     </div>
   );

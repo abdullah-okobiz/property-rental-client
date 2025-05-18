@@ -7,7 +7,17 @@ import { IoIosArrowDown } from "react-icons/io";
 import { format } from "date-fns";
 import Link from "next/link";
 
-const Reserve = ({ dateRange, setDateRange }) => {
+interface Props {
+  dateRange: {
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+  };
+  setDateRange: (range: {
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+  }) => void;
+}
+const Reserve: React.FC<Props> = ({ dateRange, setDateRange }) => {
   // this is for cleander
   const [showPicker, setShowPicker] = useState(false);
 
@@ -81,8 +91,9 @@ const Reserve = ({ dateRange, setDateRange }) => {
                   Check-in
                 </p>
                 <p className="font-medium">
-                  {/* {dateRange?.startDate || "Add Dates"} */}
-                  {format(dateRange.startDate, "MMM d, yyyy") || "Add Dates"}
+                  {dateRange.startDate
+                    ? format(dateRange.startDate, "MMM d, yyyy")
+                    : "Add Dates"}
                 </p>
               </div>
             </div>
@@ -96,7 +107,9 @@ const Reserve = ({ dateRange, setDateRange }) => {
                   Check-out
                 </p>
                 {/* <p className="font-medium">Add Dates</p> */}
-                {format(dateRange.endDate, "MMM d, yyyy") || "Add Dates"}
+                {dateRange.endDate
+                  ? format(dateRange.endDate, "MMM d, yyyy")
+                  : "Add Dates"}
               </div>
             </div>
           </div>

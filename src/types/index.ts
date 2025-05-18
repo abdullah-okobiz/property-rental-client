@@ -104,7 +104,7 @@ export interface IRent {
   listingFor: IListingFor[];
   location: string;
   price: number;
+  slug: string;
   status: string;
   __v: number;
 }
-
