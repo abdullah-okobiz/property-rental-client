@@ -143,7 +143,7 @@ export default function LocationStep() {
   };
 
   return (
-    <div className="h-[500px] w-full max-w-4xl mx-auto rounded-xl overflow-hidden shadow-lg">
+    <div className="h-full w-full  mx-auto rounded-xl overflow-hidden shadow-lg">
       <div className="p-4">
         <Title level={4} className="mb-2 tracking-wider">
           Where's your place located?
