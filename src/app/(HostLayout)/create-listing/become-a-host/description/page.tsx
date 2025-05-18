@@ -41,8 +41,6 @@ export default function DescriptionStep() {
           onChange={(e) => setDescription(e.target.value)}
           placeholder="e.g. Spacious and bright 3-bedroom apartment with a beautiful view of the lake..."
           rows={6}
-          // showCount
-          // maxLength={1000}
         />
       </div>
     </div>

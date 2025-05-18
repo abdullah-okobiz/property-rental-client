@@ -37,6 +37,19 @@ const CategoryApis = {
     axiosClient.patch(`/host/${featureType}/${listingId}`, {
       location,
     }),
+  updateFloorPlanForListing: (
+    featureType: string,
+    listingId: string,
+    floorPlan: {
+      bedroomCount: number;
+      bathCount: number;
+      bedCount: number;
+      guestCount: number;
+    }
+  ) =>
+    axiosClient.patch(`/host/${featureType}/${listingId}`, {
+      floorPlan,
+    }),
 };
 
 export default CategoryApis;
