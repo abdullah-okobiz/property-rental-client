@@ -4,7 +4,10 @@ import Cleander from "../Cleander/Cleander";
 import Reserve from "../Reserve/Reserve";
 import { addDays } from "date-fns";
 const CleanderAndResever = () => {
-  const [dateRange, setDateRange] = useState({
+  const [dateRange, setDateRange] = useState<{
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+  }>({
     startDate: new Date(),
     endDate: addDays(new Date(), 0),
   });

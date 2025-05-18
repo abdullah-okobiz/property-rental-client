@@ -3,6 +3,7 @@ import { poppins } from "@/app/font";
 import RentCard from "@/components/card/RentCard/RentCard";
 import { IRent } from "@/types";
 import SectionTitle from "@/utilits/SectionTitle";
+import Link from "next/link";
 import React from "react";
 
 interface Props {
@@ -27,11 +28,13 @@ const RentSection: React.FC<Props> = ({ rents }) => {
       </div>
 
       <div className="flex items-center justify-center py-8 text-[#fff]">
+        <Link href='/rent'>
         <button
           className={`bg-primary px-6 py-3 rounded font-medium cursor-pointer  ${poppins.className}`}
         >
           Load more..
         </button>
+        </Link>
       </div>
     </div>
   );

@@ -5,12 +5,25 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "../Cleander/Cleander.css";
 import { format } from "date-fns";
-const Cleander = ({ dateRange, setDateRange }) => {
-  console.log("recive data", dateRange);
+
+interface CleanderProps {
+  dateRange: {
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+  };
+  setDateRange: (range: {
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+  }) => void;
+}
+
+const Cleander: React.FC<CleanderProps> = ({ dateRange, setDateRange }) => {
+  const { startDate, endDate } = dateRange;
 
   const numberOfNights =
-    (dateRange.endDate.getTime() - dateRange.startDate.getTime()) /
-    (1000 * 3600 * 24);
+    startDate && endDate
+      ? (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
+      : 0;
 
   return (
     <div className="overflow-x-hidden py-6 border-b border-[#262626]/30 pb-12 lg:w-[90%]">
@@ -22,8 +35,8 @@ const Cleander = ({ dateRange, setDateRange }) => {
         Arrival Date - Leaving Date
       </p>
       <p className="mt-1 text-[#262626]/60 text-sm font-medium">
-        {format(dateRange.startDate, "MMM d, yyyy")} -{" "}
-        {format(dateRange.endDate, "MMM d, yyyy")}
+        {startDate ? format(startDate, "MMM d, yyyy") : "Select a start date"} -{" "}
+        {endDate ? format(endDate, "MMM d, yyyy") : "Select an end date"}
       </p>
 
       <div className="mt-8 w-full">
@@ -32,8 +45,6 @@ const Cleander = ({ dateRange, setDateRange }) => {
             onChange={(item) => {
               const { startDate, endDate } = item.selection;
               setDateRange({ startDate, endDate });
-              console.log("Start Date:", startDate);
-              console.log("End Date:", endDate);
             }}
             moveRangeOnFirstSelection={false}
             months={2}
