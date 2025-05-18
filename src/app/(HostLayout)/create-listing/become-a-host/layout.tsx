@@ -4,10 +4,13 @@ import { ListingProvider } from "@/contexts/ListingContext";
 import StepNavigation from "../components/stepNavigation/StepNavigation";
 
 import TopNavWithAction from "../components/TopNavWithAction";
+import { ListingStepProvider } from "@/contexts/ListingStepContext";
+import 'leaflet/dist/leaflet.css';
 
 export default function BecomeAHostLayout({ children }: { children: React.ReactNode }) {
   return (
     <ListingProvider>
+      <ListingStepProvider>
       <div className="flex flex-col min-h-screen">
           <TopNavWithAction/>
         <main className="flex-grow max-w-2xl w-full mx-auto p-4">
@@ -20,6 +23,7 @@ export default function BecomeAHostLayout({ children }: { children: React.ReactN
           </div>
         </div>
       </div>
+      </ListingStepProvider>
     </ListingProvider>
   );
 }

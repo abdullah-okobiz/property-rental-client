@@ -33,15 +33,15 @@ const NavBar = () => {
     onSuccess: () => {
       message.success("Logout Successful");
       localStorage.removeItem("accessToken");
-      setTimeout(() => window.location.reload(), 1000);
+      setTimeout(() => window.location.reload(), 800);
     },
-    onError: (error) => {
+    onError: (error:any) => {
       message.error(error?.response?.data?.message || "Logout failed");
     },
   });
 
   const handleScroll = useCallback(() => {
-    setIsSticky(window.scrollY > 120);
+    setIsSticky(window.scrollY > 70);
   }, []);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const NavBar = () => {
       >
         <div className="Container py-2 flex items-center justify-between shadow-md">
           <Link href="/">
-            <Image src={logo} alt="Stayverz logo" width={80} height={80} />
+            <Image src={logo} alt="Stayverz logo" width={80} height={80} className="h-[65px] w-[67px]"/>
           </Link>
 
           <div className="hidden lg:flex gap-8 items-center">
