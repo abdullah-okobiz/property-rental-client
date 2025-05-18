@@ -32,11 +32,11 @@ export default function FeaturePage() {
   }, []);
 
   const handleSubmit = async () => {
+    console.log("clicked handle submit =========");
     if (!selected) {
       setError("Please select a feature before continuing.");
       return;
     }
-
     setError("");
 
     const selectedFeature = features.find(

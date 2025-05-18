@@ -1,6 +1,7 @@
 "use client";
 
 import { useListingContext } from "@/contexts/ListingContext";
+import { useListingStepContext } from "@/contexts/ListingStepContext";
 import { useEffect, useState } from "react";
 import CategoryServices from "@/services/category/category.services";
 import { Home, Building2, Landmark, Warehouse } from "lucide-react";
@@ -12,8 +13,10 @@ type Category = {
 
 export default function CategoryPage() {
   const { featureId, listingId, featureType } = useListingContext();
+  const { setOnNextSubmit } = useListingStepContext();
   const [categories, setCategories] = useState<Category[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -30,22 +33,30 @@ export default function CategoryPage() {
     fetchCategories();
   }, [featureId]);
 
+  const handleSubmit = async () => {
+    if (!selected) {
+      setError("Please select a category before continuing.");
+      return;
+    }
+
+    setError("");
+
+    if (!listingId || !featureType) return;
+
+    try {
+      const categoryPatchRes = await CategoryServices.setListingCategory({
+        featureType,
+        listingId,
+        categoryId: selected,
+      });
+      console.log("categoryPatchRes ==", categoryPatchRes);
+    } catch (err) {
+      console.error("Error setting listing category:", err);
+    }
+  };
+
   useEffect(() => {
-    const updateCategory = async () => {
-      if (!selected || !listingId || !featureType) return;
-
-      try {
-        await CategoryServices.setListingCategory({
-          featureType,
-          listingId,
-          categoryId: selected,
-        });
-      } catch (err) {
-        console.error("Error setting listing category:", err);
-      }
-    };
-
-    updateCategory();
+    setOnNextSubmit(handleSubmit);
   }, [selected, listingId, featureType]);
 
   const getCategoryIcon = (name: string) => {
@@ -70,15 +81,21 @@ export default function CategoryPage() {
         <h2 className="text-xl font-semibold tracking-wide mb-6 text-center">
           Which category best describes your place?
         </h2>
+
+        {error && (
+          <div className="text-red-500 text-sm text-center">{error}</div>
+        )}
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {categories.map((category) => (
             <div
               key={category._id}
               onClick={() => setSelected(category._id)}
-              className={`relative cursor-pointer border rounded-2xl p-4 flex flex-col items-center gap-3 transition-all duration-200 ${selected === category._id
+              className={`relative cursor-pointer border rounded-2xl p-4 flex flex-col items-center gap-3 transition-all duration-200 ${
+                selected === category._id
                   ? "border-primary ring-0 ring-primary"
                   : "border-gray-200"
-                }`}
+              }`}
             >
               <div className="absolute top-2 right-2 w-5 h-5 border-1 rounded border-gray-300 flex items-center justify-center bg-white">
                 {selected === category._id && (
