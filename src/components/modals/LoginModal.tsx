@@ -7,7 +7,7 @@ import {AuthServices} from "@/services/auth/auth.service";
 import { useMutation } from "@tanstack/react-query";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import {jwtDecode } from "jwt-decode"; 
+import { jwtDecode } from "jwt-decode";
 
 interface LoginModalProps {
   open: boolean;
@@ -20,13 +20,11 @@ const initialForm = {
 };
 
 const LoginModal = ({ open, onClose }: LoginModalProps) => {
-
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(initialForm);
   const [messageApi, contextHolder] = message.useMessage();
   const { login } = useAuth();
-  
 
   const { mutate: loginUser, isPending } = useMutation({
     mutationFn: AuthServices.processLogin,
@@ -35,18 +33,18 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
       if (accessToken) {
         try {
           const decoded: any = jwtDecode(accessToken);
-          const role = decoded?.role; 
-          login({ accessToken }); 
+          const role = decoded?.role;
+          login({ accessToken });
           messageApi.success(data?.message || "Login successful!");
-        
+
           if (role === "host") {
             router.replace("/host-dashboard");
           } else if (role === "guest") {
-            router.replace("/"); 
+            router.replace("/");
           } else {
-            router.replace("/"); 
+            router.replace("/");
           }
-  
+
           onClose();
           setFormData(initialForm);
         } catch (error) {
@@ -74,7 +72,7 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
       return messageApi.warning("Please fill in both fields.");
     }
 
-    loginUser({  email, password });
+    loginUser({ email, password });
   };
 
   return (
@@ -83,7 +81,7 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
       <Modal
         title={
           <div className="pb-4 border-b border-gray-200 text-center text-lg font-semibold">
-             Welcome to HomeZay Stay
+            Welcome to HomZay Stay
           </div>
         }
         open={open}
@@ -138,7 +136,7 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
       </Modal>
 
       {/* Uncomment when needed */}
-      {/* <SignupModal open={showModal} onClose={() => setShowModal(false)} /> */}
+      <SignupModal open={showModal} onClose={() => setShowModal(false)} />
     </>
   );
 };

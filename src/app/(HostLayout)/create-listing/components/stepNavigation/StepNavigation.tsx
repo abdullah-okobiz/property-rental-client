@@ -1,17 +1,15 @@
-'use client';
+"use client";
 
-import { usePathname, useRouter } from 'next/navigation';
-import { stepRoutes } from '../listing-utils/steps';
+import { usePathname, useRouter } from "next/navigation";
+import { stepRoutes } from "../listing-utils/steps";
+import { useListingStepContext } from "@/contexts/ListingStepContext";
 
-type StepNavigationProps = {
-  onNextSubmit?: () => Promise<void>; 
-};
-
-export default function StepNavigation({ onNextSubmit }: StepNavigationProps) {
+export default function StepNavigation() {
   const pathname = usePathname();
   const router = useRouter();
+  const { onNextSubmit } = useListingStepContext();
 
-  const currentIndex = stepRoutes.findIndex(route => pathname === route);
+  const currentIndex = stepRoutes.findIndex((route) => pathname === route);
   const isFirst = currentIndex === 0;
   const isLast = currentIndex === stepRoutes.length - 1;
 
@@ -43,7 +41,7 @@ export default function StepNavigation({ onNextSubmit }: StepNavigationProps) {
       <button
         onClick={handleNext}
         disabled={isLast}
-        className="px-4 md:px-6 py-2  cursor-pointer bg-primary text-white rounded disabled:opacity-50"
+        className="px-4 md:px-6 py-2 cursor-pointer bg-primary text-white rounded disabled:opacity-50"
       >
         Next
       </button>

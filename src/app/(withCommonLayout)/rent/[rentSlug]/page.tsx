@@ -12,32 +12,43 @@ import Image from "next/image";
 import RentDetails from "@/components/details/RentDetails/RentDetails";
 import CleanderAndResever from "@/components/details/CleanderAndResever/CleanderAndResever";
 import HostInformation from "@/components/details/HostInformation/HostInformation";
+import RulesRent from "@/components/details/RulesRent/RulesRent";
+import { getSingleRentBySlug } from "@/services/rents";
+import { apiBaseUrl } from "@/config/config";
+import { IAmenities } from "@/types";
 
-const images = [
-  "https://i.ibb.co.com/7dfpZVVL/58579f3a2fed460cba15532daa5a0897-dhaka-hotel-bluebird-ltd-photo-19-1.jpg",
-  "https://i.ibb.co.com/8LsJsTrm/6a5cf48ff8f740418ae59770fda84e76-dhaka-hotel-bluebird-ltd-photo-14.jpg",
-  "https://i.ibb.co.com/5WHJn96T/b71df2d60c704214ba969731c242eba6-a292f390.jpg",
-  "https://i.ibb.co.com/S4PgQXSm/01bfd90306904f31a9f47a20bdfa1c56-IMG20250503172040.jpg",
-  "https://i.ibb.co.com/BKjk30jg/rent3.jpg",
-  // "https://i.ibb.co.com/BKjk30jg/rent3.jpg",
-  // "https://i.ibb.co.com/BKjk30jg/rent3.jpg",
-];
+interface Props {
+  params: Promise<{
+    rentSlug: string;
+  }>;
+}
 
-const page = () => {
+const page = async ({ params }: Props) => {
+  const resolvedParams = await params;
+  const { data: rent } = await getSingleRentBySlug(resolvedParams.rentSlug);
+  const {
+    title,
+    location,
+    images,
+    description,
+    amenities,
+    allowableThings,
+    cancellationPolicy,
+    houseRules,
+    floorPlan,
+  } = rent;
   return (
     <div className={`Container py-8 ${poppins.className}`}>
       <div className="flex flex-col">
         <h2 className={`xl:text-2xl lg:text-xl text-lg font-medium`}>
-          Family Room (2 Queen Bed)
+          {title}
         </h2>
         <div className="flex items-center justify-between py-2">
           <p className="flex items-center gap-1 font-medium text-[#262626]/60 text-base">
             <span>
               <PiMapPinLine />
             </span>
-            <span>
-              Terrace View, House 4, Lake Drive Road, Sector 7, Uttara, Dhaka
-            </span>
+            <span>{location}</span>
           </p>
           <p className="border border-[#262626]/20 p-2 rounded-full cursor-pointer hover:border-primary hover:text-primary duration-300">
             <IoIosHeartEmpty />
@@ -64,53 +75,84 @@ const page = () => {
             Entire villa hosted by <span>Mishu</span>
           </h2>
           <div>
-            <div className="flex items-center flex-wrap gap-4 my-2">
-              <div className="flex items-center gap-2">
-                <span>
-                  <MdOutlineKingBed />
-                </span>
-                <span>6 Bedroom</span>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span>
-                  <LiaBathSolid />
-                </span>
-                <span>2 Bath</span>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span>
-                  <LuBed />
-                </span>
-                <span>2 Bed</span>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <span>
-                  <BsPeople />
-                </span>
-                <span>5 Guest</span>
-              </div>
+            <div className="flex items-center flex-wrap gap-2 my-2 text-sm text-[#262626]/60">
+              {floorPlan && (
+                <>
+                  {floorPlan.bedroomCount > 0 && (
+                    <div className="flex items-center gap-2">
+                      <span>
+                        <MdOutlineKingBed />
+                      </span>
+                      <span>
+                        {floorPlan.bedroomCount} Bedroom
+                        {floorPlan.bedroomCount > 1 ? "s" : ""}
+                      </span>
+                    </div>
+                  )}
+                  {floorPlan.bathCount !== "" && (
+                    <div className="flex items-center gap-2">
+                      <span>
+                        <LiaBathSolid />
+                      </span>
+                      <span>
+                        {floorPlan.bathCount} Bath
+                        {Number(floorPlan.bathCount) > 1 ? "s" : ""}
+                      </span>
+                    </div>
+                  )}
+                  {floorPlan.bedCount > 0 && (
+                    <div className="flex items-center gap-2">
+                      <span>
+                        <LuBed />
+                      </span>
+                      <span>
+                        {floorPlan.bedCount} Bed
+                        {floorPlan.bedCount > 1 ? "s" : ""}
+                      </span>
+                    </div>
+                  )}
+                  {floorPlan.guestCount > 0 && (
+                    <div className="flex items-center gap-2">
+                      <span>
+                        <BsPeople />
+                      </span>
+                      <span>
+                        {floorPlan.guestCount} Guest
+                        {floorPlan.guestCount > 1 ? "s" : ""}
+                      </span>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </div>
       </div>
 
       <div>
-        <RentDetails />
+        <RentDetails description={description} />
       </div>
 
       <div className="py-6 border-b border-[#262626]/30 pb-6 lg:w-[60%]">
         <h2 className="text-xl font-medium">House Details</h2>
 
         <div className="flex items-center gap-2 mt-4 pb-2">
-          <p className="px-4 py-2 rounded bg-[#F2F2F5] text-[#262626]/80 text-sm">
-            Fire extinguisher
-          </p>
-          <p className="px-4 py-2 rounded bg-[#F2F2F5] text-[#262626]/80 text-sm">
-            First aid kit
-          </p>
+          {amenities?.map((amenitie: IAmenities) => (
+            <div
+              key={amenitie._id}
+              className="px-4 py-2 rounded bg-[#F2F2F5] text-[#262626]/80 text-sm flex items-center gap-1"
+            >
+              <div className="w-[30px]">
+                <Image
+                  src={apiBaseUrl + amenitie.amenitiesImage}
+                  alt="amenitie.amenitiesLabel"
+                  width={30}
+                  height={30}
+                />
+              </div>
+              <p>{amenitie.amenitiesLabel}</p>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -120,6 +162,14 @@ const page = () => {
 
       <div className="py-6 border-b border-[#262626]/30 pb-6 lg:w-[60%]">
         <HostInformation />
+      </div>
+
+      <div className="py-6">
+        <RulesRent
+          houseRules={houseRules}
+          cancellationPolicy={cancellationPolicy}
+          allowableThings={allowableThings}
+        />
       </div>
     </div>
   );

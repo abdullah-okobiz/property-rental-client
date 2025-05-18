@@ -1,4 +1,3 @@
-// src/app/apis/category.apis.ts
 import axiosClient from "@/lib/axios.config";
 
 const CategoryApis = {
@@ -21,6 +20,22 @@ const CategoryApis = {
   ) =>
     axiosClient.patch(`/host/${featureType}/${listingId}`, {
       title,
+    }),
+  updateDescriptionForListing: (
+    featureType: string,
+    listingId: string,
+    description: string
+  ) =>
+    axiosClient.patch(`/host/${featureType}/${listingId}`, {
+      description,
+    }),
+  updateLocationForListing: (
+    featureType: string,
+    listingId: string,
+    location: string
+  ) =>
+    axiosClient.patch(`/host/${featureType}/${listingId}`, {
+      location,
     }),
 };
 

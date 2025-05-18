@@ -27,3 +27,13 @@ export const getAllRents = async ({
   if (!res.ok) throw new Error("Failed to fetch rents");
   return res.json();
 };
+
+export const getSingleRentBySlug = async (slug: string) => {
+  const res = await fetch(`${apiBaseUrl}/rent/${slug}`);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch rent");
+  }
+
+  return res.json();
+};
