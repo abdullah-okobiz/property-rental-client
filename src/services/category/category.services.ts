@@ -6,6 +6,7 @@ const {
   updateTitleForListing,
   updateDescriptionForListing,
   updateLocationForListing,
+  updateFloorPlanForListing,
 } = CategoryApis;
 
 const CategoryServices = {
@@ -78,6 +79,27 @@ const CategoryServices = {
         featureType,
         listingId,
         location
+      );
+      return res.data;
+    } catch (error) {
+      throw new Error("Failed to update listing title");
+    }
+  },
+  processUpdateFloorPlan: async (
+    featureType: string,
+    listingId: string,
+    floorPlan: {
+      bedroomCount: number;
+      bathCount: number;
+      bedCount: number;
+      guestCount: number;
+    }
+  ) => {
+    try {
+      const res = await updateFloorPlanForListing(
+        featureType,
+        listingId,
+        floorPlan
       );
       return res.data;
     } catch (error) {
