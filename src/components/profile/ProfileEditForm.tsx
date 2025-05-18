@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
 import { getUser } from "@/services/auth/auth.service";
 import { jwtDecode } from "jwt-decode";
+import defaultProfile from "@/assets/images/default.png";
 import {
   updateProfileWork,
   updateProfileLocation,
@@ -17,6 +18,7 @@ import {
   getProfileBio,
   getProfileAvatar,
 } from "@/services/profile";
+
 
 const ALL_LANGUAGES = [
   "Afrikaans",
@@ -140,7 +142,7 @@ const ProfileEditForm = () => {
     language: "",
     languages: [],
     bio: "",
-    image: "/default-profile.jpg",
+    image: `${defaultProfile}`,
   });
   const [loading, setLoading] = useState(true);
   const [editingField, setEditingField] = useState<string | null>(null);
@@ -184,7 +186,7 @@ const ProfileEditForm = () => {
           bio: bio?.data?.intro || "",
           image: avatar?.data?.avatar
             ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${avatar.data.avatar}`
-            : "/default-profile.jpg",
+            : `${defaultProfile}`,
         });
       } catch (error) {
         console.error("Failed to fetch profile data:", error);

@@ -18,7 +18,7 @@ interface DecodedToken {
 }
 
 const ProfileVerification = () => {
-  const [isVerified, setIsVerified] = useState<boolean | null>(null);
+  const [isVerified, setIsVerified] = useState<string | null>(null);
 
   useEffect(() => {
     const checkVerification = async () => {
@@ -27,41 +27,43 @@ const ProfileVerification = () => {
 
       try {
         const decoded = jwtDecode<DecodedToken>(token);
-        console.log("Decoded token:", decoded);
         setIsVerified(decoded.accountStatus);
       } catch (error) {
         console.error("Invalid token:", error);
-        setIsVerified(false);
       }
     };
 
     checkVerification();
   }, []);
 
-  if (isVerified === null) return null; 
+  if (isVerified === null) return null;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-x-16 mt-10">
       <div className="md:col-span-1">
         <div className="bg-white rounded-2xl p-6 flex flex-col items-start transition-all border border-black/10">
-          {!isVerified ? (
+          {isVerified === "active" ? (
             <div className="text-xl font-semibold text-green-600">
               ✅ Your Profile is Verified
             </div>
+          ) : isVerified === "pending" ? (
+            <div className="text-xl font-semibold text-yellow-600">
+              ⏳ Your Profile is Under Review
+            </div>
           ) : (
             <>
-              <div className="text-xl font-semibold text-gray-800">
-                Your Profile is not verified
+              <div className="text-xl font-semibold text-red-600">
+                ❌ Your Profile is Not Verified
               </div>
 
-              <VerificationModal />
+              {/* <VerificationModal /> */}
 
               <div className="text-xl text-gray-700 mt-5 font-semibold">
                 Verify your identity
               </div>
               <div className="text-gray-700 mt-5 text-sm font-semibold">
-                Before you book or Host on HomezyStay, you will need to
-                complete this step.
+                Before you book or Host on HomezyStay, you will need to complete
+                this step.
               </div>
               <div className="relative group p-2 border border-gray-600 rounded-lg mt-5 transition-transform transform hover:scale-105 hover:border-blue-500 duration-300">
                 <Link
