@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import VerificationModal from "../modals/VerificationModal";
+// import VerificationModal from "../modals/VerificationModal";
 import Link from "next/link";
 import { getUser } from "@/services/auth/auth.service";
 import { jwtDecode } from "jwt-decode";
