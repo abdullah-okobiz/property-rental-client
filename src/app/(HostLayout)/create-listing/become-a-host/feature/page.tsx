@@ -37,9 +37,11 @@ export default function FeaturePage() {
       return;
     }
 
-    setError(""); // clear previous errors
+    setError("");
 
-    const selectedFeature = features.find((feature) => feature._id === selected);
+    const selectedFeature = features.find(
+      (feature) => feature._id === selected
+    );
     if (!selectedFeature) return;
 
     const name: any = selectedFeature.featureName.toLowerCase();
@@ -52,13 +54,13 @@ export default function FeaturePage() {
         featureType: name,
         featureId: selected,
       });
+      console.log("listingRes", listingRes);
       setListingId(listingRes.data._id);
     } catch (err) {
       console.error("Error creating listing", err);
     }
   };
 
-  // Register the handler
   useEffect(() => {
     setOnNextSubmit(handleSubmit);
   }, [selected, features]);
@@ -92,9 +94,10 @@ export default function FeaturePage() {
             <div
               key={feature._id}
               onClick={() => setSelected(feature._id)}
-              className={`relative cursor-pointer border rounded-2xl p-4 flex flex-col items-center gap-3 transition-all duration-200 ${selected === feature._id
-                ? "border-primary ring-0 ring-primary"
-                : "border-gray-200"
+              className={`relative cursor-pointer border rounded-2xl p-4 flex flex-col items-center gap-3 transition-all duration-200 ${
+                selected === feature._id
+                  ? "border-primary ring-0 ring-primary"
+                  : "border-gray-200"
               }`}
             >
               <div className="absolute top-2 right-2 w-5 h-5 border-1 rounded border-gray-300 flex items-center justify-center bg-white">
