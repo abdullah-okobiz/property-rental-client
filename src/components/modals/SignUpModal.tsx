@@ -7,6 +7,8 @@ import guestImage from "../../../public/images/guest.png";
 import { useMutation } from "@tanstack/react-query";
 import { AuthServices } from "@/services/auth/auth.service";
 import { useRouter } from "next/navigation";
+import { SignupFormValues, SignupResponse } from "@/types/authTypes";
+import Image from "next/image";
 
 interface SignupModalProps {
   open: boolean;
@@ -32,22 +34,23 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
   const [role, setRole] = useState<"host" | "guest">("guest");
   const [form] = Form.useForm();
 
-  const { mutate, isPending } = useMutation({
+  const { mutate, isPending } = useMutation<
+    SignupResponse,
+    Error,
+    SignupFormValues
+  >({
     mutationFn: processSignup,
-    onSuccess: (data: any) => {
+    onSuccess: (data) => {
       messageApi.success(data?.message || "Signup successful!");
       form.resetFields();
       onClose();
       router.push(`/email-verification?email=${data?.data?.email}`);
     },
-    onError: (error: any) => {
-      messageApi.error(
-        error?.response?.data?.message || "Signup failed. Please try again."
-      );
+    onError: (error) => {
+      messageApi.error(error?.message || "Signup failed. Please try again.");
     },
   });
-
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: Omit<SignupFormValues, "role">) => {
     mutate({
       ...values,
       role,
@@ -93,7 +96,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
                   )}
 
                   <div className="flex flex-col gap-2 justify-center items-center">
-                    <img src={type.imgSrc} alt="image" className="w-[70px]" />
+                    <Image height={200} width={200} src={type.imgSrc} alt="image" className="w-[70px]" />
                     <h4 className="text-[14px] tracking-tight font-bold text-gray-600">
                       Sign Up as {type.name}
                     </h4>
@@ -162,7 +165,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
 
             <p className="text-xs text-gray-500 leading-snug pt-1">
               By selecting <span className="font-medium">Continue</span>, I
-              agree to Homezay stay's{" "}
+              agree to Homezay stay&apos;s{" "}
               <a href="#" className="text-blue-500 underline">
                 Terms of Service
               </a>{" "}

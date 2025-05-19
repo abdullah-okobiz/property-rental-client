@@ -1,18 +1,74 @@
 import AuthApis from "@/app/apis/auth.apis";
+import { LoginResponse, OtpResponse, SignupResponse } from "@/types/authTypes";
 
-
-const { loginApi, refreshTokenApi, logoutApi, signupApi,verifyEmailOtpApi,otpResendApi } = AuthApis;
+const {
+  loginApi,
+  refreshTokenApi,
+  logoutApi,
+  signupApi,
+  verifyEmailOtpApi,
+  otpResendApi,
+} = AuthApis;
 
 export const AuthServices = {
-  processLogin: async (payload: { email: string, password: string }) => {
+  processSignup: async (payload: {
+    name: string;
+    email: string;
+    password: string;
+    role: "guest" | "host";
+  }): Promise<SignupResponse> => {
+    try {
+      const response = await signupApi(payload);
+      return response?.data as SignupResponse;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("Unknown error occurred in processSignup");
+      }
+    }
+  },
+  processLogin: async (payload: {
+    email: string;
+    password: string;
+  }): Promise<LoginResponse> => {
     try {
       const response = await loginApi(payload);
-      return response?.data;
+      return response.data as LoginResponse;
     } catch (error) {
       if (error instanceof Error) {
         throw error;
       } else {
         throw new Error("Unknown error occurred in processLogin");
+      }
+    }
+  },
+  processVerifyEmailOtp: async (payload: {
+    email: string;
+    otp: string;
+  }): Promise<OtpResponse> => {
+    try {
+      const response = await verifyEmailOtpApi(payload);
+      return response?.data as OtpResponse;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("Unknown error occurred in processSignup");
+      }
+    }
+  },
+  processResendOtp: async (payload: {
+    email: string;
+  }): Promise<OtpResponse> => {
+    try {
+      const response = await otpResendApi(payload);
+      return response.data as OtpResponse;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("Unknown error occurred in processResendOtp");
       }
     }
   },
@@ -42,46 +98,6 @@ export const AuthServices = {
       }
     }
   },
-
-  processSignup: async (payload: { name: string, email: string, password: string, role: 'guest' | 'host' }) => {
-    try {
-      const response = await signupApi(payload);
-      return response?.data;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      } else {
-        throw new Error("Unknown error occurred in processSignup");
-      }
-    }
-  },
-  processVerifyEmailOtp:async (payload:{email:string, otp:string})=>{
-    try {
-        const response = await verifyEmailOtpApi(payload)
-        return response
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      } else {
-        throw new Error("Unknown error occurred in processSignup");
-      }
-      
-    }
-  },
-  processResendOtp: async (payload:{email:string})=>{
-     try {
-      const response = await  otpResendApi(payload)
-      return response
-      
-     }  catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      } else {
-        throw new Error("Unknown error occurred in processSignup");
-      }
-      
-    }
-  }
 };
 
 export const getUser = async () => {
