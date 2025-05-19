@@ -11,7 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import logo from "@/assets/logo/stayverz.png";
 import { poppins } from "@/app/font";
 import useAuth from "@/hooks/useAuth";
-import {AuthServices} from "@/services/auth/auth.service";
+import { AuthServices } from "@/services/auth/auth.service";
 
 import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
@@ -35,8 +35,8 @@ const NavBar = () => {
       localStorage.removeItem("accessToken");
       setTimeout(() => window.location.reload(), 800);
     },
-    onError: (error:any) => {
-      message.error(error?.response?.data?.message || "Logout failed");
+    onError: () => {
+      message.error("Logout failed");
     },
   });
 
@@ -75,7 +75,13 @@ const NavBar = () => {
       >
         <div className="Container py-2 flex items-center justify-between shadow-md">
           <Link href="/">
-            <Image src={logo} alt="Stayverz logo" width={80} height={80} className="h-[65px] w-[67px]"/>
+            <Image
+              src={logo}
+              alt="Stayverz logo"
+              width={80}
+              height={80}
+              className="h-[65px] w-[67px]"
+            />
           </Link>
 
           <div className="hidden lg:flex gap-8 items-center">
@@ -125,7 +131,7 @@ const NavBar = () => {
           </div>
 
           <div className="hidden lg:flex gap-4 items-center">
-            {isAuthenticated && (user as any)?.isVerified ? (
+            {isAuthenticated && user && user.isVerified ? (
               <Dropdown menu={profileMenu} trigger={["click"]}>
                 <Button icon={<HiOutlineUser />} shape="round">
                   {user?.role}
@@ -205,7 +211,7 @@ const NavBar = () => {
           })}
 
           <div className="border-t pt-4 mt-4">
-            {isAuthenticated && (user as any)?.isVerified ? (
+            {isAuthenticated && user && user.isVerified ? (
               <Button
                 icon={<HiOutlineUser />}
                 onClick={() => logout()}

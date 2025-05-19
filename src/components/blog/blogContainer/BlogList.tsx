@@ -1,7 +1,7 @@
-import BlogCard from './BlogCard';
+import BlogCard from "./BlogCard";
 
 const BlogList = ({ blogs }: any) => {
-  if (!blogs.length) {
+  if (!blogs?.length) {
     return <p className="text-gray-500">No blogs found.</p>;
   }
 

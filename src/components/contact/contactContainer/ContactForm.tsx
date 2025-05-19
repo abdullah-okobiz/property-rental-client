@@ -1,29 +1,23 @@
 "use client";
 
-import { useState, ChangeEvent, FormEvent } from 'react';
-import { Input, message, Button, Flex } from 'antd';
-import { contactSubmitFormApi } from '@/services/contact';
+import { useState, ChangeEvent, FormEvent } from "react";
+import { Input, message, Button, Flex } from "antd";
+import { contactSubmitFormApi } from "@/services/contact";
+import { ContactFormValues } from "@/types/contactFormtypes";
 
 const { TextArea } = Input;
 
-interface ContactFormValues {
-  firstName: string;
-  subject: string;
-  email: string;
-  phone: string;
-  message: string;
-}
-
 const initialFormValues: ContactFormValues = {
-  firstName: '',
-  subject: '',
-  email: '',
-  phone: '',
-  message: '',
+  firstName: "",
+  subject: "",
+  email: "",
+  phone: "",
+  message: "",
 };
 
 const ContactForm = () => {
-  const [formValues, setFormValues] = useState<ContactFormValues>(initialFormValues);
+  const [formValues, setFormValues] =
+    useState<ContactFormValues>(initialFormValues);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (
@@ -34,36 +28,37 @@ const ContactForm = () => {
   };
 
   const isFormValid = () => {
-    return Object.values(formValues).every((val) => val.trim() !== '');
+    return Object.values(formValues).every((val) => val.trim() !== "");
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!isFormValid()) {
-      message.error('Please fill in all fields.');
+      message.error("Please fill in all fields.");
       return;
     }
 
     setLoading(true);
 
     const formData = new FormData();
-    formData.append('name', formValues.firstName);
-    formData.append('subject', formValues.subject);
-    formData.append('email', formValues.email);
-    formData.append('phone', formValues.phone);
-    formData.append('message', formValues.message);
+    formData.append("name", formValues.firstName);
+    formData.append("subject", formValues.subject);
+    formData.append("email", formValues.email);
+    formData.append("phone", formValues.phone);
+    formData.append("message", formValues.message);
 
     try {
       const result = await contactSubmitFormApi(formData);
       if (result.status == "success") {
-        message.success('Message sent successfully!');
+        message.success("Message sent successfully!");
         setFormValues(initialFormValues);
       } else {
-        message.error('Something went wrong!');
+        message.error("Something went wrong!");
       }
     } catch (error) {
-      message.error('Network error!');
+      message.error("Network error!");
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -79,7 +74,11 @@ const ContactForm = () => {
             value={formValues.firstName}
             onChange={handleChange}
             required
-            style={{ paddingTop: '12px', paddingBottom: '12px', fontSize: '16px' }}
+            style={{
+              paddingTop: "12px",
+              paddingBottom: "12px",
+              fontSize: "16px",
+            }}
           />
           <Input
             name="subject"
@@ -87,7 +86,11 @@ const ContactForm = () => {
             value={formValues.subject}
             onChange={handleChange}
             required
-            style={{ paddingTop: '12px', paddingBottom: '12px', fontSize: '16px' }}
+            style={{
+              paddingTop: "12px",
+              paddingBottom: "12px",
+              fontSize: "16px",
+            }}
           />
           <Input
             name="email"
@@ -95,7 +98,11 @@ const ContactForm = () => {
             value={formValues.email}
             onChange={handleChange}
             required
-            style={{ paddingTop: '12px', paddingBottom: '12px', fontSize: '16px' }}
+            style={{
+              paddingTop: "12px",
+              paddingBottom: "12px",
+              fontSize: "16px",
+            }}
           />
           <Input
             name="phone"
@@ -103,7 +110,11 @@ const ContactForm = () => {
             value={formValues.phone}
             onChange={handleChange}
             required
-            style={{ paddingTop: '12px', paddingBottom: '12px', fontSize: '16px' }}
+            style={{
+              paddingTop: "12px",
+              paddingBottom: "12px",
+              fontSize: "16px",
+            }}
           />
           <div className="col-span-2">
             <TextArea
@@ -115,32 +126,32 @@ const ContactForm = () => {
               rows={2}
               required
               style={{
-                borderTop: 'none',
-                borderLeft: 'none',
-                borderRight: 'none',
-                borderBottom: '1px solid #d9d9d9',
-                borderRadius: '0',
-                boxShadow: 'none',
-                fontSize: '16px',
+                borderTop: "none",
+                borderLeft: "none",
+                borderRight: "none",
+                borderBottom: "1px solid #d9d9d9",
+                borderRadius: "0",
+                boxShadow: "none",
+                fontSize: "16px",
               }}
             />
           </div>
         </div>
 
-        <div className='flex justify-end'>
+        <div className="flex justify-end">
           <Button
             type="primary"
             htmlType="submit"
             loading={loading}
             disabled={loading}
             style={{
-              backgroundColor: '#F66C0E',
-              color: 'white',
-              padding: '14px',
-              cursor: loading ? 'not-allowed' : 'pointer',
+              backgroundColor: "#F66C0E",
+              color: "white",
+              padding: "14px",
+              cursor: loading ? "not-allowed" : "pointer",
             }}
           >
-            {loading ? 'Sending...' : 'Send Message'}
+            {loading ? "Sending..." : "Send Message"}
           </Button>
         </div>
       </Flex>

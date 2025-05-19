@@ -3,6 +3,7 @@ import { getAllBlogs, getFeatures } from "@/services/blog";
 
 const BlogMainContainer = async () => {
   const { data: blogs } = await getAllBlogs();
+  console.log("blogs data ==", blogs);
   const { data: features } = await getFeatures();
 
   return (
