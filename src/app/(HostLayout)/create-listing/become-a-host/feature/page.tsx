@@ -5,11 +5,13 @@ import { useListingStepContext } from "@/contexts/ListingStepContext";
 import { useEffect, useState } from "react";
 import { Building2, Home, Landmark } from "lucide-react";
 import FeatureServices from "@/services/feature/feature.services";
-import {
-  Feature,
-  FeatureType,
-} from "@/app/(HostLayout)/components/types/feature";
-import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
+import { Feature, FeatureType } from "@/app/(hostLayout)/components/types/feature";
+import { ListingResponse } from "@/app/(hostLayout)/components/types/listing";
+// import {
+//   Feature,
+//   FeatureType,
+// } from "@/app/(HostLayout)/components/types/feature";
+// import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
 
 const VALID_FEATURE_TYPES: FeatureType[] = ["rent", "flat", "land"];
 

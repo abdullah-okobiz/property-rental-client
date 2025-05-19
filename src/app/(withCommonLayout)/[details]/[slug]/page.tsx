@@ -23,34 +23,34 @@ import AmenitiesForFlat from "@/components/details/AmenitiesForFlat/AmenitiesFor
 import FlatAndLandVideo from "@/components/details/FlatAndLandVideo/FlatAndLandVideo";
 import { apiBaseUrl } from "@/config/config";
 import Appointment from "@/components/details/Appointment/Appointment";
-// import Appointment from "@/components/details/Appointment/Appointment";
 
-interface Props {
-  params: {
+import { FC } from "react";
+
+interface PageProps {
+  params: Promise<{
     details: string;
     slug: string;
-  };
+  }>;
 }
 
-const Page = async ({ params }: Props) => {
-  const { details, slug } = params;
-
+const Page: FC<PageProps> = async ({ params }) => {
+  const resolvedParams = await params;
   let resData = null;
   console.log("---------------params", params);
 
   try {
-    if (details === "flat") {
-      const { data } = await getSingleFlatBySlug(slug);
+    if (resolvedParams.details === "flat") {
+      const { data } = await getSingleFlatBySlug(resolvedParams.slug);
       console.log("---------------data", data);
 
       resData = data;
-    } else if (details === "rent") {
-      const { data } = await getSingleRentBySlug(slug);
+    } else if (resolvedParams.details === "rent") {
+      const { data } = await getSingleRentBySlug(resolvedParams.slug);
       console.log("---------------data", data);
 
       resData = data;
-    } else if (details === "land") {
-      const { data } = await getSingleLandBySlug(slug);
+    } else if (resolvedParams.details === "land") {
+      const { data } = await getSingleLandBySlug(resolvedParams.slug);
       console.log("---------------data", data);
 
       resData = data;
@@ -195,7 +195,13 @@ const Page = async ({ params }: Props) => {
             </div>
           </div>
 
-          <div>{details === "rent" ? "" : <Appointment title={title} />}</div>
+          <div>
+            {resolvedParams.details === "rent" ? (
+              ""
+            ) : (
+              <Appointment title={title} />
+            )}
+          </div>
         </div>
       </div>
 
@@ -205,7 +211,7 @@ const Page = async ({ params }: Props) => {
       </div>
 
       <div>
-        {details === "rent" ? (
+        {resolvedParams.details === "rent" ? (
           <AmenitiesForRent amenities={amenities} />
         ) : (
           <div>
@@ -215,14 +221,14 @@ const Page = async ({ params }: Props) => {
       </div>
 
       <div className="">
-        {details === "rent" ? (
+        {resolvedParams.details === "rent" ? (
           <CleanderAndResever title={title} />
         ) : (
           <div>{/* <Appointment /> */}</div>
         )}
       </div>
 
-      {details === "rent" && (
+      {resolvedParams.details === "rent" && (
         <div className="py-6 border-b border-[#262626]/30 pb-6 lg:w-[60%]">
           {" "}
           <HostInformation />{" "}
