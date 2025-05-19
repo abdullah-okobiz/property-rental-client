@@ -61,6 +61,8 @@ export interface IFloorPlan {
   bathCount: number;
   bedCount: number;
   guestCount: number;
+  drawing: boolean;
+  dinning: boolean;
   bedRoomCount: number;
 }
 
@@ -103,6 +105,7 @@ export interface IRent {
   houseRules: string[];
   listingFor: IListingFor[];
   location: string;
+  buildingYear:string;
   price: number;
   slug: string;
   status: string;
