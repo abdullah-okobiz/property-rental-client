@@ -1,8 +1,6 @@
 import React from "react";
 import { Steps } from "antd";
 
-const { Step } = Steps;
-
 const StepLayout: React.FC = () => {
   return (
     <div className="flex gap-8 h-full  min-h-[calc(100vh-100px)] ">

@@ -75,6 +75,7 @@ const VerificationForm = () => {
       toast.success("Verification submitted successfully!");
     } catch (err) {
       toast.error("Something went wrong while submitting verification.");
+      console.log(err);
     }
   };
 

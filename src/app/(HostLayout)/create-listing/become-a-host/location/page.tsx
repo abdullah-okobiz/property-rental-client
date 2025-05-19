@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import { Input, Typography } from "antd";
@@ -11,8 +11,8 @@ import { useListingStepContext } from "@/contexts/ListingStepContext";
 import CategoryServices from "@/services/category/category.services";
 
 const { Title } = Typography;
-
 delete (L.Icon.Default.prototype as any)._getIconUrl;
+
 L.Icon.Default.mergeOptions({
   iconUrl: "/images/location.png",
 });
@@ -23,12 +23,12 @@ function MapEventHandler({
   onMoveEnd: (center: [number, number]) => void;
 }) {
   useMapEvents({
-    moveend(e) {
-      const center = e.target.getCenter();
+    moveend(e: L.LeafletEvent) {
+      const center = (e.target as L.Map).getCenter();
       onMoveEnd([center.lat, center.lng]);
     },
-    click(e) {
-      e.target.setView(e.latlng);
+    click(e: L.LeafletMouseEvent) {
+      (e.target as L.Map).setView(e.latlng);
     },
   });
   return null;
@@ -94,19 +94,18 @@ export default function LocationStep() {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (!listingId || !featureType) return;
-    const res = await CategoryServices.updateListingLocation(
+    await CategoryServices.updateListingLocation(
       featureType,
       listingId,
       location
     );
-    console.log("Submitted location:", res);
-  };
+  }, [featureType, listingId, location]);
 
   useEffect(() => {
     setOnNextSubmit(handleSubmit);
-  }, [location, center, listingId, featureType]);
+  }, [handleSubmit, setOnNextSubmit]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -124,7 +123,8 @@ export default function LocationStep() {
       },
       (err) => {
         console.warn(
-          "Geolocation denied or unavailable. Using default center."
+          "Geolocation denied or unavailable. Using default center.",
+          err
         );
         const defaultCoords: [number, number] = [23.8103, 90.4125];
         setFallbackCenter(defaultCoords);
@@ -146,10 +146,10 @@ export default function LocationStep() {
     <div className="h-full w-full  mx-auto rounded-xl overflow-hidden shadow-lg">
       <div className="p-4">
         <Title level={4} className="mb-2 tracking-wider">
-          Where's your place located?
+          Where&apos;s your place located?
         </Title>
         <h4 className="text-gray-400 tracking-wide">
-          Your address is only shared with guests after they've made a
+          Your address is only shared with guests after they&apos;ve made a
           reservation.
         </h4>
       </div>

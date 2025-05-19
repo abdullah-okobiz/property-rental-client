@@ -5,11 +5,13 @@ import { useListingStepContext } from "@/contexts/ListingStepContext";
 import { useEffect, useState } from "react";
 import { Building2, Home, Landmark } from "lucide-react";
 import FeatureServices from "@/services/feature/feature.services";
+import {
+  Feature,
+  FeatureType,
+} from "@/app/(HostLayout)/components/types/feature";
+import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
 
-type Feature = {
-  _id: string;
-  featureName: string;
-};
+const VALID_FEATURE_TYPES: FeatureType[] = ["rent", "flat", "land"];
 
 export default function FeaturePage() {
   const [features, setFeatures] = useState<Feature[]>([]);
@@ -22,7 +24,7 @@ export default function FeaturePage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data: any = await FeatureServices.fetchFeatures();
+        const data = await FeatureServices.fetchFeatures();
         setFeatures(data.data);
       } catch (err) {
         console.error("Error fetching features", err);
@@ -32,7 +34,6 @@ export default function FeaturePage() {
   }, []);
 
   const handleSubmit = async () => {
-    console.log("clicked handle submit =========");
     if (!selected) {
       setError("Please select a feature before continuing.");
       return;
@@ -44,17 +45,23 @@ export default function FeaturePage() {
     );
     if (!selectedFeature) return;
 
-    const name: any = selectedFeature.featureName.toLowerCase();
+    const featureNameLower = selectedFeature.featureName.toLowerCase();
+
+    if (!VALID_FEATURE_TYPES.includes(featureNameLower as FeatureType)) {
+      console.error("Invalid feature type:", featureNameLower);
+      return;
+    }
+
+    const name = featureNameLower as FeatureType;
 
     setFeatureId(selected);
     setFeatureType(name);
 
     try {
-      const listingRes: any = await FeatureServices.createListing({
+      const listingRes: ListingResponse = await FeatureServices.createListing({
         featureType: name,
         featureId: selected,
       });
-      console.log("listingRes", listingRes);
       setListingId(listingRes.data._id);
     } catch (err) {
       console.error("Error creating listing", err);
