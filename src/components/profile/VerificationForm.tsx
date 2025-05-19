@@ -2,37 +2,43 @@
 
 import { getUser } from "@/services/auth/auth.service";
 import { identityVerification } from "@/services/verification";
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 
 const VerificationForm = () => {
   const router = useRouter();
-  const [step, setStep] = useState(1);
-  const [selectedOption, setSelectedOption] = useState("");
-  const [frontImage, setFrontImage] = useState(null);
-  const [backImage, setBackImage] = useState(null);
-  const [passportImage, setPassportImage] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [step, setStep] = useState<number>(1);
+  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [frontImage, setFrontImage] = useState<File | null>(null);
+  const [backImage, setBackImage] = useState<File | null>(null);
+  const [passportImage, setPassportImage] = useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const handleOptionChange = (e) => {
+  const handleOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(e.target.value);
   };
 
-  const handleFrontImageChange = (e) => {
-    setFrontImage(e.target.files[0]);
+  const handleFrontImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFrontImage(e.target.files[0]);
+    }
   };
 
-  const handleBackImageChange = (e) => {
-    setBackImage(e.target.files[0]);
+  const handleBackImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setBackImage(e.target.files[0]);
+    }
   };
 
-  const handlePassportImageChange = (e) => {
-    setPassportImage(e.target.files[0]);
+  const handlePassportImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setPassportImage(e.target.files[0]);
+    }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (step === 1) {
@@ -80,8 +86,9 @@ const VerificationForm = () => {
       }
       await identityVerification(formData, token);
       toast.success("Verification submitted successfully!");
-      router.push("/profile"); // Redirect after successful submission
+      router.push("/profile");
     } catch (error) {
+      console.error(error);
       toast.error("Something went wrong while submitting verification.");
       setIsSubmitting(false);
     }
