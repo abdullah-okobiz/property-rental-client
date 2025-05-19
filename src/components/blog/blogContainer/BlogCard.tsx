@@ -18,13 +18,7 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
     <Link href={`/blogs/${blog._id}`}>
       <div className=" rounded  cursor-pointer border-0 overflow-hidden group shadow-sm hover:shadow-md transition duration-300">
         <div className="aspect-w-16 aspect-h-9 bg-gray-100  relative overflow-hidden">
-          {/* <img
-            src={`${apiBaseUrl}${blog?.blogImage}` ?? ""}
-            alt="image"
-            width={300}
-            height={300}
-            className="w-full h-64 object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-          /> */}
+         
 
           <Image
             src={`${apiBaseUrl}${blog?.blogImage}`}
@@ -62,37 +56,6 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
               </button>
             </Link>
           </div>
-
-          {/* <Link href={`/blogs/${blog._id}`}>
-              <h3 className="text-xl font-bold text-blue-400 hover:underline mb-4 line-clamp-1 text-justify ">
-               
-                {blog.blogTitle}
-              </h3>{" "}
-            </Link> */}
-
-          {/* <div>
-              <Link href={`/blogs/${blog._id}`}>
-                <button className="relative overflow-hidden rounded-full flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600  text-sm font-medium group cursor-pointer">
-                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  <span className="relative z-10 transition-colors duration-300 group-hover:text-white">
-                    Read more
-                  </span>
-                  <svg
-                    className="w-4 h-4 relative z-10 text-blue-600 group-hover:text-white transition-transform duration-300 group-hover:translate-x-1"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </button>
-              </Link>
-            </div> */}
         </div>
       </div>
     </Link>
