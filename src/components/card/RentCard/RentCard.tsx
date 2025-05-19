@@ -13,15 +13,17 @@ import { PiMapPin } from "react-icons/pi";
 
 interface Props {
   rent: IRent;
+  linkPrefix: string;
 }
 
-const RentCard: React.FC<Props> = ({ rent }) => {
+const RentCard: React.FC<Props> = ({ rent, linkPrefix }) => {
   const { title, coverImage, floorPlan, price, location, slug } = rent;
+  const href = `/${linkPrefix}/${slug}`;
   return (
     <div
       className={`rounded shadow-sm hover:shadow-md group cursor-pointer border border-transparent hover:border-primary/30 duration-300 ${poppins.className}`}
     >
-      <Link href={`rent/${slug}`}>
+      <Link href={href}>
         <div className="h-[280px] overflow-hidden relative group">
           <Image
             src={apiBaseUrl + coverImage}
@@ -33,7 +35,7 @@ const RentCard: React.FC<Props> = ({ rent }) => {
           <div className="absolute top-[-100%] left-0 w-full h-full bg-[#fff]/16 transition-all duration-700 group-hover:top-0"></div>
         </div>
       </Link>
-      <Link href={`rent/${slug}`}>
+      <Link href={href}>
         <div className="px-4 py-4">
           <h2 className="line-clamp-1  font-medium text-base">{title}</h2>
           <p className="flex items-center gap-2 mt-2">

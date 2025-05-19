@@ -30,7 +30,7 @@ const FlatsSection: React.FC<Props> = ({ flats }) => {
 
       <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
         {flats?.slice(0, 8).map((flat) => (
-          <RentCard key={flat._id} rent={flat}></RentCard>
+          <RentCard key={flat._id} rent={flat} linkPrefix="flat"></RentCard>
         ))}
       </div>
 

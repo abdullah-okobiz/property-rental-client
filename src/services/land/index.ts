@@ -15,7 +15,7 @@ export const getAllLands = async ({
   category,
 }: GetAllLandsParams = {}) => {
   const params = new URLSearchParams();
- 
+
   params.append("page", page.toString());
   if (status) params.append("status", status);
   if (sort !== undefined) params.append("sort", sort.toString());
@@ -28,3 +28,12 @@ export const getAllLands = async ({
   return res.json();
 };
 
+export const getSingleLandBySlug = async (slug: string) => {
+  const res = await fetch(`${apiBaseUrl}/land/${slug}`);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch land");
+  }
+
+  return res.json();
+};

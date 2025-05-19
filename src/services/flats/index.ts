@@ -29,3 +29,13 @@ export const getAllFlats = async ({
   if (!res.ok) throw new Error("Failed to fetch flat");
   return res.json();
 };
+
+export const getSingleFlatBySlug = async (slug: string) => {
+  const res = await fetch(`${apiBaseUrl}/flat/${slug}`);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch flat");
+  }
+
+  return res.json();
+};

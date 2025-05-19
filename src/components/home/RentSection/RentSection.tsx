@@ -23,17 +23,17 @@ const RentSection: React.FC<Props> = ({ rents }) => {
 
       <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
         {rents?.slice(0, 8).map((rent) => (
-          <RentCard key={rent._id} rent={rent}></RentCard>
+          <RentCard key={rent._id} rent={rent} linkPrefix="rent"></RentCard>
         ))}
       </div>
 
       <div className="flex items-center justify-center py-8 text-[#fff]">
-        <Link href='/rent'>
-        <button
-          className={`bg-primary px-6 py-3 rounded font-medium cursor-pointer  ${poppins.className}`}
-        >
-          Load more..
-        </button>
+        <Link href="/rent">
+          <button
+            className={`bg-primary px-6 py-3 rounded font-medium cursor-pointer  ${poppins.className}`}
+          >
+            Load more..
+          </button>
         </Link>
       </div>
     </div>

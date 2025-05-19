@@ -1,3 +1,5 @@
+// app/[details]/[slug]/page.tsx (or similar file structure)
+
 import { poppins } from "@/app/font";
 import ImagesGallary from "@/components/details/RentDetails/ImagesGallary/ImagesGallary";
 import React from "react";
@@ -16,38 +18,69 @@ import RulesRent from "@/components/details/RulesRent/RulesRent";
 import { getSingleRentBySlug } from "@/services/rents";
 import { apiBaseUrl } from "@/config/config";
 import { IAmenities } from "@/types";
+import { getSingleFlatBySlug } from "@/services/flats";
+import { getSingleLandBySlug } from "@/services/land";
+import { notFound } from "next/navigation";
 
 interface Props {
-  params: Promise<{
-    rentSlug: string;
-  }>;
+  params: {
+    details: string;
+    slug: string;
+  };
 }
 
-const page = async ({ params }: Props) => {
-  const resolvedParams = await params;
-  const { data: rent } = await getSingleRentBySlug(resolvedParams.rentSlug);
+const Page = async ({ params }: Props) => {
+  const { details, slug } = await params;
+
+  let resData: any = null;
+  console.log("---------------params", params);
+
+  try {
+    if (details === "flat") {
+      const { data } = await getSingleFlatBySlug(slug);
+      console.log("---------------data", data);
+
+      resData = data;
+    } else if (details === "rent") {
+      const { data } = await getSingleRentBySlug(slug);
+      console.log("---------------data", data);
+
+      resData = data;
+    } else if (details === "land") {
+      const { data } = await getSingleLandBySlug(slug);
+      console.log("---------------data", data);
+
+      resData = data;
+    } else {
+      return notFound();
+    }
+  } catch (error) {
+    return notFound();
+  }
+
+  console.log("---------------resData", resData);
+
+  if (!resData) return notFound();
+
   const {
-    title,
     location,
     images,
+    title,
     description,
     amenities,
     allowableThings,
     cancellationPolicy,
     houseRules,
     floorPlan,
-  } = rent;
+  } = resData;
+
   return (
     <div className={`Container py-8 ${poppins.className}`}>
       <div className="flex flex-col">
-        <h2 className={`xl:text-2xl lg:text-xl text-lg font-medium`}>
-          {title}
-        </h2>
+        <h2 className="xl:text-2xl lg:text-xl text-lg font-medium">{title}</h2>
         <div className="flex items-center justify-between py-2">
           <p className="flex items-center gap-1 font-medium text-[#262626]/60 text-base">
-            <span>
-              <PiMapPinLine />
-            </span>
+            <PiMapPinLine />
             <span>{location}</span>
           </p>
           <p className="border border-[#262626]/20 p-2 rounded-full cursor-pointer hover:border-primary hover:text-primary duration-300">
@@ -56,9 +89,7 @@ const page = async ({ params }: Props) => {
         </div>
       </div>
 
-      <div>
-        <ImagesGallary images={images} />
-      </div>
+      <ImagesGallary images={images} />
 
       <div className="flex items-center gap-4 border-b border-[#262626]/30 pb-4 lg:w-[60%]">
         <div className="border-2 border-[#262626]/40 rounded-full">
@@ -74,68 +105,50 @@ const page = async ({ params }: Props) => {
           <h2 className="text-xl font-medium">
             Entire villa hosted by <span>Mishu</span>
           </h2>
-          <div>
-            <div className="flex items-center flex-wrap gap-2 my-2 text-sm text-[#262626]/60">
-              {floorPlan && (
-                <>
-                  {floorPlan.bedroomCount > 0 && (
-                    <div className="flex items-center gap-2">
-                      <span>
-                        <MdOutlineKingBed />
-                      </span>
-                      <span>
-                        {floorPlan.bedroomCount} Bedroom
-                        {floorPlan.bedroomCount > 1 ? "s" : ""}
-                      </span>
-                    </div>
-                  )}
-                  {floorPlan.bathCount !== "" && (
-                    <div className="flex items-center gap-2">
-                      <span>
-                        <LiaBathSolid />
-                      </span>
-                      <span>
-                        {floorPlan.bathCount} Bath
-                        {Number(floorPlan.bathCount) > 1 ? "s" : ""}
-                      </span>
-                    </div>
-                  )}
-                  {floorPlan.bedCount > 0 && (
-                    <div className="flex items-center gap-2">
-                      <span>
-                        <LuBed />
-                      </span>
-                      <span>
-                        {floorPlan.bedCount} Bed
-                        {floorPlan.bedCount > 1 ? "s" : ""}
-                      </span>
-                    </div>
-                  )}
-                  {floorPlan.guestCount > 0 && (
-                    <div className="flex items-center gap-2">
-                      <span>
-                        <BsPeople />
-                      </span>
-                      <span>
-                        {floorPlan.guestCount} Guest
-                        {floorPlan.guestCount > 1 ? "s" : ""}
-                      </span>
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
+          <div className="flex items-center flex-wrap gap-2 my-2 text-sm text-[#262626]/60">
+            {floorPlan?.bedroomCount > 0 && (
+              <div className="flex items-center gap-2">
+                <MdOutlineKingBed />
+                <span>
+                  {floorPlan.bedroomCount} Bedroom
+                  {floorPlan.bedroomCount > 1 ? "s" : ""}
+                </span>
+              </div>
+            )}
+            {floorPlan?.bathCount && (
+              <div className="flex items-center gap-2">
+                <LiaBathSolid />
+                <span>
+                  {floorPlan.bathCount} Bath
+                  {Number(floorPlan.bathCount) > 1 ? "s" : ""}
+                </span>
+              </div>
+            )}
+            {floorPlan?.bedCount > 0 && (
+              <div className="flex items-center gap-2">
+                <LuBed />
+                <span>
+                  {floorPlan.bedCount} Bed{floorPlan.bedCount > 1 ? "s" : ""}
+                </span>
+              </div>
+            )}
+            {floorPlan?.guestCount > 0 && (
+              <div className="flex items-center gap-2">
+                <BsPeople />
+                <span>
+                  {floorPlan.guestCount} Guest
+                  {floorPlan.guestCount > 1 ? "s" : ""}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      <div>
-        <RentDetails description={description} />
-      </div>
+      <RentDetails description={description} />
 
       <div className="py-6 border-b border-[#262626]/30 pb-6 lg:w-[60%]">
         <h2 className="text-xl font-medium">House Details</h2>
-
         <div className="flex items-center gap-2 mt-4 pb-2">
           {amenities?.map((amenitie: IAmenities) => (
             <div
@@ -145,7 +158,7 @@ const page = async ({ params }: Props) => {
               <div className="w-[30px]">
                 <Image
                   src={apiBaseUrl + amenitie.amenitiesImage}
-                  alt="amenitie.amenitiesLabel"
+                  alt={amenitie.amenitiesLabel}
                   width={30}
                   height={30}
                 />
@@ -156,23 +169,21 @@ const page = async ({ params }: Props) => {
         </div>
       </div>
 
-      <div className="">
-        <CleanderAndResever />
-      </div>
+      <CleanderAndResever />
 
       <div className="py-6 border-b border-[#262626]/30 pb-6 lg:w-[60%]">
         <HostInformation />
       </div>
 
       <div className="py-6">
-        <RulesRent
+        {/* <RulesRent
           houseRules={houseRules}
           cancellationPolicy={cancellationPolicy}
           allowableThings={allowableThings}
-        />
+        /> */}
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;
