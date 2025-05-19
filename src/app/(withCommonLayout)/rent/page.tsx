@@ -35,7 +35,7 @@ const Rent = async ({ searchParams }: RentProps) => {
 
       <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
         {rents?.slice(0, 8).map((rent: IRent) => (
-          <RentCard key={rent._id} rent={rent} />
+          <RentCard key={rent._id} rent={rent} linkPrefix="rent" />
         ))}
       </div>
     </div>

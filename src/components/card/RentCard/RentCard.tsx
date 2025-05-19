@@ -5,11 +5,11 @@ import { IRent } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { BsPeople } from "react-icons/bs";
+import { BsCalendar2Date, BsHouses, BsPeople } from "react-icons/bs";
 import { LiaBathSolid } from "react-icons/lia";
 import { LuBed } from "react-icons/lu";
 import { MdOutlineKingBed } from "react-icons/md";
-import { PiMapPin } from "react-icons/pi";
+import { PiHouseLine, PiMapPin } from "react-icons/pi";
 
 interface Props {
   rent: IRent;
@@ -17,7 +17,8 @@ interface Props {
 }
 
 const RentCard: React.FC<Props> = ({ rent, linkPrefix }) => {
-  const { title, coverImage, floorPlan, price, location, slug } = rent;
+  const { title, coverImage, floorPlan, price, location, slug, buildingYear } =
+    rent;
   const href = `/${linkPrefix}/${slug}`;
   return (
     <div
@@ -33,6 +34,13 @@ const RentCard: React.FC<Props> = ({ rent, linkPrefix }) => {
             className="w-full h-full rounded-t object-cover transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute top-[-100%] left-0 w-full h-full bg-[#fff]/16 transition-all duration-700 group-hover:top-0"></div>
+          {/* <div>
+            {buildingYear && (
+              <p className="px-4 py-2 rounded border border-[#fff]/20 text-[#fff] text-sm font-medium absolute top-4 right-4 bg-primary">
+                {buildingYear} Year
+              </p>
+            )}
+          </div> */}
         </div>
       </Link>
       <Link href={href}>
@@ -99,6 +107,39 @@ const RentCard: React.FC<Props> = ({ rent, linkPrefix }) => {
                     </span>
                   </div>
                 )}
+
+                {floorPlan?.drawing == true && (
+                  <div className="flex items-center gap-1">
+                    <PiHouseLine />
+
+                    <span>
+                      {floorPlan.guestCount} Drawing
+                      {floorPlan.guestCount > 1 ? "s" : ""}
+                    </span>
+                  </div>
+                )}
+
+                {floorPlan?.dinning == true && (
+                  <div className="flex items-center gap-1">
+                    <BsHouses />
+
+                    <span>
+                      {floorPlan.guestCount} Dinning
+                      {floorPlan.guestCount > 1 ? "s" : ""}
+                    </span>
+                  </div>
+                )}
+
+                <div>
+                  {buildingYear && (
+                    <p className="flex item-center gap-1">
+                      <span>
+                        <BsCalendar2Date className="pt-1" />
+                      </span>
+                      <span> {buildingYear} Year</span>
+                    </p>
+                  )}
+                </div>
               </>
             )}
           </div>

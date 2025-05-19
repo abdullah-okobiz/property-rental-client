@@ -9,14 +9,6 @@ interface Props {
 }
 
 const FlatsSection: React.FC<Props> = ({ flats }) => {
-  // const [rents, setRents] = useState([]);
-  // useEffect(() => {
-  //   fetch("flatData.json")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setRents(data);
-  //     });
-  // }, []);
 
   console.log("find flats data", flats);
   return (

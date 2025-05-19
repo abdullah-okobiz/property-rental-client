@@ -40,7 +40,7 @@ const LandSection: React.FC<Props> = ({ lands }) => {
           >
             {lands?.slice(0, 8).map((land) => (
               <SwiperSlide key={land._id} className="py-2 px-1">
-                <RentCard rent={land} />
+                <RentCard rent={land} linkPrefix="land" />
               </SwiperSlide>
             ))}
           </Swiper>
