@@ -14,7 +14,7 @@ import Image from "next/image";
 import RentDetails from "@/components/details/RentDetails/RentDetails";
 import CleanderAndResever from "@/components/details/CleanderAndResever/CleanderAndResever";
 import HostInformation from "@/components/details/HostInformation/HostInformation";
-import RulesRent from "@/components/details/RulesRent/RulesRent";
+
 import { getSingleRentBySlug } from "@/services/rents";
 import { apiBaseUrl } from "@/config/config";
 import { IAmenities } from "@/types";
@@ -32,7 +32,7 @@ interface Props {
 const Page = async ({ params }: Props) => {
   const { details, slug } = await params;
 
-  let resData: any = null;
+  let resData = null;
   console.log("---------------params", params);
 
   try {
@@ -56,6 +56,7 @@ const Page = async ({ params }: Props) => {
     }
   } catch (error) {
     return notFound();
+    console.log(error);
   }
 
   console.log("---------------resData", resData);
@@ -68,9 +69,9 @@ const Page = async ({ params }: Props) => {
     title,
     description,
     amenities,
-    allowableThings,
-    cancellationPolicy,
-    houseRules,
+    // allowableThings,
+    // cancellationPolicy,
+    // houseRules,
     floorPlan,
   } = resData;
 
