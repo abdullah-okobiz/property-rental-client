@@ -1,21 +1,26 @@
 "use client";
+import Tabs from "./Tabs";
+import BlogList from "./BlogList";
+import { useState } from "react";
+import { BlogData, Feature } from "@/types/blogTypes/blogTypes";
 
-import Tabs from './Tabs';
-import BlogList from './BlogList';
-import { useState } from 'react';
+interface BlogTabsProps {
+  blogs: BlogData[];
+  features: Feature[];
+}
 
-const BlogTabs = ({ blogs, features }: any) => {
-  const [activeTab, setActiveTab] = useState('All');
+const BlogTabs = ({ blogs, features }: BlogTabsProps) => {
+  const [activeTab, setActiveTab] = useState("All");
 
-  const tabs = ['All', ...features.map((f: any) => f.featureName)];
+  const tabs = ["All", ...features.map((f) => f.featureName)];
 
   const filteredBlogs =
-    activeTab === 'All'
+    activeTab === "All"
       ? blogs
-      : blogs.filter((blog: any) => blog.feature?.featureName === activeTab);
+      : blogs.filter((blog) => blog.feature?.featureName === activeTab);
 
   return (
-    <div className=" px-4 sm:px-6 lg:px-8 py-6">
+    <div className="px-4 sm:px-6 lg:px-8 py-6">
       <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
       <BlogList blogs={filteredBlogs} />
     </div>

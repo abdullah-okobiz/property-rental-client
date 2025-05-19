@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, ChangeEvent } from "react";
 import { getUser } from "@/services/auth/auth.service";
 import { jwtDecode } from "jwt-decode";
 import {
@@ -17,6 +17,8 @@ import {
   getProfileBio,
   getProfileAvatar,
 } from "@/services/profile";
+
+import defaultProfileImage from "@/assets/images/defaultProfile.png";
 
 const ALL_LANGUAGES = [
   "Afrikaans",
@@ -129,7 +131,7 @@ interface ProfileData {
   language: string;
   languages: string[];
   bio: string;
-  image: string;
+  image: string | StaticImageData;
 }
 
 const ProfileEditForm = () => {
@@ -140,14 +142,14 @@ const ProfileEditForm = () => {
     language: "",
     languages: [],
     bio: "",
-    image: "/default-profile.jpg",
+    image: defaultProfileImage,
   });
   const [loading, setLoading] = useState(true);
   const [editingField, setEditingField] = useState<string | null>(null);
   const [tempValue, setTempValue] = useState("");
   const [tempLanguages, setTempLanguages] = useState<string[]>([]);
   const [showImageModal, setShowImageModal] = useState(false);
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState<string>("");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [languageSearch, setLanguageSearch] = useState("");
@@ -179,12 +181,12 @@ const ProfileEditForm = () => {
           email: decoded.email,
           work: work?.data?.worksAt || "",
           location: location?.data?.location || "",
-          language: languages.join(", "), // For display
-          languages: languages, // For storage
+          language: languages.join(", "),
+          languages: languages,
           bio: bio?.data?.intro || "",
           image: avatar?.data?.avatar
             ? `${process.env.NEXT_PUBLIC_API_BASE_URL}${avatar.data.avatar}`
-            : "/default-profile.jpg",
+            : defaultProfileImage,
         });
       } catch (error) {
         console.error("Failed to fetch profile data:", error);
@@ -201,8 +203,8 @@ const ProfileEditForm = () => {
     if (field === "language") {
       setTempLanguages(profileData.languages);
     } else {
-      const value = profileData[field as keyof ProfileData];
-      setTempValue(Array.isArray(value) ? value.join(", ") : value || "");
+      const value = profileData[field as keyof Omit<ProfileData, "languages">];
+      setTempValue(typeof value === "string" ? value : "");
     }
   };
 
@@ -262,7 +264,7 @@ const ProfileEditForm = () => {
     }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       setImageFile(file);
@@ -331,7 +333,8 @@ const ProfileEditForm = () => {
                 height={160}
                 className="object-cover"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = "/default-profile.jpg";
+                  const target = e.target as HTMLImageElement;
+                  target.src = "/default-profile.jpg";
                 }}
               />
             </div>
@@ -358,8 +361,16 @@ const ProfileEditForm = () => {
               >
                 <div className="text-sm text-gray-500 capitalize">{field}</div>
                 <div className="font-medium mt-1">
-                  {profileData[field as keyof ProfileData] ||
-                    `Add your ${field}`}
+                  {(() => {
+                    const value = profileData[field as keyof ProfileData];
+                    if (typeof value === "string") {
+                      return value || `Add your ${field}`;
+                    }
+                    if (Array.isArray(value)) {
+                      return value.join(", ") || `Add your ${field}`;
+                    }
+                    return `Add your ${field}`;
+                  })()}
                 </div>
               </div>
             ))}
@@ -519,6 +530,10 @@ const ProfileEditForm = () => {
                   width={128}
                   height={128}
                   className="object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "/default-profile.jpg";
+                  }}
                 />
               </div>
               <input

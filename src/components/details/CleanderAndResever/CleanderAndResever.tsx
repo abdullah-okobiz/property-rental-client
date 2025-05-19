@@ -3,7 +3,11 @@ import React, { useState } from "react";
 import Cleander from "../Cleander/Cleander";
 import Reserve from "../Reserve/Reserve";
 import { addDays } from "date-fns";
-const CleanderAndResever = () => {
+
+interface Props {
+  title:string
+}
+const CleanderAndResever:React.FC<Props> = ({title}) => {
   const [dateRange, setDateRange] = useState<{
     startDate: Date | undefined;
     endDate: Date | undefined;
@@ -14,7 +18,7 @@ const CleanderAndResever = () => {
   return (
     <div className="mt-20 flex">
       <div className="w-2/3">
-        <Cleander dateRange={dateRange} setDateRange={setDateRange} />
+        <Cleander dateRange={dateRange} setDateRange={setDateRange} title={title} />
       </div>
       <div className="w-1/3">
         <div className="sticky top-0">

@@ -1,26 +1,29 @@
-// app/[details]/[slug]/page.tsx (or similar file structure)
-
 import { poppins } from "@/app/font";
 import ImagesGallary from "@/components/details/RentDetails/ImagesGallary/ImagesGallary";
 import React from "react";
-import { BsPeople } from "react-icons/bs";
+import { BsCalendar2Date, BsHouses, BsPeople } from "react-icons/bs";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { LiaBathSolid } from "react-icons/lia";
 import { LuBed } from "react-icons/lu";
 import { MdOutlineKingBed } from "react-icons/md";
-import { PiMapPinLine } from "react-icons/pi";
-import defualtUser from "@/assets/user/avatar.png";
+import { PiHouseLine, PiMapPinLine } from "react-icons/pi";
 import Image from "next/image";
 import RentDetails from "@/components/details/RentDetails/RentDetails";
 import CleanderAndResever from "@/components/details/CleanderAndResever/CleanderAndResever";
 import HostInformation from "@/components/details/HostInformation/HostInformation";
 
 import { getSingleRentBySlug } from "@/services/rents";
-import { apiBaseUrl } from "@/config/config";
-import { IAmenities } from "@/types";
+
 import { getSingleFlatBySlug } from "@/services/flats";
 import { getSingleLandBySlug } from "@/services/land";
 import { notFound } from "next/navigation";
+import RulesRent from "@/components/details/RulesRent/RulesRent";
+import AmenitiesForRent from "@/components/details/Amenities/AmenitiesForRent/AmenitiesForRent";
+import AmenitiesForFlat from "@/components/details/AmenitiesForFlat/AmenitiesForFlat";
+import FlatAndLandVideo from "@/components/details/FlatAndLandVideo/FlatAndLandVideo";
+import { apiBaseUrl } from "@/config/config";
+import Appointment from "@/components/details/Appointment/Appointment";
+// import Appointment from "@/components/details/Appointment/Appointment";
 
 interface Props {
   params: {
@@ -30,7 +33,7 @@ interface Props {
 }
 
 const Page = async ({ params }: Props) => {
-  const { details, slug } = await params;
+  const { details, slug } = params;
 
   let resData = null;
   console.log("---------------params", params);
@@ -69,10 +72,13 @@ const Page = async ({ params }: Props) => {
     title,
     description,
     amenities,
-    // allowableThings,
-    // cancellationPolicy,
-    // houseRules,
+    allowableThings,
+    cancellationPolicy,
+    houseRules,
     floorPlan,
+    buildingYear,
+    video,
+    host,
   } = resData;
 
   return (
@@ -93,96 +99,145 @@ const Page = async ({ params }: Props) => {
       <ImagesGallary images={images} />
 
       <div className="flex items-center gap-4 border-b border-[#262626]/30 pb-4 lg:w-[60%]">
-        <div className="border-2 border-[#262626]/40 rounded-full">
-          <Image
-            src={defualtUser}
-            alt="user"
-            width={35}
-            height={35}
-            className="opacity-50"
+        <div>
+          {host && (
+            <div className="border-2 border-[#262626]/40 rounded-full">
+              {host?.avatar ? (
+                <Image
+                  src={apiBaseUrl + host.avatar}
+                  alt="user"
+                  width={55}
+                  height={35}
+                  className="opacity-50"
+                />
+              ) : (
+                <div className="border pt-1 flex item-center justify-center w-8 h-8 border-[#262626]/20 rounded-full text-center">
+                  ?
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        <div className="flex item-center justify-between mt-6 w-full">
+          <div className="flex flex-col">
+            {host && (
+              <h2 className="text-xl font-medium">
+                Entire villa hosted by <span>{host.name}</span>
+              </h2>
+            )}
+            <div className="flex items-center flex-wrap gap-2 my-2 text-sm text-[#262626]/60">
+              {floorPlan?.bedroomCount > 0 && (
+                <div className="flex items-center gap-1">
+                  <MdOutlineKingBed />
+                  <span>
+                    {floorPlan.bedroomCount} Bedroom
+                    {floorPlan.bedroomCount > 1 ? "s" : ""}
+                  </span>
+                </div>
+              )}
+              {floorPlan?.bathCount && (
+                <div className="flex items-center gap-1">
+                  <LiaBathSolid />
+                  <span>
+                    {floorPlan.bathCount} Bath
+                    {Number(floorPlan.bathCount) > 1 ? "s" : ""}
+                  </span>
+                </div>
+              )}
+              {floorPlan?.bedCount > 0 && (
+                <div className="flex items-center gap-1">
+                  <LuBed />
+                  <span>
+                    {floorPlan.bedCount} Bed{floorPlan.bedCount > 1 ? "s" : ""}
+                  </span>
+                </div>
+              )}
+              {floorPlan?.guestCount > 0 && (
+                <div className="flex items-center gap-1">
+                  <BsPeople />
+                  <span>
+                    {floorPlan.guestCount} Guest
+                    {floorPlan.guestCount > 1 ? "s" : ""}
+                  </span>
+                </div>
+              )}
+              {floorPlan?.drawing == true && (
+                <div className="flex items-center gap-1">
+                  <PiHouseLine />
+
+                  <span>
+                    {floorPlan.guestCount} Drawing
+                    {floorPlan.guestCount > 1 ? "s" : ""}
+                  </span>
+                </div>
+              )}
+              {floorPlan?.dinning == true && (
+                <div className="flex items-center gap-1">
+                  <BsHouses />
+
+                  <span>
+                    {floorPlan.guestCount} Dinning
+                    {floorPlan.guestCount > 1 ? "s" : ""}
+                  </span>
+                </div>
+              )}
+
+              <div>
+                {buildingYear && (
+                  <p className="flex item-center gap-1">
+                    <span>
+                      <BsCalendar2Date className="pt-1" />
+                    </span>
+                    <span> {buildingYear} Year</span>
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div>{details === "rent" ? "" : <Appointment title={title} />}</div>
+        </div>
+      </div>
+
+      <div className="flex gap-20">
+        <RentDetails description={description} />
+        {video && <FlatAndLandVideo video={video} />}
+      </div>
+
+      <div>
+        {details === "rent" ? (
+          <AmenitiesForRent amenities={amenities} />
+        ) : (
+          <div>
+            <AmenitiesForFlat amenities={amenities} />
+          </div>
+        )}
+      </div>
+
+      <div className="">
+        {details === "rent" ? (
+          <CleanderAndResever title={title} />
+        ) : (
+          <div>{/* <Appointment /> */}</div>
+        )}
+      </div>
+
+      {details === "rent" && (
+        <div className="py-6 border-b border-[#262626]/30 pb-6 lg:w-[60%]">
+          {" "}
+          <HostInformation />{" "}
+        </div>
+      )}
+
+      {(allowableThings || cancellationPolicy || houseRules) && (
+        <div className="py-6">
+          <RulesRent
+            houseRules={houseRules}
+            cancellationPolicy={cancellationPolicy}
+            allowableThings={allowableThings}
           />
         </div>
-        <div className="flex flex-col mt-6">
-          <h2 className="text-xl font-medium">
-            Entire villa hosted by <span>Mishu</span>
-          </h2>
-          <div className="flex items-center flex-wrap gap-2 my-2 text-sm text-[#262626]/60">
-            {floorPlan?.bedroomCount > 0 && (
-              <div className="flex items-center gap-2">
-                <MdOutlineKingBed />
-                <span>
-                  {floorPlan.bedroomCount} Bedroom
-                  {floorPlan.bedroomCount > 1 ? "s" : ""}
-                </span>
-              </div>
-            )}
-            {floorPlan?.bathCount && (
-              <div className="flex items-center gap-2">
-                <LiaBathSolid />
-                <span>
-                  {floorPlan.bathCount} Bath
-                  {Number(floorPlan.bathCount) > 1 ? "s" : ""}
-                </span>
-              </div>
-            )}
-            {floorPlan?.bedCount > 0 && (
-              <div className="flex items-center gap-2">
-                <LuBed />
-                <span>
-                  {floorPlan.bedCount} Bed{floorPlan.bedCount > 1 ? "s" : ""}
-                </span>
-              </div>
-            )}
-            {floorPlan?.guestCount > 0 && (
-              <div className="flex items-center gap-2">
-                <BsPeople />
-                <span>
-                  {floorPlan.guestCount} Guest
-                  {floorPlan.guestCount > 1 ? "s" : ""}
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      <RentDetails description={description} />
-
-      <div className="py-6 border-b border-[#262626]/30 pb-6 lg:w-[60%]">
-        <h2 className="text-xl font-medium">House Details</h2>
-        <div className="flex items-center gap-2 mt-4 pb-2">
-          {amenities?.map((amenitie: IAmenities) => (
-            <div
-              key={amenitie._id}
-              className="px-4 py-2 rounded bg-[#F2F2F5] text-[#262626]/80 text-sm flex items-center gap-1"
-            >
-              <div className="w-[30px]">
-                <Image
-                  src={apiBaseUrl + amenitie.amenitiesImage}
-                  alt={amenitie.amenitiesLabel}
-                  width={30}
-                  height={30}
-                />
-              </div>
-              <p>{amenitie.amenitiesLabel}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <CleanderAndResever />
-
-      <div className="py-6 border-b border-[#262626]/30 pb-6 lg:w-[60%]">
-        <HostInformation />
-      </div>
-
-      <div className="py-6">
-        {/* <RulesRent
-          houseRules={houseRules}
-          cancellationPolicy={cancellationPolicy}
-          allowableThings={allowableThings}
-        /> */}
-      </div>
+      )}
     </div>
   );
 };

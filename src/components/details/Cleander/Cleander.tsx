@@ -15,9 +15,14 @@ interface CleanderProps {
     startDate: Date | undefined;
     endDate: Date | undefined;
   }) => void;
+  title: string;
 }
 
-const Cleander: React.FC<CleanderProps> = ({ dateRange, setDateRange }) => {
+const Cleander: React.FC<CleanderProps> = ({
+  dateRange,
+  setDateRange,
+  title,
+}) => {
   const { startDate, endDate } = dateRange;
 
   const numberOfNights =
@@ -28,8 +33,8 @@ const Cleander: React.FC<CleanderProps> = ({ dateRange, setDateRange }) => {
   return (
     <div className="overflow-x-hidden py-6 border-b border-[#262626]/30 pb-12 lg:w-[90%]">
       <h2 className="text-xl font-medium">
-        <span>{numberOfNights}</span> nights in{" "}
-        <span>Cozy Non-ac room at Mugda</span>
+        <span>{(numberOfNights ?? 0).toFixed(0)} nights in</span>{" "}
+        <span>{title}</span>
       </h2>
       <p className="mt-1 text-[#262626]/60 text-sm font-medium">
         Arrival Date - Leaving Date

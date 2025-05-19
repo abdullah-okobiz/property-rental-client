@@ -1,9 +1,8 @@
-"use client";
-
-import React, { useState, useEffect, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode, useCallback } from "react";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { AuthServices } from "@/services/auth/auth.service";
 import AuthContext from "@/contexts/AuthContext";
+import { RefreshTokenResponse } from "@/types/authTypes";
 
 const { processRefreshToken } = AuthServices;
 
@@ -31,6 +30,20 @@ const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<ExtendedJwtPayload | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
+  const refreshToken = useCallback(async () => {
+    try {
+      const res = (await processRefreshToken()) as RefreshTokenResponse;
+      const { accessToken } = res;
+      localStorage.setItem("accessToken", accessToken);
+      const decoded = jwtDecode<ExtendedJwtPayload>(accessToken);
+      setUser(decoded);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error("Refresh token failed:", error);
+      logout();
+    }
+  }, []);
+
   useEffect(() => {
     const checkToken = async () => {
       const accessToken = localStorage.getItem("accessToken");
@@ -55,27 +68,13 @@ const AuthProvider = ({ children }: Props) => {
     };
 
     checkToken();
-  }, []);
+  }, [refreshToken]);
 
   const login = ({ accessToken }: { accessToken: string }) => {
     localStorage.setItem("accessToken", accessToken);
     const decoded = jwtDecode<ExtendedJwtPayload>(accessToken);
     setUser(decoded);
     setIsAuthenticated(true);
-  };
-
-  const refreshToken = async () => {
-    try {
-      const res = await processRefreshToken();
-      const { accessToken }: any = res;
-      localStorage.setItem("accessToken", accessToken);
-      const decoded = jwtDecode<ExtendedJwtPayload>(accessToken);
-      setUser(decoded);
-      setIsAuthenticated(true);
-    } catch (error) {
-      console.error("Refresh token failed:", error);
-      logout();
-    }
   };
 
   const logout = () => {
@@ -93,9 +92,7 @@ const AuthProvider = ({ children }: Props) => {
     refreshToken,
   };
 
-  return (
-    <AuthContext.Provider value={value as any}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
