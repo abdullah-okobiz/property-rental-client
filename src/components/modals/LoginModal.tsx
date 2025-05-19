@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
+import { DecodedJwtPayload, LoginResponse } from "@/types/authTypes";
 
 interface LoginModalProps {
   open: boolean;
@@ -26,21 +27,24 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
   const [messageApi, contextHolder] = message.useMessage();
   const { login } = useAuth();
 
-  const { mutate: loginUser, isPending } = useMutation({
+  const { mutate: loginUser, isPending } = useMutation<
+    LoginResponse,
+    Error,
+    { email: string; password: string }
+  >({
     mutationFn: AuthServices.processLogin,
-    onSuccess: (data: any) => {
-      const accessToken = data?.accessToken;
+    onSuccess: (data) => {
+      const accessToken = data.accessToken;
       if (accessToken) {
         try {
-          const decoded: any = jwtDecode(accessToken);
-          const role = decoded?.role;
+          const decoded = jwtDecode<DecodedJwtPayload>(accessToken);
+          const role = decoded.role;
+
           login({ accessToken });
-          messageApi.success(data?.message || "Login successful!");
+          messageApi.success(data.message || "Login successful!");
 
           if (role === "host") {
             router.replace("/host-dashboard");
-          } else if (role === "guest") {
-            router.replace("/");
           } else {
             router.replace("/");
           }
@@ -55,10 +59,8 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
         messageApi.error("No access token received.");
       }
     },
-    onError: (error: any) => {
-      messageApi.error(
-        error?.response?.data?.message || "Login failed. Please try again."
-      );
+    onError: (error) => {
+      messageApi.error(error.message || "Login failed. Please try again.");
     },
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

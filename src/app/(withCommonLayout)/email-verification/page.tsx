@@ -3,10 +3,11 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { Form, Input, Button, message } from "antd";
 import { useMutation } from "@tanstack/react-query";
-import {AuthServices} from "@/services/auth/auth.service";
 import { useEffect, useState } from "react";
-import useAuth from "@/hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
+import useAuth from "@/hooks/useAuth";
+import { AuthServices } from "@/services/auth/auth.service";
+import { DecodedJwtPayload, OtpPayload, OtpResponse } from "@/types/authTypes";
 
 const { processVerifyEmailOtp, processResendOtp } = AuthServices;
 
@@ -15,39 +16,36 @@ const EmailVerification = () => {
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
   const router = useRouter();
-
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
   const [cooldown, setCooldown] = useState<number>(0);
   const [resendTimer, setResendTimer] = useState<NodeJS.Timeout | null>(null);
 
-  const {
-    mutate: verifyOtp,
-    isPending: isVerifying,
-  } = useMutation({
+  const { mutate: verifyOtp, isPending: isVerifying } = useMutation<
+    OtpResponse,
+    Error,
+    OtpPayload
+  >({
     mutationFn: processVerifyEmailOtp,
-    onSuccess: (res: any) => {
-      const accessToken = res?.data?.accessToken;
+    onSuccess: (data) => {
+      const accessToken = data?.accessToken;
 
       if (accessToken) {
         try {
-          const decoded: any = jwtDecode(accessToken);
+          const decoded = jwtDecode<DecodedJwtPayload>(accessToken);
           const role = decoded?.role;
 
           login({ accessToken });
 
-          messageApi.success(res?.data?.message || "Email verified successfully!");
+          messageApi.success(data?.message || "Email verified successfully!");
           form.resetFields();
 
           if (role === "host") {
             router.replace("/host-dashboard");
-          } else if (role === "guest") {
-            router.replace("/");
           } else {
             router.replace("/");
           }
-
         } catch (error) {
           console.error("Invalid token", error);
           messageApi.error("Invalid token.");
@@ -56,37 +54,31 @@ const EmailVerification = () => {
         messageApi.error("Access token is missing.");
       }
     },
-    onError: (error: any) => {
-      messageApi.error(
-        error?.response?.data?.message || "OTP verification failed."
-      );
+    onError: (error) => {
+      messageApi.error(error?.message || "OTP verification failed.");
     },
   });
 
-  const {
-    mutate: resendOtp,
-    isPending: isResending,
-  } = useMutation({
+  const { mutate: resendOtp, isPending: isResending } = useMutation<
+    OtpResponse,
+    Error,
+    void
+  >({
     mutationFn: () => processResendOtp({ email: email as string }),
-    onSuccess: (res: any) => {
-      messageApi.success(res?.data?.message || "OTP resent to your email!");
+    onSuccess: (res) => {
+      messageApi.success(res.message || "OTP resent to your email!");
       startCooldown(30);
     },
-    onError: (error: any) => {
-      messageApi.error(
-        error?.response?.data?.message || "Failed to resend OTP."
-      );
+    onError: (error) => {
+      messageApi.error(error?.message || "Failed to resend OTP.");
     },
   });
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: { otp: string }) => {
     if (!email) {
       return messageApi.error("Missing email.");
     }
-    verifyOtp({
-      email,
-      otp: values.otp,
-    });
+    verifyOtp({ email, otp: values.otp });
   };
 
   const startCooldown = (seconds: number) => {
@@ -135,7 +127,7 @@ const EmailVerification = () => {
       </Form>
 
       <div className="text-center mt-4">
-        <span className="text-sm text-gray-600">Didn't get the code?</span>
+        <span className="text-sm text-gray-600">Didn&apos;t get the code?</span>
         <br />
         <Button
           type="link"

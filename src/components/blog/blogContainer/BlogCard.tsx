@@ -1,6 +1,5 @@
 import { apiBaseUrl } from "@/config/config";
 import { formatDate } from "../util/DateTimeFormate";
-// import { truncateText } from "../util/truncateText";
 import Link from "next/link";
 import Image from "next/image";
 import { CiCalendarDate } from "react-icons/ci";
@@ -18,14 +17,6 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
     <Link href={`/blogs/${blog._id}`}>
       <div className=" rounded  cursor-pointer border-0 overflow-hidden group shadow-sm hover:shadow-md transition duration-300">
         <div className="aspect-w-16 aspect-h-9 bg-gray-100  relative overflow-hidden">
-          {/* <img
-            src={`${apiBaseUrl}${blog?.blogImage}` ?? ""}
-            alt="image"
-            width={300}
-            height={300}
-            className="w-full h-64 object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-          /> */}
-
           <Image
             src={`${apiBaseUrl}${blog?.blogImage}`}
             alt="image"

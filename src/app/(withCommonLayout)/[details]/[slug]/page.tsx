@@ -33,7 +33,7 @@ interface Props {
 }
 
 const Page = async ({ params }: Props) => {
-  const { details, slug } = await params;
+  const { details, slug } = params;
 
   let resData = null;
   console.log("---------------params", params);
