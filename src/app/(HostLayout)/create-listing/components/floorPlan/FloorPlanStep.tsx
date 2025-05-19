@@ -77,7 +77,7 @@ export default function FloorPlanStep() {
         Share some basics about your place
       </h2>
       <h4 className="text-gray-400 tracking-wide">
-        You'll add more details later, like bed types
+        You ll add more details later, like bed types
       </h4>
       <div className="flex flex-col space-y-6">
         {renderCounter("Bedrooms", bedrooms, setBedrooms)}

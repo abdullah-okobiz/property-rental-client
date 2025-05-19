@@ -1,4 +1,3 @@
- 
 import { createContext } from "react";
 
 interface ExtendedJwtPayload {
@@ -7,6 +6,7 @@ interface ExtendedJwtPayload {
   role?: string;
   exp?: number;
   iat?: number;
+  isVerified?: boolean;
 }
 
 interface AuthContextType {
