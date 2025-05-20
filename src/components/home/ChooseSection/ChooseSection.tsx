@@ -15,7 +15,6 @@ interface Props {
   chooses: IChoose[];
 }
 const ChooseSection: React.FC<Props> = ({ chooses }) => {
-  console.log("..........blogs", chooses);
   return (
     <div className="Container pt-12">
       <div>

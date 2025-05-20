@@ -17,8 +17,6 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
     <Link href={`/blogs/${blog._id}`}>
       <div className=" rounded  cursor-pointer border-0 overflow-hidden group shadow-sm hover:shadow-md transition duration-300">
         <div className="aspect-w-16 aspect-h-9 bg-gray-100  relative overflow-hidden">
-         
-
           <Image
             src={`${apiBaseUrl}${blog?.blogImage}`}
             alt="image"

@@ -10,7 +10,6 @@ interface Props {
 
 const FlatsSection: React.FC<Props> = ({ flats }) => {
 
-  console.log("find flats data", flats);
   return (
     <div className="Container pt-8">
       <div>

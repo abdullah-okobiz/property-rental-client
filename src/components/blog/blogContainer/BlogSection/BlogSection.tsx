@@ -14,7 +14,7 @@ interface Props {
   blogs: IBlog[];
 }
 const BlogSection: React.FC<Props> = ({ blogs }) => {
-  console.log("..........blogs", blogs);
+
   return (
     <div className="Container pt-12">
       <div>

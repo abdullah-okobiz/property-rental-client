@@ -84,8 +84,10 @@ const Page: FC<PageProps> = async ({ params }) => {
 
   return (
     <div className={`Container py-8 ${poppins.className}`}>
-      <div className="flex flex-col">
-        <h2 className="xl:text-2xl lg:text-xl text-lg font-medium">{title}</h2>
+      <div className="lg:flex flex-col hidden">
+        <h2 className="xl:text-2xl lg:text-xl md:text-base text-base font-medium">
+          {title}
+        </h2>
         <div className="flex items-center justify-between py-2">
           <p className="flex items-center gap-1 font-medium text-[#262626]/60 text-base">
             <PiMapPinLine />
@@ -99,7 +101,22 @@ const Page: FC<PageProps> = async ({ params }) => {
 
       <ImagesGallary images={images} />
 
-      <div className="flex items-center gap-4 border-b border-[#262626]/30 pb-4 lg:w-[60%]">
+      <div className="flex flex-col lg:hidden mt-4">
+        <h2 className="xl:text-2xl lg:text-xl md:text-lg text-base font-medium capitalize">
+          {title}
+        </h2>
+        <div className="flex items-center justify-between py-1">
+          <p className="flex md:items-center items-baseline gap-1 font-medium text-[#262626]/60 text-base">
+            <PiMapPinLine className="md:text-xl text-2xl" />
+            <span>{location}</span>
+          </p>
+          <p className="border border-[#262626]/20 p-2 rounded-full cursor-pointer hover:border-primary hover:text-primary duration-300 hidden lg:block">
+            <IoIosHeartEmpty />
+          </p>
+        </div>
+      </div>
+
+      <div className="flex md:items-center items-baseline gap-4 border-b border-[#262626]/30 pb-4 xl:w-[60%] w-full">
         <div>
           {host && (
             <div className="border-2 border-[#262626]/40 rounded-full">
@@ -119,10 +136,10 @@ const Page: FC<PageProps> = async ({ params }) => {
             </div>
           )}
         </div>
-        <div className="flex item-center justify-between mt-6 w-full">
+        <div className="flex md:flex-row flex-col item-center justify-between mt-6 w-full">
           <div className="flex flex-col">
             {host && (
-              <h2 className="text-xl font-medium">
+              <h2 className="md:text-xl text-base font-medium">
                 Entire villa hosted by <span>{host.name}</span>
               </h2>
             )}
@@ -206,15 +223,16 @@ const Page: FC<PageProps> = async ({ params }) => {
         </div>
       </div>
 
-      <div className="flex gap-20">
+      <div className="flex xl:gap-20 lg:gap-12">
         <RentDetails description={description} />
         {video && <FlatAndLandVideo video={video} />}
       </div>
 
       <div>
-        {resolvedParams.details === "rent" ? (
+        {resolvedParams.details === "rent" && (
           <AmenitiesForRent amenities={amenities} />
-        ) : (
+        )}
+        {resolvedParams.details === "flat" && (
           <div>
             <AmenitiesForFlat amenities={amenities} />
           </div>

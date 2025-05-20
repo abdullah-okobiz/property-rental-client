@@ -18,7 +18,7 @@ const RentDetails: React.FC<Props> = ({ description }) => {
   }, []);
 
   return (
-    <div className="py-6 border-b border-[#262626]/30 pb-4 lg:w-[60%]">
+    <div className="py-6 border-b border-[#262626]/30 pb-4 xl:w-[60%] lg:w-[60%]">
       <h2 className="text-xl font-medium">Description</h2>
 
       <p

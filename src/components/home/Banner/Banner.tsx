@@ -18,7 +18,7 @@ interface BannerProps {
 
 const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
   const swiperRef = useRef<SwiperClass | null>(null);
-  console.log("try to find banner", banners);
+
   return (
     <div className="relative mt-[-15px]">
       <Swiper

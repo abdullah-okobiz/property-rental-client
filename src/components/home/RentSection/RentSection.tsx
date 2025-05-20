@@ -11,7 +11,6 @@ interface Props {
 }
 
 const RentSection: React.FC<Props> = ({ rents }) => {
-  console.log("find rent data", rents);
   return (
     <div className="Container pt-28">
       <div>

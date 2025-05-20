@@ -15,6 +15,7 @@ const BlogDetailsContainer: React.FC<PageProps> = async ({ params }) => {
     resolvedParams.id
   );
 
+  
   return (
     <Fragment>
       <BlogDetails data={blogsDetailsData} />

@@ -14,7 +14,10 @@ const ImagesGallery: React.FC<ImagesGalleryProps> = ({ images }) => {
     <div>
       <div className="grid lg:grid-cols-2 gap-4 relative cursor-pointer">
         {/* Main large image */}
-        <div onClick={() => setOpenGallery(true)} className="w-full h-[430px]">
+        <div
+          onClick={() => setOpenGallery(true)}
+          className="w-full xl:h-[430px] lg:h-[350px] md:h-[320px] h-[240px]"
+        >
           <Image
             src={apiBaseUrl + images[0]}
             alt="Main Image"
@@ -27,10 +30,10 @@ const ImagesGallery: React.FC<ImagesGalleryProps> = ({ images }) => {
         {/* Remaining images */}
         <div
           onClick={() => setOpenGallery(true)}
-          className="grid grid-cols-2 gap-2"
+          className="lg:grid grid-cols-2 gap-2 hidden"
         >
           {images.slice(1, 5).map((img, index) => (
-            <div key={index} className="w-full h-[210px]">
+            <div key={index} className="w-full xl:h-[210] lg:h-[165px]">
               <Image
                 src={apiBaseUrl + img}
                 alt={`Image ${index + 2}`}
@@ -44,7 +47,7 @@ const ImagesGallery: React.FC<ImagesGalleryProps> = ({ images }) => {
 
         <div
           onClick={() => setOpenGallery(true)}
-          className="flex items-center gap-2 border rounded px-2 cursor-pointer text-sm font-medium py-2 absolute bottom-5 right-5 bg-[#fff]"
+          className="flex items-center lg:gap-2 gap-1 border rounded lg:px-2 lg:py-2 p-1  cursor-pointer md:text-sm text-[12px] font-medium  absolute lg:bottom-5 bottom-2 right-2 lg:right-5 bg-[#fff]"
         >
           <p>
             <TbGridDots />

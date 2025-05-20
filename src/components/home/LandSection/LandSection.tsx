@@ -13,7 +13,6 @@ interface Props {
   lands: IRent[];
 }
 const LandSection: React.FC<Props> = ({ lands }) => {
-  console.log("find rent landData", lands);
   return (
     <div className="Container pt-8">
       <div>
