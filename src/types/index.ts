@@ -59,6 +59,8 @@ export interface IAmenities {
 export interface IFloorPlan {
   bedroomCount: number;
   bathCount: number;
+  bathroomCount: number;
+  balconyCount: number;
   bedCount: number;
   guestCount: number;
   drawing: boolean;
@@ -96,6 +98,7 @@ export interface IRent {
   description: string;
   coverImage: string;
   images: string[];
+  isSold: boolean;
   category: ICategory;
   amenities: IAmenities[];
   allowableThings: string[];
@@ -105,9 +108,11 @@ export interface IRent {
   houseRules: string[];
   listingFor: IListingFor[];
   location: string;
+  landSize: number;
   buildingYear:string;
   price: number;
   slug: string;
   status: string;
+  publishStatus: string;
   __v: number;
 }
