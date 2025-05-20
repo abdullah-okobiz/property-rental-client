@@ -16,6 +16,7 @@ import { AuthServices } from "@/services/auth/auth.service";
 import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
 import { TabMenuList } from "./nav.utils";
+import { HiChevronDown } from "react-icons/hi";
 
 const { processLogout } = AuthServices;
 
@@ -104,13 +105,14 @@ const NavBar = () => {
                     }}
                   >
                     <span
-                      className={`cursor-pointer text-base font-medium ${
+                      className={`cursor-pointer text-base font-medium flex items-center gap-1 ${
                         isActive
                           ? "text-primary font-semibold"
                           : "text-gray-700"
                       } ${poppins.className}`}
                     >
                       {menu.title}
+                      <HiChevronDown className="text-sm" />
                     </span>
                   </Dropdown>
                 );

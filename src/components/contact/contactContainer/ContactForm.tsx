@@ -19,6 +19,7 @@ const ContactForm = () => {
   const [formValues, setFormValues] =
     useState<ContactFormValues>(initialFormValues);
   const [loading, setLoading] = useState<boolean>(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -51,10 +52,10 @@ const ContactForm = () => {
     try {
       const result = await contactSubmitFormApi(formData);
       if (result.status == "success") {
-        message.success("Message sent successfully!");
+        messageApi.success(result?.message || "Message sent successfully!");
         setFormValues(initialFormValues);
       } else {
-        message.error("Something went wrong!");
+        messageApi.error("Something went wrong!");
       }
     } catch (error) {
       message.error("Network error!");
@@ -66,6 +67,7 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {contextHolder}
       <Flex vertical gap={20}>
         <div className='grid grid-cols-2 gap-4 mb-5 bg-[#FFFFFF] py-10 px-4 md:px-8"'>
           <Input
