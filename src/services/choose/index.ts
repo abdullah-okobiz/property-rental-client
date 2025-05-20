@@ -3,7 +3,7 @@
 import { apiBaseUrl } from "@/config/config";
 
 export const getAllChoose = async () => {
-  const res = await fetch(`${apiBaseUrl}/admin/why-choose-us`);
+  const res = await fetch(`${apiBaseUrl}/why-choose-us`);
 
   return res.json();
 };

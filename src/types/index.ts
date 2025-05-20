@@ -33,6 +33,7 @@ export interface IChoose {
   _id: string;
   whyChooseUsTitle: string;
   whyChooseUsDescription: string;
+  whyChooseUsIcon: string;
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -105,7 +106,7 @@ export interface IRent {
   houseRules: string[];
   listingFor: IListingFor[];
   location: string;
-  buildingYear:string;
+  buildingYear: string;
   price: number;
   slug: string;
   status: string;
