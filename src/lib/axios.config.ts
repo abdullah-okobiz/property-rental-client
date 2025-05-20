@@ -1,6 +1,5 @@
 "use client";
 import axios from "axios";
-
 import { apiBaseUrl } from "@/config/config";
 
 const axiosClient = axios.create({
@@ -9,23 +8,25 @@ const axiosClient = axios.create({
   withCredentials: true,
 });
 
-// Request interceptor to add the access token to the headers
+// Request interceptor to add the access token
 axiosClient.interceptors.request.use((config) => {
   const token =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers = config.headers ?? {};
+    config.headers["Authorization"] = `Bearer ${token}`;
   }
+
   return config;
 });
 
-// Response interceptor to handle token refresh logic
+// Response interceptor for token refresh
 axiosClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Only handle 403 error for token expiration and avoid infinite refresh loop
     if (
       error.response?.status === 403 &&
       !originalRequest._retry &&
@@ -34,22 +35,20 @@ axiosClient.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const res = await axiosClient.post("/refresh");
+        const res = await axiosClient.post<{ accessToken: string }>("/refresh");
         const newAccessToken = res?.data?.accessToken;
 
         if (newAccessToken) {
           localStorage.setItem("accessToken", newAccessToken);
+          originalRequest.headers = originalRequest.headers ?? {};
           originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return axiosClient(originalRequest);
         }
       } catch (refreshError) {
-        // In case refresh fails, logout the user
-        // logout();
         return Promise.reject(refreshError);
       }
     }
 
-    // Reject other errors
     return Promise.reject(error);
   }
 );

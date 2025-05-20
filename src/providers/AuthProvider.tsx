@@ -46,12 +46,20 @@ const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const checkToken = async () => {
+      const hasLoggedOut = localStorage.getItem("hasLoggedOut");
+      if (hasLoggedOut) {
+        localStorage.removeItem("hasLoggedOut");
+        return;
+      }
+
       const accessToken = localStorage.getItem("accessToken");
 
       if (accessToken) {
         try {
           const decoded = jwtDecode<ExtendedJwtPayload>(accessToken);
-          const isExpired = decoded.exp && decoded.exp * 1000 < Date.now();
+          const isExpired = decoded.exp
+            ? decoded.exp * 1000 < Date.now()
+            : true;
 
           if (isExpired) {
             await refreshToken();
@@ -59,11 +67,10 @@ const AuthProvider = ({ children }: Props) => {
             setUser(decoded);
             setIsAuthenticated(true);
           }
-        } catch {
+        } catch (err) {
           await refreshToken();
+          console.log(err)
         }
-      } else {
-        await refreshToken();
       }
     };
 

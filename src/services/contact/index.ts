@@ -9,9 +9,6 @@ export const contactSubmitFormApi = async (
   const res = await fetch(`${apiBaseUrl}/create-contact`, {
     method: "POST",
     body: formData,
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
   });
 
   if (!res.ok) {

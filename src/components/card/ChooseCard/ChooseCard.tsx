@@ -1,5 +1,6 @@
 import { poppins } from "@/app/font";
 import ChooseModal from "@/components/modals/ChooseModal";
+import { apiBaseUrl } from "@/config/config";
 import { IChoose } from "@/types";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -44,7 +45,7 @@ const ChooseCard: React.FC<Props> = ({ choose }) => {
       <div className="border relative border-primary/5 group-hover:bg-primary/80 duration-300 cursor-pointer shadow rounded p-4 group-hover:mt-[-12px]">
         <div className="h-[50px] w-[60px]">
           <Image
-            src="https://i.ibb.co/h1R954d0/istockphoto-1370021187-612x612-removebg-preview.png"
+            src={apiBaseUrl+choose.whyChooseUsIcon}
             alt=""
             width={80}
             height={80}

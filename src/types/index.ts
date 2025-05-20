@@ -33,6 +33,7 @@ export interface IChoose {
   _id: string;
   whyChooseUsTitle: string;
   whyChooseUsDescription: string;
+  whyChooseUsIcon: string;
   createdAt: string;
   updatedAt: string;
   __v: number;
