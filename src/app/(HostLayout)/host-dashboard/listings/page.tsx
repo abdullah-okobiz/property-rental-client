@@ -1,12 +1,12 @@
-import React from 'react'
-import ListingsPage from '../../components/listingsPage/ListingsPage'
+import React from "react";
+import ListingsPage from "../../components/listingsPage/ListingsPage";
 
 const page = () => {
   return (
     <div>
-      <ListingsPage></ListingsPage>
+      <ListingsPage />
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

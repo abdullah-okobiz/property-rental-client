@@ -28,7 +28,7 @@ const ListingsPage = async () => {
   console.log("Rents", rents);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="Container mx-auto  py-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
           My Listings
@@ -94,7 +94,7 @@ const ListingsPage = async () => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {rents.map((rent : IRent) => (
+              {rents.map((rent: IRent) => (
                 <tr key={rent?._id} className="hover:bg-gray-50 transition">
                   {/* Your table row content here */}
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -106,9 +106,7 @@ const ListingsPage = async () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      <div className="text-sm font-medium text-gray-900">
-                        
-                      </div>
+                      <div className="text-sm font-medium text-gray-900"></div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
