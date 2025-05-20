@@ -28,6 +28,7 @@ const Navbar = () => {
   const { mutate: logout } = useMutation({
     mutationFn: processLogout,
     onSuccess: () => {
+      localStorage.setItem("hasLoggedOut", "true");
       message.success("Logout Successful");
       localStorage.removeItem("accessToken");
       setTimeout(() => window.location.reload(), 1000);
