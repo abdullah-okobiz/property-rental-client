@@ -16,7 +16,7 @@ const CleanderAndResever: React.FC<Props> = ({ title }) => {
     endDate: addDays(new Date(), 0),
   });
   return (
-    <div className="mt-20 flex flex-wrap">
+    <div className="md:mt-20 mt-2 flex flex-wrap">
       <div className="lg:w-2/3 w-full">
         <Cleander
           dateRange={dateRange}

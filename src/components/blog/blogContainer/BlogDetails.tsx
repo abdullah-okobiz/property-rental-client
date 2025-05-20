@@ -10,7 +10,7 @@ interface BlogDetailsProps {
 const BlogDetails: React.FC<BlogDetailsProps> = ({ data }) => {
   if (!data) return null;
 
-  console.log("this blog data", data);
+  console.log("blog details", data);
 
   return (
     <div className="max-w-6xl mx-auto  py-10 px-3 md:px-6 ">

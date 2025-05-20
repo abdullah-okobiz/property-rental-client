@@ -8,6 +8,7 @@ export interface BlogData {
   blogTitle: string;
   blogImage: string;
   blogDescription: string;
+  slug:string;
   feature: Feature;
   tags: string[];
   createdAt: string;

@@ -106,9 +106,9 @@ const Page: FC<PageProps> = async ({ params }) => {
           {title}
         </h2>
         <div className="flex items-center justify-between py-1">
-          <p className="flex md:items-center items-baseline gap-1 font-medium text-[#262626]/60 text-base">
+          <p className="flex md:items-center items-start gap-1 font-medium text-[#262626]/60 text-base">
             <PiMapPinLine className="md:text-xl text-2xl" />
-            <span>{location}</span>
+            <span className="md:text-base text-sm">{location}</span>
           </p>
           <p className="border border-[#262626]/20 p-2 rounded-full cursor-pointer hover:border-primary hover:text-primary duration-300 hidden lg:block">
             <IoIosHeartEmpty />

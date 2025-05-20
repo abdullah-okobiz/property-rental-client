@@ -8,6 +8,7 @@ export interface IBlog {
   blogTitle: string;
   blogImage: string;
   blogDescription: string;
+  slug: string;
   feature?: IBlogFeature;
   createdAt: string;
   updatedAt: string;

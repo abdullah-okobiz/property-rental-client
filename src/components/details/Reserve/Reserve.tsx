@@ -69,7 +69,7 @@ const Reserve: React.FC<Props> = ({ dateRange, setDateRange }) => {
 
   const totalGuest = adults + younger + infants || 0;
   return (
-    <div className="mt-20  relative  bg-[#fff]">
+    <div className="md:mt-20 mt-10 relative  bg-[#fff]">
       <div className="border border-[#262626]/20 shadow rounded p-4">
         <p className="text-primary bg-primary/20 rounded px-4 py-2 inline-flex font-medium">
           ৳1400 night
@@ -90,7 +90,7 @@ const Reserve: React.FC<Props> = ({ dateRange, setDateRange }) => {
                 <p className="text-[12px] uppercase text-[#262626]/50">
                   Check-in
                 </p>
-                <p className="font-medium">
+                <p className="font-medium md:text-base text-sm">
                   {dateRange.startDate
                     ? format(dateRange.startDate, "MMM d, yyyy")
                     : "Add Dates"}
@@ -107,9 +107,11 @@ const Reserve: React.FC<Props> = ({ dateRange, setDateRange }) => {
                   Check-out
                 </p>
                 {/* <p className="font-medium">Add Dates</p> */}
-                {dateRange.endDate
-                  ? format(dateRange.endDate, "MMM d, yyyy")
-                  : "Add Dates"}
+                <p className="md:text-base text-sm">
+                  {dateRange.endDate
+                    ? format(dateRange.endDate, "MMM d, yyyy")
+                    : "Add Dates"}
+                </p>
               </div>
             </div>
           </div>
@@ -126,7 +128,7 @@ const Reserve: React.FC<Props> = ({ dateRange, setDateRange }) => {
                 <p className="text-[12px] uppercase text-[#262626]/50">
                   guests
                 </p>
-                <p className="font-medium">
+                <p className="font-medium md:text-base text-sm">
                   <span>{totalGuest}</span> Guests
                 </p>
               </div>

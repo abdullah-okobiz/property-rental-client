@@ -36,12 +36,14 @@ export const blogDetails = async (id: string): Promise<BlogResponse> => {
   };
 };
 
-// export const getSingleRentBySlug = async (id: string) => {
-//   const res = await fetch(`${apiBaseUrl}/rent/${id}`);
+export const getSingleBlogBySlug = async (slug: string) => {
+  const res = await fetch(`${apiBaseUrl}/blog/${slug}`);
 
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch rent");
-//   }
+  if (!res.ok) {
+    throw new Error("Failed to fetch blog");
+  }
 
-//   return res.json();
-// };
+  return res.json();
+};
+
+

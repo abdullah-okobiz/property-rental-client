@@ -15,9 +15,9 @@ const RulesRent: React.FC<Props> = ({
     <div className="">
       <h2 className="text-2xl font-medium">Need to know</h2>
 
-      <div className="py-6 px-20 bg-[#FBFCFC] border border-[#262626]/10 rounded mt-6 grid lg:grid-cols-3">
+      <div className="py-6 md:px-20 px-4 bg-[#FBFCFC] border border-[#262626]/10 rounded mt-6 grid lg:grid-cols-3">
         <div className="">
-          <h2 className="text-xl font-medium">House rules</h2>
+          <h2 className="md:text-xl text-lg font-medium">House rules</h2>
           <ul className="flex flex-col gap-2 mt-4">
             {houseRules.map((rule, idx) => (
               <li
@@ -33,7 +33,9 @@ const RulesRent: React.FC<Props> = ({
           </ul>
         </div>
         <div className="flex flex-col gap-2 mt-4 lg:ml-[-20px]">
-          <h2 className="text-xl font-medium">Allowable things</h2>
+          <h2 className="md:text-xl text-lg mb:pb-0 pb-2 font-medium">
+            Allowable things
+          </h2>
           {allowableThings.map((allow, idx) => (
             <li
               key={idx}
@@ -47,7 +49,9 @@ const RulesRent: React.FC<Props> = ({
           ))}
         </div>
         <div>
-          <h2 className="text-xl font-medium">Cancellation policy</h2>
+          <h2 className="md:text-xl text-lg mb:pt-0 pt-4 font-medium">
+            Cancellation policy
+          </h2>
 
           <ul className="flex flex-col gap-2 mt-4">
             {cancellationPolicy.map((rule, idx) => (

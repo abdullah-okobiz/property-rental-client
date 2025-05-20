@@ -14,7 +14,7 @@ interface Props {
 
 const BlogCard: React.FC<Props> = ({ blog }) => {
   return (
-    <Link href={`/blogs/${blog._id}`}>
+    <Link href={`/blogs/${blog.slug}`}>
       <div className=" rounded  cursor-pointer border-0 overflow-hidden group shadow-sm hover:shadow-md transition duration-300">
         <div className="aspect-w-16 aspect-h-9 bg-gray-100  relative overflow-hidden">
           <Image
@@ -40,7 +40,7 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
             {blog.blogDescription}
           </p>
           <div className="mt-3">
-            <Link href={`/blogs/${blog._id}`}>
+            <Link href={`/blogs/${blog.slug}`}>
               <button className="flex items-center group-hover:text-primary duration-300 gap-1 uppercase text-sm font-medium tracking-wider">
                 <span
                   className={`relative z-10 transition-colors duration-300 ${poppins.className}`}
