@@ -1,10 +1,12 @@
 import axiosClient from "@/lib/axios.config";
+import { FeatureResponse } from "@/app/(HostLayout)/components/types/feature";
+import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
 
 const FeatureApis = {
-  getAllFeatures: () => axiosClient.get("/admin/feature"),
+  getAllFeatures: () => axiosClient.get<FeatureResponse>("/admin/feature"),
 
   createNewListing: (featureType: string, featureId: string) =>
-    axiosClient.post(`/host/${featureType}/new`, {
+    axiosClient.post<ListingResponse>(`/host/${featureType}/new`, {
       listingFor: [featureId],
     }),
 };

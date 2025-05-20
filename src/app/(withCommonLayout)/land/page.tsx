@@ -7,11 +7,18 @@ import { getAllFeature } from "@/services/feature";
 import { getAllLands } from "@/services/land";
 import { IListingFor, IRent } from "@/types";
 
+// interface landProps {
+//   searchParams: { category?: string };
+// }
+
 interface landProps {
-  searchParams: { category?: string };
+  searchParams: Promise<{
+    category?: string;
+  }>;
 }
 
-const Land = async ({ searchParams }: landProps) => {
+const Land: React.FC<landProps> = async ({ searchParams }) => {
+  const resolvedParams = await searchParams;
   const { data: features } = await getAllFeature();
 
   const featuresRent = features.find(
@@ -22,7 +29,7 @@ const Land = async ({ searchParams }: landProps) => {
 
   const { data: rentCategories } = await getAllCategory(featuresRentID);
 
-  const categoryId = searchParams.category;
+  const categoryId = resolvedParams.category;
 
   const { data: lands } = await getAllLands({
     category: categoryId !== "all" ? categoryId : undefined,

@@ -1,4 +1,6 @@
+import { CategoryResponse } from "@/app/(hostLayout)/components/types/category";
 import CategoryApis from "@/app/apis/category.apis";
+// import { CategoryResponse } from "@/app/(HostLayout)/components/types/category";
 
 const {
   getCategoriesByFeatureId,
@@ -10,13 +12,9 @@ const {
 } = CategoryApis;
 
 const CategoryServices = {
-  fetchCategories: async (featureId: string) => {
-    try {
-      const res = await getCategoriesByFeatureId(featureId);
-      return res.data;
-    } catch (err) {
-      throw new Error("Failed to fetch categories");
-    }
+  fetchCategories: async (featureId: string): Promise<CategoryResponse> => {
+    const res = await getCategoriesByFeatureId(featureId);
+    return res.data;
   },
 
   setListingCategory: async ({
@@ -28,17 +26,12 @@ const CategoryServices = {
     listingId: string;
     categoryId: string;
   }) => {
-    try {
-      const res = await updateCategoryForListing(
-        featureType,
-        listingId,
-        categoryId
-      );
-      console.log(res, "category result");
-      return res.data;
-    } catch (err) {
-      throw new Error("Failed to update listing category");
-    }
+    const res = await updateCategoryForListing(
+      featureType,
+      listingId,
+      categoryId
+    );
+    return res.data;
   },
 
   updateListingTitle: async (
@@ -46,45 +39,36 @@ const CategoryServices = {
     listingId: string,
     title: string
   ) => {
-    try {
-      const res = await updateTitleForListing(featureType, listingId, title);
-      return res.data;
-    } catch (error) {
-      throw new Error("Failed to update listing title");
-    }
+    const res = await updateTitleForListing(featureType, listingId, title);
+    return res.data;
   },
+
   updateListingDescription: async (
     featureType: string,
     listingId: string,
     description: string
   ) => {
-    try {
-      const res = await updateDescriptionForListing(
-        featureType,
-        listingId,
-        description
-      );
-      return res.data;
-    } catch (error) {
-      throw new Error("Failed to update listing title");
-    }
+    const res = await updateDescriptionForListing(
+      featureType,
+      listingId,
+      description
+    );
+    return res.data;
   },
+
   updateListingLocation: async (
     featureType: string,
     listingId: string,
     location: string
   ) => {
-    try {
-      const res = await updateLocationForListing(
-        featureType,
-        listingId,
-        location
-      );
-      return res.data;
-    } catch (error) {
-      throw new Error("Failed to update listing title");
-    }
+    const res = await updateLocationForListing(
+      featureType,
+      listingId,
+      location
+    );
+    return res.data;
   },
+
   processUpdateFloorPlan: async (
     featureType: string,
     listingId: string,
@@ -95,16 +79,12 @@ const CategoryServices = {
       guestCount: number;
     }
   ) => {
-    try {
-      const res = await updateFloorPlanForListing(
-        featureType,
-        listingId,
-        floorPlan
-      );
-      return res.data;
-    } catch (error) {
-      throw new Error("Failed to update listing title");
-    }
+    const res = await updateFloorPlanForListing(
+      featureType,
+      listingId,
+      floorPlan
+    );
+    return res.data;
   },
 };
 

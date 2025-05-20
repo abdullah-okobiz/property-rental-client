@@ -1,10 +1,7 @@
-"use client"
+"use client";
 import axios from "axios";
 
 import { apiBaseUrl } from "@/config/config";
-import useAuth from "@/hooks/useAuth";
-
-// const { logout } = useAuth();
 
 const axiosClient = axios.create({
   baseURL: apiBaseUrl,
@@ -14,7 +11,8 @@ const axiosClient = axios.create({
 
 // Request interceptor to add the access token to the headers
 axiosClient.interceptors.request.use((config) => {
-  const token = typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -36,11 +34,10 @@ axiosClient.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const res = await axiosClient.post("/refresh");  
-        const newAccessToken = res?.data?.accessToken ;
+        const res = await axiosClient.post("/refresh");
+        const newAccessToken = res?.data?.accessToken;
 
         if (newAccessToken) {
-    
           localStorage.setItem("accessToken", newAccessToken);
           originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
           return axiosClient(originalRequest);
@@ -58,4 +55,3 @@ axiosClient.interceptors.response.use(
 );
 
 export default axiosClient;
-

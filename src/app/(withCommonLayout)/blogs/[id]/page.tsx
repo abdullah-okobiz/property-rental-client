@@ -1,17 +1,19 @@
 import BlogDetails from "@/components/blog/blogContainer/BlogDetails";
-import { IBlog } from "@/components/blog/types";
 import { blogDetails } from "@/services/blog";
+import { IBlog } from "@/components/blog/types";
+import React, { Fragment } from "react";
 
-import { Fragment } from "react";
-
-interface BlogDetailsPageProps {
-  params: { id: string };
+interface PageProps {
+  params: Promise<{
+    id: string;
+  }>;
 }
 
-const BlogDetailsContainer = async ({ params }: BlogDetailsPageProps) => {
-  const { id } = params;
-
-  const { data: blogsDetailsData }: { data: IBlog } = await blogDetails(id);
+const BlogDetailsContainer: React.FC<PageProps> = async ({ params }) => {
+  const resolvedParams = await params;
+  const { data: blogsDetailsData }: { data: IBlog } = await blogDetails(
+    resolvedParams.id
+  );
 
   return (
     <Fragment>

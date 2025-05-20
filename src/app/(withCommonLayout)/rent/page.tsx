@@ -7,13 +7,21 @@ import { getAllCategory } from "@/services/category";
 import { getAllFeature } from "@/services/feature";
 import { getAllRents } from "@/services/rents";
 import { IListingFor, IRent } from "@/types";
+import React from "react";
+
+// interface RentProps {
+//   searchParams: { category?: string };
+// }
 
 interface RentProps {
-  searchParams: { category?: string };
+  searchParams: Promise<{
+    category?: string;
+  }>;
 }
 
-const Rent = async ({ searchParams }: RentProps) => {
+const Rent: React.FC<RentProps> = async ({ searchParams }) => {
   const { data: features } = await getAllFeature();
+  const resolvedParams = await searchParams;
   const featuresRent = features.find(
     (feature: IListingFor) => feature.featureName === "Rent"
   );
@@ -21,7 +29,7 @@ const Rent = async ({ searchParams }: RentProps) => {
 
   const { data: rentCategories } = await getAllCategory(featuresRentID);
 
-  const categoryId = searchParams.category;
+  const categoryId = resolvedParams.category;
   const { data: rents } = await getAllRents({
     category: categoryId !== "all" ? categoryId : undefined,
   });

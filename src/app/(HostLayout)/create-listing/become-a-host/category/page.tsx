@@ -4,16 +4,14 @@ import { useListingContext } from "@/contexts/ListingContext";
 import { useListingStepContext } from "@/contexts/ListingStepContext";
 import { useEffect, useState } from "react";
 import CategoryServices from "@/services/category/category.services";
+// import { Category } from "@/app/(HostLayout)/components/types/category";
 import { Home, Building2, Landmark, Warehouse } from "lucide-react";
-
-type Category = {
-  _id: string;
-  categoryName: string;
-};
+import { Category } from "@/app/(hostLayout)/components/types/category";
 
 export default function CategoryPage() {
   const { featureId, listingId, featureType } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
+
   const [categories, setCategories] = useState<Category[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -23,7 +21,7 @@ export default function CategoryPage() {
       if (!featureId) return;
 
       try {
-        const res: any = await CategoryServices.fetchCategories(featureId);
+        const res = await CategoryServices.fetchCategories(featureId);
         setCategories(res.data);
       } catch (err) {
         console.error("Error fetching categories:", err);
@@ -97,7 +95,7 @@ export default function CategoryPage() {
                   : "border-gray-200"
               }`}
             >
-              <div className="absolute top-2 right-2 w-5 h-5 border-1 rounded border-gray-300 flex items-center justify-center bg-white">
+              <div className="absolute top-2 right-2 w-5 h-5 border rounded border-gray-300 flex items-center justify-center bg-white">
                 {selected === category._id && (
                   <span className="text-primary text-xs font-bold leading-none">
                     ✔

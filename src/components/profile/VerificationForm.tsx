@@ -109,7 +109,10 @@ const VerificationForm = () => {
           {step === 1 ? (
             <div className="space-y-3">
               {["NID", "Driving License", "Passport"].map((option) => (
-                <div key={option} className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm">
+                <div
+                  key={option}
+                  className="flex items-center gap-3 p-3 bg-white rounded-lg shadow-sm"
+                >
                   <input
                     type="radio"
                     id={option}
@@ -134,7 +137,9 @@ const VerificationForm = () => {
               {selectedOption !== "Passport" ? (
                 <>
                   <div className="space-y-2">
-                    <label className="block text-gray-700 font-medium">Front Image</label>
+                    <label className="block text-gray-700 font-medium">
+                      Front Image
+                    </label>
                     <input
                       type="file"
                       accept="image/*"
@@ -149,7 +154,9 @@ const VerificationForm = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-gray-700 font-medium">Back Image</label>
+                    <label className="block text-gray-700 font-medium">
+                      Back Image
+                    </label>
                     <input
                       type="file"
                       accept="image/*"
@@ -166,7 +173,9 @@ const VerificationForm = () => {
                 </>
               ) : (
                 <div className="space-y-2">
-                  <label className="block text-gray-700 font-medium">Passport Image</label>
+                  <label className="block text-gray-700 font-medium">
+                    Passport Image
+                  </label>
                   <input
                     type="file"
                     accept="image/*"
@@ -200,7 +209,11 @@ const VerificationForm = () => {
               className="w-full bg-primary text-white py-2 rounded-lg transition-colors hover:bg-blue-700 cursor-pointer disabled:bg-blue-300"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Processing..." : step === 1 ? "Continue" : "Submit"}
+              {isSubmitting
+                ? "Processing..."
+                : step === 1
+                ? "Continue"
+                : "Submit"}
             </button>
           </div>
         </form>

@@ -72,9 +72,14 @@ export default function FloorPlanStep() {
   );
 
   return (
-    <div className="border bg-white rounded shadow py-4 px-4 max-w-md mx-auto">
-      <h2 className="text-lg font-semibold mb-4">Set your floor plan</h2>
-      <div className="flex flex-col gap-4">
+    <div className=" bg-white rounded shadow py-4 px-4 max-w-6xl space-y-4 mx-auto">
+      <h2 className="text-2xl font-semibold mb-4 tracking-wider">
+        Share some basics about your place
+      </h2>
+      <h4 className="text-gray-400 tracking-wide">
+        You ll add more details later, like bed types
+      </h4>
+      <div className="flex flex-col space-y-6">
         {renderCounter("Bedrooms", bedrooms, setBedrooms)}
         {renderCounter("Bathrooms", bathrooms, setBathrooms)}
         {renderCounter("Beds", beds, setBeds)}

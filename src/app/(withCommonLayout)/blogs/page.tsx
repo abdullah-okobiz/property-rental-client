@@ -1,9 +1,10 @@
 import BlogTabs from "@/components/blog/blogContainer/BlogTabs";
 import { getAllBlogs, getFeatures } from "@/services/blog";
+import { BlogData, Feature } from "@/types/blogTypes/blogTypes";
 
 const BlogMainContainer = async () => {
-  const { data: blogs } = await getAllBlogs();
-  const { data: features } = await getFeatures();
+  const { data: blogs }: { data: BlogData[] } = await getAllBlogs();
+  const { data: features }: { data: Feature[] } = await getFeatures();
 
   return (
     <div className="Container py-4">

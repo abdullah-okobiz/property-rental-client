@@ -1,6 +1,5 @@
 import { apiBaseUrl } from "@/config/config";
 import { formatDate } from "../util/DateTimeFormate";
-// import { truncateText } from "../util/truncateText";
 import Link from "next/link";
 import Image from "next/image";
 import { CiCalendarDate } from "react-icons/ci";

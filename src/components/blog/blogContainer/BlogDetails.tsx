@@ -1,6 +1,7 @@
 import { formatDate } from "../util/DateTimeFormate";
 import { IBlog } from "../types";
 import { apiBaseUrl } from "@/config/config";
+import Image from "next/image";
 
 interface BlogDetailsProps {
   data: IBlog;
@@ -12,11 +13,12 @@ const BlogDetails: React.FC<BlogDetailsProps> = ({ data }) => {
   return (
     <div className="max-w-6xl mx-auto  py-10 px-3 md:px-6 ">
       <div className="relative overflow-hidden rounded-2xl shadow-sm mb-6 p-2">
-        <img
+        {/* <img
           src={`${apiBaseUrl}${data.blogImage}` ?? ""}
           alt={data.blogTitle}
           className="w-full h-[70vh] object-cover"
-        />
+        /> */}
+        <Image src={`${apiBaseUrl}${data.blogImage}`} alt="" width={700} height={700}/>
       </div>
 
       <div className="p-4">

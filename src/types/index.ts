@@ -105,7 +105,7 @@ export interface IRent {
   houseRules: string[];
   listingFor: IListingFor[];
   location: string;
-  buildingYear:string;
+  buildingYear: string;
   price: number;
   slug: string;
   status: string;

@@ -20,9 +20,12 @@ export const TabMenuList = [
     title: "Menu",
     link: "#",
     dropdownItems: [
-      { key: "faq", label: "FAQs", href: "/host-dashboard/help/faq" },
-      { key: "contact", label: "Contact Us", href: "/host-dashboard/help/contact" },
-      { key: "support", label: "Support", href: "/host-dashboard/help/support" },
+      { key: "listing", label: "Listings", href: "/host-dashboard/listings" },
+      { key: "reservations", label: "Reservations", href: "/host-dashboard/reservations" },
+      { key: "payouts", label: "Payouts", href: "/host-dashboard/payouts" },
+      { key: "blogs", label: "Blogs", href: "/host-dashboard/blogs" },
+      { key: "about", label: "About Us", href: "/host-dashboard/about" },
+      { key: "contact", label: "Contact", href: "/host-dashboard/contact" },
     ],
   },
 ];
