@@ -40,7 +40,7 @@ const ListingsPage = async () => {
         <h1 className="text-3xl font-bold text-gray-800 mb-4 md:mb-0">
           My Listings
         </h1>
-        <Link href="/listings/create">
+        <Link href="#">
           <button
             type="button"
             className="flex items-center gap-2 bg-primary hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-full transition duration-300 shadow-md hover:shadow-lg cursor-pointer"
