@@ -68,6 +68,7 @@ export default function FeaturePage() {
         featureId: selected,
       });
       setListingId(listingRes.data._id);
+      console.log("Listing created successfully:", listingRes.data);
     } catch (err) {
       console.error("Error creating listing", err);
     }
