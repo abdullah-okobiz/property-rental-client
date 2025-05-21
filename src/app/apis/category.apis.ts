@@ -1,5 +1,6 @@
 import axiosClient from "@/lib/axios.config";
-import { CategoryResponse } from "@/app/(HostLayout)/components/types/category";
+import { CategoryResponse } from "../(hostLayout)/components/types/category";
+
 
 const CategoryApis = {
   getCategoriesByFeatureId: (featureId: string) =>

@@ -95,7 +95,13 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
                   )}
 
                   <div className="flex flex-col gap-2 justify-center items-center">
-                    <Image height={200} width={200} src={type.imgSrc} alt="image" className="w-[70px]" />
+                    <Image
+                      height={200}
+                      width={200}
+                      src={type.imgSrc}
+                      alt="image"
+                      className="w-[70px]"
+                    />
                     <h4 className="text-[14px] tracking-tight font-bold text-gray-600">
                       Sign Up as {type.name}
                     </h4>
@@ -150,9 +156,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
                     if (!value || getFieldValue("password") === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(
-                      new Error("Passwords do not match.")
-                    );
+                    return Promise.reject(new Error("Passwords do not match."));
                   },
                 }),
               ]}

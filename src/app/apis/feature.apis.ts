@@ -1,6 +1,7 @@
 import axiosClient from "@/lib/axios.config";
-import { FeatureResponse } from "@/app/(HostLayout)/components/types/feature";
-import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
+import { FeatureResponse } from "../(hostLayout)/components/types/feature";
+import { ListingResponse } from "../(hostLayout)/components/types/listing";
+
 
 const FeatureApis = {
   getAllFeatures: () => axiosClient.get<FeatureResponse>("/admin/feature"),
