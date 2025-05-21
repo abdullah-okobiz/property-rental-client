@@ -16,7 +16,7 @@ const FlatAndLandVideo: React.FC<Props> = ({ video }) => {
   const youtubeId = extractYouTubeId(video);
 
   return (
-    <div className="w-2/5 h-[30vh] top-20 sticky">
+    <div className="2xl:w-2/5 xl:w-3/5 lg:w-3/5 h-[30vh] top-20 2xl:mt-0 xl:mt-10 mt-20  sticky lg:block hidden">
       {youtubeId ? (
         <iframe
           className="h-full w-full object-cover rounded duration-300"

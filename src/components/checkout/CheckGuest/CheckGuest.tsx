@@ -1,17 +1,23 @@
 "use client";
 import { poppins } from "@/app/font";
 import CheckGuestsModel from "@/components/modals/CheckGuestsModel";
+import { useDateRange } from "@/contexts/DateRangeContext";
 import { useState } from "react";
 // import DatesModel from "@/components/modals/DatesModel";
 // import React, { useState } from "react";
 
 const CheckGuest = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [adults, setAdults] = useState(0);
-  const [younger, setYounger] = useState(0);
-  const [infants, setInfants] = useState(0);
-
-  const totalGuest = adults + younger + infants || 0;
+  const { guestInfo, setGuestInfo } = useDateRange();
+  const handleGuestChange = (
+    type: "adults" | "younger" | "infants",
+    value: number
+  ) => {
+    setGuestInfo({
+      ...guestInfo,
+      [type]: value,
+    });
+  };
 
   return (
     <div>
@@ -20,7 +26,9 @@ const CheckGuest = () => {
       >
         <div>
           <h2 className="font-medium">Guests</h2>
-          <p className="text-[#262626]/60 text-sm">{totalGuest} guest</p>
+          <p className="text-[#262626]/60 text-sm">
+            {guestInfo.totalGuest} guest
+          </p>
         </div>
         <div>
           <p
@@ -34,12 +42,12 @@ const CheckGuest = () => {
 
       {openModal && (
         <CheckGuestsModel
-          adults={adults}
-          setAdults={setAdults}
-          younger={younger}
-          setYounger={setYounger}
-          infants={infants}
-          setInfants={setInfants}
+          adults={guestInfo.adults}
+          setAdults={(val) => handleGuestChange("adults", val)}
+          younger={guestInfo.younger}
+          setYounger={(val) => handleGuestChange("younger", val)}
+          infants={guestInfo.infants}
+          setInfants={(val) => handleGuestChange("infants", val)}
           onClose={() => setOpenModal(false)}
         />
       )}

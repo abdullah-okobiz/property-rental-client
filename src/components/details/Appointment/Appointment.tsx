@@ -34,7 +34,7 @@ const Appointment: React.FC<Props> = ({ title }) => {
       <div className="flex item-center gap-2">
         <button
           onClick={() => setAppintment(true)}
-          className={`border border-primary rounded text-primary hover:bg-primary hover:text-[#fff] duration-300 h-10 px-2 font-medium cursor-pointer ${poppins.className}`}
+          className={`border border-primary rounded md:text-base text-sm text-primary hover:bg-primary hover:text-[#fff] duration-300 h-10 px-2 font-medium cursor-pointer ${poppins.className}`}
         >
           Book Appointment
         </button>

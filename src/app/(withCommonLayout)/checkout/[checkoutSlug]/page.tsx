@@ -7,8 +7,20 @@ import sslImage from "@/assets/images/sslcommerz.png";
 import Image from "next/image";
 import RentConfirmBtn from "@/components/action/RentConfirmBtn/RentConfirmBtn";
 import CheckOutRentCard from "@/components/card/CheckOutRentCard/CheckOutRentCard";
+import { getSingleRentBySlug } from "@/services/rents";
+// import { useDateRange } from "@/contexts/DateRangeContext";
 
-const index = () => {
+interface PageProps {
+  params: Promise<{
+    slug: string;
+  }>;
+}
+
+const page: React.FC<PageProps> = async ({ params }) => {
+  const resolvedParams = await params;
+  const { data } = await getSingleRentBySlug(resolvedParams.slug);
+
+  console.log("find reserv single data", data);
   return (
     <div className="py-12 Container">
       <div
@@ -74,4 +86,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default page;

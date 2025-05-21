@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
-import { FaStar } from "react-icons/fa6";
 import defualtUser from "@/assets/user/avatar.png";
 import { PiSealCheckFill, PiShieldCheck } from "react-icons/pi";
 import ContactHostModel from "@/components/modals/ContactHostModel";
@@ -31,36 +30,36 @@ const HostInformation = () => {
 
   return (
     <div>
-      <div className="flex items-center gap-4">
-        <div className="border-2 border-[#262626]/40 rounded-full">
+      <div className="flex items-center md:gap-4 gap-2">
+        <div className="md:border-2 border border-[#262626]/30 md:rounded-full rounded">
           <Image
             src={defualtUser}
             alt="user"
-            width={35}
-            height={35}
-            className="opacity-50"
+            width={30}
+            height={30}
+            className="opacity-50 mt-1"
           />
         </div>
-        <div className="flex flex-col mt-6">
-          <h2 className="text-xl font-medium flex items-center gap-2">
+        <div className="flex flex-col">
+          <h2 className="md:text-xl text-lg font-medium flex items-center gap-2">
             Hosted by <span>Mishu</span>
             <span className="text-[#2F80ED]">
               <PiSealCheckFill />
             </span>
           </h2>
-          <div className="flex items-center flex-wrap gap-4 my-2">
+          <div className="flex items-center flex-wrap gap-4">
             <div className="flex items-center gap-1">
               <PiShieldCheck className="text-lg text-[#2F80ED]" />
-              <span className="text-[#262626]/70 font-medium">
+              <span className="text-[#262626]/70 font-medium md:text-base text-sm">
                 Joined in 3 May 2025
               </span>
             </div>
-            <div className="flex items-center gap-1">
+            {/* <div className="flex items-center gap-1">
               <FaStar className="text-[#FFA412] text-lg" />
               <span className="text-sm text-[#262626]/70 font-medium">
                 2 Reviews
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -72,8 +71,11 @@ const HostInformation = () => {
         >
           Contact Host
         </button>
-        <p className="flex items-center gap-2 py-4">
-          <PiShieldCheck className="text-lg text-primary" />
+        <p className="flex md:items-center items-start gap-2 py-4">
+          <span className="md:text-lg text-xl w-8 h-8 text-primary">
+            {" "}
+            <PiShieldCheck />
+          </span>
           <span className="text-sm text-[#262626]/60">
             To protect your payment, never transfer money or communicate outside
             of the Stayverz website or app.

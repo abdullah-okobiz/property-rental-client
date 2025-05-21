@@ -1,11 +1,14 @@
 "use client";
 import { poppins } from "@/app/font";
 import DatesModel from "@/components/modals/DatesModel";
+import { useDateRange } from "@/contexts/DateRangeContext";
+import { format } from "date-fns";
 import React, { useState } from "react";
 
 const Dates = () => {
   const [openModal, setOpenModal] = useState(false);
-
+  const { dateRange } = useDateRange();
+  const { startDate, endDate } = dateRange;
   return (
     <div>
       <div
@@ -13,7 +16,10 @@ const Dates = () => {
       >
         <div>
           <h2 className="font-medium">Dates</h2>
-          <p className="text-[#262626]/60 text-sm">Jun 08 - 18</p>
+          <p>
+            {startDate ? format(startDate, "MMM d, yyyy") : "No start date"} -{" "}
+            {endDate ? format(endDate, "MMM d, yyyy") : "No end date"}
+          </p>
         </div>
         <div>
           <p

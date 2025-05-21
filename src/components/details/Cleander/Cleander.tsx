@@ -5,6 +5,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import "../Cleander/Cleander.css";
 import { format } from "date-fns";
+import { useEffect, useState } from "react";
 
 interface CleanderProps {
   dateRange: {
@@ -30,9 +31,21 @@ const Cleander: React.FC<CleanderProps> = ({
       ? (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
       : 0;
 
+  const [monthsToShow, setMonthsToShow] = useState(2);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setMonthsToShow(window.innerWidth <= 768 ? 1 : 2);
+    };
+
+    handleResize(); // initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="overflow-x-hidden py-6 border-b border-[#262626]/30 pb-12 lg:w-[90%]">
-      <h2 className="text-xl font-medium">
+      <h2 className="md:text-xl text-base font-medium capitalize">
         <span>{(numberOfNights ?? 0).toFixed(0)} nights in</span>{" "}
         <span>{title}</span>
       </h2>
@@ -52,13 +65,13 @@ const Cleander: React.FC<CleanderProps> = ({
               setDateRange({ startDate, endDate });
             }}
             moveRangeOnFirstSelection={false}
-            months={2}
+            months={monthsToShow}
             ranges={[{ ...dateRange, key: "selection" }]}
             direction="horizontal"
             preventSnapRefocus={true}
             staticRanges={[]}
             inputRanges={[]}
-            className="w-[60%]"
+            className="lg:w-[60%] w-full"
           />
         </div>
       </div>

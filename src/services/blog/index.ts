@@ -19,13 +19,12 @@ export const getFeatures = async (): Promise<FeatureRoot> => {
 //   return res.json();
 // };
 
-
 type BlogResponse = {
   data: IBlog;
 };
 
 export const blogDetails = async (id: string): Promise<BlogResponse> => {
-  const res = await fetch(`${apiBaseUrl}/blogs/${id}`);
+  const res = await fetch(`${apiBaseUrl}/blog/${id}`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch blog details");
@@ -36,3 +35,15 @@ export const blogDetails = async (id: string): Promise<BlogResponse> => {
     data: json.data,
   };
 };
+
+export const getSingleBlogBySlug = async (slug: string) => {
+  const res = await fetch(`${apiBaseUrl}/blog/${slug}`);
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch blog");
+  }
+
+  return res.json();
+};
+
+
