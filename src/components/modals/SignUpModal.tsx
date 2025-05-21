@@ -16,14 +16,8 @@ interface SignupModalProps {
 }
 
 const hostandGuest = [
-  {
-    name: "Host",
-    imgSrc: hostImage.src,
-  },
-  {
-    name: "Guest",
-    imgSrc: guestImage.src,
-  },
+  { name: "Host", imgSrc: hostImage.src },
+  { name: "Guest", imgSrc: guestImage.src },
 ];
 
 const { processSignup } = AuthServices;
@@ -42,14 +36,18 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
     mutationFn: processSignup,
     onSuccess: (data) => {
       messageApi.success(data?.message || "Signup successful!");
-      form.resetFields();
-      onClose();
       router.push(`/email-verification?email=${data?.data?.email}`);
+
+      setTimeout(() => {
+        form.resetFields();
+        onClose();
+      }, 300);
     },
     onError: (error) => {
       messageApi.error(error?.message || "Signup failed. Please try again.");
     },
   });
+
   const handleSubmit = (values: Omit<SignupFormValues, "role">) => {
     mutate({
       ...values,
@@ -70,6 +68,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
         onCancel={onClose}
         footer={null}
         centered
+        destroyOnClose
       >
         <div className="space-y-4 py-2">
           <div className="w-full flex justify-center items-center gap-4 mb-6">
@@ -152,9 +151,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
                       return Promise.resolve();
                     }
                     return Promise.reject(
-                      new Error(
-                        "Passwords do not match. Please check and try again."
-                      )
+                      new Error("Passwords do not match.")
                     );
                   },
                 }),
@@ -165,7 +162,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
 
             <p className="text-xs text-gray-500 leading-snug pt-1">
               By selecting <span className="font-medium">Continue</span>, I
-              agree to Homezay stay&apos;s{" "}
+              agree to HomZay Stay&apos;s{" "}
               <a href="#" className="text-blue-500 underline">
                 Terms of Service
               </a>{" "}

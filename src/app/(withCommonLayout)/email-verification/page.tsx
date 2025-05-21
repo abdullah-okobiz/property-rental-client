@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Form, Input, Button, message } from "antd";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
@@ -15,7 +15,7 @@ const EmailVerification = () => {
   const { login } = useAuth();
   const searchParams = useSearchParams();
   const email = searchParams.get("email");
-  const router = useRouter();
+  // const router = useRouter();
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -42,9 +42,11 @@ const EmailVerification = () => {
           form.resetFields();
 
           if (role === "host") {
-            router.replace("/host-dashboard");
+            // router.replace("/host-dashboard");
+            window.location.href = "/host-dashboard";
           } else {
-            router.replace("/");
+            // router.replace("/");
+            window.location.href = "/";
           }
         } catch (error) {
           console.error("Invalid token", error);

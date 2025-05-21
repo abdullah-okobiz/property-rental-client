@@ -34,31 +34,36 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
   >({
     mutationFn: AuthServices.processLogin,
     onSuccess: (data) => {
-      const accessToken = data.accessToken;
-      if (accessToken) {
-        try {
-          const decoded = jwtDecode<DecodedJwtPayload>(accessToken);
-          const role = decoded.role;
+      const accessToken = data?.accessToken;
 
-          login({ accessToken });
+      if (!accessToken) {
+        messageApi.error("No access token received.");
+        return;
+      }
+
+      try {
+        const decoded = jwtDecode<DecodedJwtPayload>(accessToken);
+        const role = decoded.role;
+
+        login({ accessToken });
+        if (role === "host") {
+          router.replace("/host-dashboard");
+        } else {
+          router.replace("/");
+        }
+
+        setTimeout(() => {
           messageApi.success(data.message || "Login successful!");
-
-          if (role === "host") {
-            router.replace("/host-dashboard");
-          } else {
-            router.replace("/");
-          }
-
           onClose();
           setFormData(initialForm);
-        } catch (error) {
-          console.error("Invalid token", error);
-          messageApi.error("Invalid token.");
-        }
-      } else {
-        messageApi.error("No access token received.");
+        }, 300); 
+
+      } catch (error) {
+        console.error("Invalid token", error);
+        messageApi.error("Invalid token.");
       }
-    },
+    }
+    ,
     onError: (error) => {
       messageApi.error(error.message || "Login failed. Please try again.");
     },

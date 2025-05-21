@@ -2,7 +2,7 @@ export const menuList = [
   {
     id: "01",
     title: "Home",
-    link: "/",
+    link: "/home",
   },
   {
     id: "02",
