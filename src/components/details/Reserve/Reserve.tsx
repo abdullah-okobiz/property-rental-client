@@ -7,6 +7,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { format } from "date-fns";
 import Link from "next/link";
 import { useDateRange } from "@/contexts/DateRangeContext";
+import { HiXMark } from "react-icons/hi2";
 
 interface Props {
   dateRange: {
@@ -18,8 +19,16 @@ interface Props {
     endDate: Date | undefined;
   }) => void;
   slug: string;
+  price: number;
+  numberOfNights: number;
 }
-const Reserve: React.FC<Props> = ({ dateRange, setDateRange, slug }) => {
+const Reserve: React.FC<Props> = ({
+  dateRange,
+  setDateRange,
+  numberOfNights,
+  slug,
+  price,
+}) => {
   // this is for cleander
   const [showPicker, setShowPicker] = useState(false);
 
@@ -79,11 +88,13 @@ const Reserve: React.FC<Props> = ({ dateRange, setDateRange, slug }) => {
       [type]: value,
     });
   };
+
+  const subTotal = price * numberOfNights;
   return (
     <div className="md:mt-20 mt-10 relative  bg-[#fff]">
       <div className="border border-[#262626]/20 shadow rounded p-4">
         <p className="text-primary bg-primary/20 rounded px-4 py-2 inline-flex font-medium">
-          ৳1400 night
+          ৳{price} night
         </p>
 
         <div
@@ -159,6 +170,35 @@ const Reserve: React.FC<Props> = ({ dateRange, setDateRange, slug }) => {
           <p className="text-center py-2 text-base mt-2 text-[#262626]/70 font-medium">
             You won&#39;t be charged yet
           </p>
+
+          <div className="py-2">
+            {numberOfNights && (
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1 font-medium">
+                    <p>৳{price} night</p>
+                    <p>
+                      <HiXMark />
+                    </p>
+                    <p>{numberOfNights}</p>
+                  </div>
+                  <div>
+                    <p>৳{subTotal}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between font-medium mt-2 border-b pb-4 border-[#262626]/20">
+                  <p>Gateway fee</p>
+                  <p>৳00.00</p>
+                </div>
+
+                <div className="flex items-center justify-between font-medium mt-2 text-lg">
+                  <p>Total Cost</p>
+                  <p>৳{subTotal}</p>
+                </div>
+              </div>
+            )}
+          </div>
           <Link href={`/checkout/${slug}`}>
             <button className="py-3 rounded bg-primary text-[#fff] font-medium w-full my-2 cursor-pointer">
               Reserve

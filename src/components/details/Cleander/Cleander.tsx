@@ -17,19 +17,16 @@ interface CleanderProps {
     endDate: Date | undefined;
   }) => void;
   title: string;
+  numberOfNights: number;
 }
 
 const Cleander: React.FC<CleanderProps> = ({
   dateRange,
   setDateRange,
   title,
+  numberOfNights,
 }) => {
   const { startDate, endDate } = dateRange;
-
-  const numberOfNights =
-    startDate && endDate
-      ? (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
-      : 0;
 
   const [monthsToShow, setMonthsToShow] = useState(2);
 
@@ -46,7 +43,7 @@ const Cleander: React.FC<CleanderProps> = ({
   return (
     <div className="overflow-x-hidden py-6 border-b border-[#262626]/30 pb-12 lg:w-[90%]">
       <h2 className="md:text-xl text-base font-medium capitalize">
-        <span>{(numberOfNights ?? 0).toFixed(0)} nights in</span>{" "}
+        {numberOfNights && <span>{numberOfNights.toFixed(0)} nights in</span>}
         <span>{title}</span>
       </h2>
       <p className="mt-1 text-[#262626]/60 text-sm font-medium">

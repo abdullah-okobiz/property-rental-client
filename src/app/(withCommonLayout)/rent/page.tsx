@@ -1,4 +1,4 @@
-// app/rent/page.tsx
+
 "use server";
 
 import RentCard from "@/components/card/RentCard/RentCard";
@@ -9,9 +9,7 @@ import { getAllRents } from "@/services/rents";
 import { IListingFor, IRent } from "@/types";
 import React from "react";
 
-// interface RentProps {
-//   searchParams: { category?: string };
-// }
+
 
 interface RentProps {
   searchParams: Promise<{

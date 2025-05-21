@@ -1,10 +1,11 @@
-import { Tabs } from 'antd';
-import RentSearchInputField from './RentSearchInputField';
-import LandSearchInputField from './LandSearchInputField';
-import FlatSearchInputField from './FlatSearchInputField';
+import { Tabs } from "antd";
+import RentSearchInputField from "./RentSearchInputField";
+import LandSearchInputField from "./LandSearchInputField";
+import FlatSearchInputField from "./FlatSearchInputField";
 
 const SearchTabs = () => {
-  const tabClass = "text-white bg-[#F2693C] px-4 py-2 rounded";
+  const tabClass =
+    "text-white bg-[#F2693C] !inline-block px-4 py-2 rounded w-[60px]";
 
   const items = [
     {
@@ -24,7 +25,9 @@ const SearchTabs = () => {
     },
   ];
 
-  return <Tabs defaultActiveKey="rent" type="card" items={items} />;
+  return (
+    <Tabs defaultActiveKey="rent" type="card" items={items} className="" />
+  );
 };
 
 export default SearchTabs;

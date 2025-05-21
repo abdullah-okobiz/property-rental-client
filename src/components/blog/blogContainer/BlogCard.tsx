@@ -36,9 +36,11 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
             <time className="text-sm"> {formatDate(blog.createdAt)}</time>
           </div>
           <h2 className="text-base font-semibold mt-2">{blog.blogTitle}</h2>
-          <p className="line-clamp-2 mt-2 text-[#262626]/70">
-            {blog.blogDescription}
-          </p>
+
+          <p
+            className="line-clamp-2 mt-2 text-[#262626]/70"
+            dangerouslySetInnerHTML={{ __html: blog.blogDescription }}
+          ></p>
           <div className="mt-3">
             <Link href={`/blogs/${blog.slug}`}>
               <button className="flex items-center group-hover:text-primary duration-300 gap-1 uppercase text-sm font-medium tracking-wider">

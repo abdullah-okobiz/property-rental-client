@@ -37,7 +37,7 @@ const Page: FC<PageProps> = async ({ params }) => {
   const resolvedParams = await params;
 
   let resData = null;
-  console.log("---------------params", params);
+
 
   try {
     if (resolvedParams.details === "flat") {
@@ -63,7 +63,7 @@ const Page: FC<PageProps> = async ({ params }) => {
     console.log(error);
   }
 
-  console.log("---------------resData", resData);
+
 
   if (!resData) return notFound();
 
@@ -80,6 +80,7 @@ const Page: FC<PageProps> = async ({ params }) => {
     buildingYear,
     video,
     host,
+    price,
     slug,
   } = resData;
 
@@ -242,7 +243,7 @@ const Page: FC<PageProps> = async ({ params }) => {
 
       <div className="">
         {resolvedParams.details === "rent" ? (
-          <CleanderAndResever title={title} slug={slug} />
+          <CleanderAndResever title={title} slug={slug} price={price} />
         ) : (
           <div>{/* <Appointment /> */}</div>
         )}
