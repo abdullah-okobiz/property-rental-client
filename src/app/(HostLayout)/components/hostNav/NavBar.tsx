@@ -25,6 +25,7 @@ const NavBar = () => {
   const [showModal, setShowModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const { user, isAuthenticated } = useAuth();
   const pathname = usePathname();
@@ -32,13 +33,18 @@ const NavBar = () => {
   const { mutate: logout } = useMutation({
     mutationFn: processLogout,
     onSuccess: () => {
-      localStorage.setItem("hasLoggedOut", "true");
-      message.success("Logout Successful");
       localStorage.removeItem("accessToken");
-      setTimeout(() => window.location.reload(), 800);
+      localStorage.setItem("hasLoggedOut", "true");
+
+      messageApi.success("Logout Successful");
+      window.location.href = "/";
+
+      // setTimeout(() => {
+      //   router.push("/");
+      // }, 300);
     },
     onError: () => {
-      message.error("Logout failed");
+      messageApi.error("Logout failed");
     },
   });
 
@@ -70,6 +76,7 @@ const NavBar = () => {
 
   return (
     <>
+      {contextHolder}
       <nav
         className={`w-full top-0 z-50 transition-all duration-300 ${
           isSticky ? "fixed bg-white shadow-sm" : "relative"
@@ -142,10 +149,17 @@ const NavBar = () => {
               </Dropdown>
             ) : (
               <>
-                <Button onClick={() => setShowLoginModal(true)}>
+                <Button
+                  className="!border !border-primary !text-gray-900"
+                  onClick={() => setShowLoginModal(true)}
+                >
                   <HiOutlineUser /> Login
                 </Button>
-                <Button type="primary" onClick={() => setShowModal(true)}>
+                <Button
+                  className="!bg-primary !text-white "
+                  type="primary"
+                  onClick={() => setShowModal(true)}
+                >
                   Sign Up
                 </Button>
               </>
