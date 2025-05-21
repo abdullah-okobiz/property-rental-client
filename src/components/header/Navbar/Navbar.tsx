@@ -5,9 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HiOutlineUser } from "react-icons/hi";
 import { Dropdown, message } from "antd";
-import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-
 import logo from "@/assets/logo/stayverz.png";
 import { menuList } from "@/utilits/menuList";
 import { poppins } from "@/app/font";
@@ -19,29 +17,31 @@ import { AuthServices } from "@/services/auth/auth.service";
 const { processLogout } = AuthServices;
 
 const Navbar = () => {
-  const router = useRouter();
   const [isSticky, setIsSticky] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, logout: contextLogout } = useAuth();
 
   const { mutate: logout } = useMutation({
     mutationFn: processLogout,
     onMutate: () => setLoggingOut(true),
     onSuccess: () => {
+      contextLogout();
       localStorage.removeItem("accessToken");
       localStorage.setItem("hasLoggedOut", "true");
-      message.success("Logout Successful");
+      messageApi.success("Logout Successful");
+      window.location.href = "/";
       setTimeout(() => {
-        router.push("/");
         setLoggingOut(false);
       }, 300);
     },
-    onError: (error: any) => {
+    onError: () => {
       setLoggingOut(false);
-      message.error(error?.response?.data?.message || "Logout failed");
+
+      messageApi.error("Logout failed");
     },
   });
 
@@ -84,7 +84,10 @@ const Navbar = () => {
       label: (
         <button
           className="cursor-pointer w-full text-left"
-          onClick={() => logout()}
+          onClick={() => {
+            console.log("Clicked Logout");
+            logout();
+          }}
           disabled={loggingOut}
         >
           {loggingOut ? "Logging out..." : "Logout"}
@@ -95,9 +98,11 @@ const Navbar = () => {
 
   return (
     <>
+      {contextHolder}
       <div
-        className={`w-full top-0 z-50 transition-all ease-in-out duration-300 ${isSticky ? "fixed bg-white shadow-md" : "relative"
-          }`}
+        className={`w-full top-0 z-50 transition-all ease-in-out duration-300 ${
+          isSticky ? "fixed bg-white shadow-md" : "relative"
+        }`}
       >
         <div className="Container py-2 md:py-2">
           <div className="flex items-center justify-between">
@@ -155,9 +160,7 @@ const Navbar = () => {
                         {(user as any)?.name?.charAt(0) ??
                           (user as any)?.role?.charAt(0)}
                       </div>
-                      <span className="capitalize">
-                        {(user as any)?.role}
-                      </span>
+                      <span className="capitalize">{(user as any)?.role}</span>
                     </div>
                   </Dropdown>
                 </>
@@ -168,7 +171,7 @@ const Navbar = () => {
                     onClick={() => setShowLoginModal(true)}
                     className="flex cursor-pointer items-center gap-1 border border-primary px-4 py-1 rounded"
                   >
-                    <span className="p-1 rounded-full bg-primary text-[#fff]">
+                    <span className="p-1 rounded-full !bg-primary text-[#fff]">
                       <HiOutlineUser />
                     </span>
                     <span>Login</span>
@@ -177,7 +180,7 @@ const Navbar = () => {
                   {/* Sign Up Button */}
                   <button
                     onClick={() => setShowModal(true)}
-                    className="px-6 py-2 cursor-pointer bg-primary rounded !text-[#fff] hidden md:block"
+                    className="px-6 py-2 cursor-pointer !bg-primary !rounded !text-[#fff] hidden md:block"
                   >
                     Sign Up
                   </button>

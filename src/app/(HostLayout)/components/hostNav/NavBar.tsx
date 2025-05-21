@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { HiOutlineUser, HiMenu, HiX } from "react-icons/hi";
 import { Dropdown, Button, Drawer, message, MenuProps } from "antd";
 import { useMutation } from "@tanstack/react-query";
@@ -25,7 +25,7 @@ const NavBar = () => {
   const [showModal, setShowModal] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const router = useRouter();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const { user, isAuthenticated } = useAuth();
   const pathname = usePathname();
@@ -36,14 +36,15 @@ const NavBar = () => {
       localStorage.removeItem("accessToken");
       localStorage.setItem("hasLoggedOut", "true");
 
-      message.success("Logout Successful");
+      messageApi.success("Logout Successful");
+      window.location.href = "/";
 
-      setTimeout(() => {
-        router.push("/");
-      }, 300);
+      // setTimeout(() => {
+      //   router.push("/");
+      // }, 300);
     },
     onError: () => {
-      message.error("Logout failed");
+      messageApi.error("Logout failed");
     },
   });
 
@@ -75,12 +76,14 @@ const NavBar = () => {
 
   return (
     <>
+      {contextHolder}
       <nav
-        className={`w-full top-0 z-50 transition-all duration-300 ${isSticky ? "fixed bg-white shadow-sm" : "relative"
-          }`}
+        className={`w-full top-0 z-50 transition-all duration-300 ${
+          isSticky ? "fixed bg-white shadow-sm" : "relative"
+        }`}
       >
         <div className="Container py-2 flex items-center justify-between shadow-md">
-          <Link href="/host-dashboard">
+          <Link href="/">
             <Image
               src={logo}
               alt="Stayverz logo"
@@ -110,10 +113,11 @@ const NavBar = () => {
                     }}
                   >
                     <span
-                      className={`cursor-pointer text-base font-medium flex items-center gap-1 ${isActive
+                      className={`cursor-pointer text-base font-medium flex items-center gap-1 ${
+                        isActive
                           ? "text-primary font-semibold"
                           : "text-gray-700"
-                        } ${poppins.className}`}
+                      } ${poppins.className}`}
                     >
                       {menu.title}
                       <HiChevronDown className="text-sm" />
@@ -125,8 +129,9 @@ const NavBar = () => {
                   <Link
                     key={menu.id}
                     href={menu.link}
-                    className={`text-base font-medium ${isActive ? "text-primary font-semibold" : "text-gray-700"
-                      } ${poppins.className}`}
+                    className={`text-base font-medium ${
+                      isActive ? "text-primary font-semibold" : "text-gray-700"
+                    } ${poppins.className}`}
                   >
                     {menu.title}
                   </Link>
@@ -144,10 +149,17 @@ const NavBar = () => {
               </Dropdown>
             ) : (
               <>
-                <Button className="!border !border-primary !text-gray-900" onClick={() => setShowLoginModal(true)}>
+                <Button
+                  className="!border !border-primary !text-gray-900"
+                  onClick={() => setShowLoginModal(true)}
+                >
                   <HiOutlineUser /> Login
                 </Button>
-                <Button className="!bg-primary !text-white " type="primary" onClick={() => setShowModal(true)}>
+                <Button
+                  className="!bg-primary !text-white "
+                  type="primary"
+                  onClick={() => setShowModal(true)}
+                >
                   Sign Up
                 </Button>
               </>
@@ -181,8 +193,9 @@ const NavBar = () => {
               return (
                 <div key={menu.id}>
                   <div
-                    className={`font-semibold ${isActive ? "text-primary " : "text-gray-800"
-                      }`}
+                    className={`font-semibold ${
+                      isActive ? "text-primary " : "text-gray-800"
+                    }`}
                   >
                     {menu.title}
                   </div>
@@ -204,8 +217,9 @@ const NavBar = () => {
                 <Link
                   key={menu.id}
                   href={menu.link}
-                  className={`text-base font-medium ${isActive ? "text-primary" : "text-gray-800"
-                    }`}
+                  className={`text-base font-medium ${
+                    isActive ? "text-primary" : "text-gray-800"
+                  }`}
                 >
                   {menu.title}
                 </Link>
