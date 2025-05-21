@@ -1,6 +1,6 @@
-
 import Navbar from "@/components/header/Navbar/Navbar";
 import Footer from "./footer/page";
+import { DateRangeProvider } from "@/contexts/DateRangeContext";
 
 export default function layout({
   children,
@@ -10,8 +10,8 @@ export default function layout({
   return (
     <div className="">
       <Navbar />
-      {children}
-     <Footer/>
+      <DateRangeProvider>{children}</DateRangeProvider>
+      <Footer />
     </div>
   );
 }

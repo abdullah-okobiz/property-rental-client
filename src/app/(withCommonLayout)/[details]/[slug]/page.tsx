@@ -80,6 +80,7 @@ const Page: FC<PageProps> = async ({ params }) => {
     buildingYear,
     video,
     host,
+    slug,
   } = resData;
 
   return (
@@ -241,7 +242,7 @@ const Page: FC<PageProps> = async ({ params }) => {
 
       <div className="">
         {resolvedParams.details === "rent" ? (
-          <CleanderAndResever title={title} />
+          <CleanderAndResever title={title} slug={slug} />
         ) : (
           <div>{/* <Appointment /> */}</div>
         )}

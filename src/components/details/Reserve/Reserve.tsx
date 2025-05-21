@@ -6,6 +6,7 @@ import GuestsModal from "@/components/modals/GuestsModal";
 import { IoIosArrowDown } from "react-icons/io";
 import { format } from "date-fns";
 import Link from "next/link";
+import { useDateRange } from "@/contexts/DateRangeContext";
 
 interface Props {
   dateRange: {
@@ -16,8 +17,9 @@ interface Props {
     startDate: Date | undefined;
     endDate: Date | undefined;
   }) => void;
+  slug: string;
 }
-const Reserve: React.FC<Props> = ({ dateRange, setDateRange }) => {
+const Reserve: React.FC<Props> = ({ dateRange, setDateRange, slug }) => {
   // this is for cleander
   const [showPicker, setShowPicker] = useState(false);
 
@@ -63,11 +65,20 @@ const Reserve: React.FC<Props> = ({ dateRange, setDateRange }) => {
     };
   }, [showGuests]);
 
-  const [adults, setAdults] = useState(0);
-  const [younger, setYounger] = useState(0);
-  const [infants, setInfants] = useState(0);
+  const { guestInfo, setGuestInfo } = useDateRange();
 
-  const totalGuest = adults + younger + infants || 0;
+  // const [showGuests, setShowGuests] = useState(false);
+
+  // inside guest modal handler
+  const handleGuestChange = (
+    type: "adults" | "younger" | "infants",
+    value: number
+  ) => {
+    setGuestInfo({
+      ...guestInfo,
+      [type]: value,
+    });
+  };
   return (
     <div className="md:mt-20 mt-10 relative  bg-[#fff]">
       <div className="border border-[#262626]/20 shadow rounded p-4">
@@ -129,7 +140,7 @@ const Reserve: React.FC<Props> = ({ dateRange, setDateRange }) => {
                   guests
                 </p>
                 <p className="font-medium md:text-base text-sm">
-                  <span>{totalGuest}</span> Guests
+                  <span>{guestInfo.totalGuest}</span> Guests
                 </p>
               </div>
             </div>
@@ -148,7 +159,7 @@ const Reserve: React.FC<Props> = ({ dateRange, setDateRange }) => {
           <p className="text-center py-2 text-base mt-2 text-[#262626]/70 font-medium">
             You won&#39;t be charged yet
           </p>
-          <Link href="/checkout">
+          <Link href={`/checkout/${slug}`}>
             <button className="py-3 rounded bg-primary text-[#fff] font-medium w-full my-2 cursor-pointer">
               Reserve
             </button>
@@ -168,12 +179,12 @@ const Reserve: React.FC<Props> = ({ dateRange, setDateRange }) => {
     `}
           >
             <GuestsModal
-              adults={adults}
-              setAdults={setAdults}
-              younger={younger}
-              setYounger={setYounger}
-              infants={infants}
-              setInfants={setInfants}
+              adults={guestInfo.adults}
+              setAdults={(val) => handleGuestChange("adults", val)}
+              younger={guestInfo.younger}
+              setYounger={(val) => handleGuestChange("younger", val)}
+              infants={guestInfo.infants}
+              setInfants={(val) => handleGuestChange("infants", val)}
               setShowGuests={setShowGuests}
             />
           </div>

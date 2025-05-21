@@ -69,7 +69,7 @@ const AuthProvider = ({ children }: Props) => {
           }
         } catch (err) {
           await refreshToken();
-          console.log(err)
+          console.log(err);
         }
       }
     };
