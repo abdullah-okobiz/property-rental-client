@@ -7,8 +7,8 @@ import { Building2, Home, Landmark } from "lucide-react";
 import FeatureServices from "@/services/feature/feature.services";
 
 import { Feature } from "@/types/blogTypes/blogTypes";
-import { FeatureType } from "@/app/(hostLayout)/components/types/feature";
-import { ListingResponse } from "@/app/(hostLayout)/components/types/listing";
+import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
+import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
 
 // import { Feature, FeatureType } from "@/app/(hostLayout)/components/types/feature";
 // import { ListingResponse } from "@/app/(hostLayout)/components/types/listing";
