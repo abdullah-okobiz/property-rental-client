@@ -3,7 +3,7 @@ import StepLayout from '../components/StepLayout'
 
 function MainListingInitialization() {
   return (
-    <div>
+    <div className='Container'>
       <StepLayout/>
     </div>
     
