@@ -24,6 +24,7 @@ const Navbar = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const { user, isAuthenticated, logout: contextLogout } = useAuth();
+  console.log("user ==", user);
 
   const { mutate: logout } = useMutation({
     mutationFn: processLogout,
@@ -75,10 +76,14 @@ const Navbar = () => {
       key: "profile",
       label: <Link href="/profile">Profile</Link>,
     },
-    {
-      key: "settings",
-      label: <Link href="/settings">Settings</Link>,
-    },
+    ...(user?.role === "host"
+      ? [
+          {
+            key: "switch",
+            label: <Link href="/host-dashboard">Go to Host Dashboard</Link>,
+          },
+        ]
+      : []),
     {
       key: "logout",
       label: (
