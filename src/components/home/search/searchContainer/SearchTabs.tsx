@@ -5,7 +5,7 @@ import FlatSearchInputField from "./FlatSearchInputField";
 
 const SearchTabs = () => {
   const tabClass =
-    "text-white bg-[#F2693C] !inline-block px-4 py-2 rounded w-[60px]";
+    "text-white bg-[#F2693C] !inline-block lg:px-4 px-2 py-1 lg:py-2 rounded lg:w-[60px] w-[50px]";
 
   const items = [
     {
