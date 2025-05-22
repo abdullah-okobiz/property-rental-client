@@ -14,9 +14,8 @@ interface Props {
   blogs: IBlog[];
 }
 const BlogSection: React.FC<Props> = ({ blogs }) => {
-
   return (
-    <div className="Container pt-12">
+    <div className="Container mt-20 ">
       <div>
         <SectionTitle
           title="Choose From Our Diverse Range of Lands"
@@ -30,7 +29,7 @@ const BlogSection: React.FC<Props> = ({ blogs }) => {
             spaceBetween={8}
             slidesPerView={1}
             loop={true}
-            pagination={{ el: ".custom-pagination", clickable: true }}
+            pagination={{ el: ".custom-pagination2", clickable: true }}
             breakpoints={{
               640: { slidesPerView: 2 },
               768: { slidesPerView: 3 },
@@ -45,7 +44,7 @@ const BlogSection: React.FC<Props> = ({ blogs }) => {
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className="custom-pagination flex justify-center gap-2 mt-4"></div>
+          {/* <div className="custom-pagination flex justify-center gap-2 mt-4"></div> */}
         </div>
       </div>
     </div>

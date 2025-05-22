@@ -1,4 +1,5 @@
 import { poppins } from "@/app/font";
+import { TFloorPlan } from "@/types";
 import React from "react";
 
 interface GuestsModalProps {
@@ -9,6 +10,7 @@ interface GuestsModalProps {
   infants: number;
   setInfants: (value: number) => void;
   setShowGuests: (value: boolean) => void;
+  floorPlan: TFloorPlan;
 }
 const GuestsModal: React.FC<GuestsModalProps> = ({
   adults,
@@ -18,7 +20,9 @@ const GuestsModal: React.FC<GuestsModalProps> = ({
   infants,
   setInfants,
   setShowGuests,
+  floorPlan,
 }) => {
+  console.log(floorPlan);
   return (
     <div
       className={`border bg-[#fff] rounded shadow py-4 px-4 relative pb-10 ${poppins.className}`}

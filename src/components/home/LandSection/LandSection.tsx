@@ -43,7 +43,7 @@ const LandSection: React.FC<Props> = ({ lands }) => {
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className="custom-pagination flex justify-center gap-2 mt-4"></div>
+          <div className="custom-pagination   flex justify-center gap-2 mt-4"></div>
         </div>
       </div>
     </div>

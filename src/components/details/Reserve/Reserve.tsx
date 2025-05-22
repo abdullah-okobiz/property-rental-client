@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useDateRange } from "@/contexts/DateRangeContext";
 import { HiXMark } from "react-icons/hi2";
 import useAuth from "@/hooks/useAuth";
+import { TFloorPlan } from "@/types";
 
 interface Props {
   dateRange: {
@@ -22,6 +23,7 @@ interface Props {
   slug: string;
   price: number;
   numberOfNights: number;
+  floorPlan:TFloorPlan
 }
 const Reserve: React.FC<Props> = ({
   dateRange,
@@ -29,6 +31,7 @@ const Reserve: React.FC<Props> = ({
   numberOfNights,
   slug,
   price,
+  floorPlan
 }) => {
   // this is for cleander
   const [showPicker, setShowPicker] = useState(false);
@@ -267,6 +270,7 @@ const Reserve: React.FC<Props> = ({
               infants={guestInfo.infants}
               setInfants={(val) => handleGuestChange("infants", val)}
               setShowGuests={setShowGuests}
+              floorPlan={floorPlan}
             />
           </div>
         </div>

@@ -242,7 +242,7 @@ const Page: FC<PageProps> = async ({ params }) => {
 
       <div className="">
         {resolvedParams.details === "rent" ? (
-          <CleanderAndResever title={title} slug={slug} price={price} />
+          <CleanderAndResever title={title} slug={slug} price={price} floorPlan={floorPlan} />
         ) : (
           <div>{/* <Appointment /> */}</div>
         )}

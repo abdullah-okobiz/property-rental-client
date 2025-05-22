@@ -30,7 +30,7 @@ const ChooseSection: React.FC<Props> = ({ chooses }) => {
             spaceBetween={8}
             slidesPerView={1}
             loop={true}
-            pagination={{ el: ".custom-pagination", clickable: true }}
+            pagination={{ el: ".custom-pagination3", clickable: true }}
             breakpoints={{
               640: { slidesPerView: 2 },
               768: { slidesPerView: 3 },
@@ -45,7 +45,7 @@ const ChooseSection: React.FC<Props> = ({ chooses }) => {
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className="custom-pagination flex justify-center gap-2 mt-4"></div>
+          <div className="custom-pagination3 flex justify-center gap-2 mt-4"></div>
         </div>
       </div>
     </div>
