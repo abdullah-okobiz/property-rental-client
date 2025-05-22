@@ -36,6 +36,9 @@ interface PageProps {
 const Page: FC<PageProps> = async ({ params }) => {
   const resolvedParams = await params;
 
+
+
+
   let resData = null;
 
 
