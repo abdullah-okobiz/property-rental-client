@@ -6,7 +6,7 @@ const AboutPromiseCard = () => {
       <Image
         height={500}
         width={500}
-        src="./images/check-mark.png"
+        src="/images/check-mark.png"
         alt="img"
         className="w-16 h-16 mb-4"
       />

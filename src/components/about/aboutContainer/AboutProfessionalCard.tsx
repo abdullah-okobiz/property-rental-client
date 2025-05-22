@@ -6,7 +6,7 @@ const AboutProfessionalCard = () => {
       <Image
         height={500}
         width={500}
-        src="./images/woman.png"
+        src="/images/woman.png"
         alt="img"
         className="w-16 h-16 mb-4"
       />

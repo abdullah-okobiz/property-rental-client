@@ -20,7 +20,7 @@ const FeatureServices = {
     featureId,
   }: CreateListingPayload): Promise<ListingResponse> => {
     const res = await createNewListing(featureType, featureId);
-    return res.data;
+    return res?.data;
   },
 };
 
