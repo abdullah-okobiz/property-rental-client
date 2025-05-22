@@ -6,7 +6,7 @@ const AboutBookingCard = () => {
       <Image
         height={500}
         width={500}
-        src="./images/license.png"
+        src="/images/license.png"
         alt="img"
         className="w-16 h-16 mb-4"
       />
