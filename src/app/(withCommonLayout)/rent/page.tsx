@@ -26,6 +26,7 @@ const Rent: React.FC<RentProps> = async ({ searchParams }) => {
   const featuresRentID = featuresRent?._id;
 
   const { data: rentCategories } = await getAllCategory(featuresRentID);
+  console.log("rentcategoris == ", rentCategories);
 
   const categoryId = resolvedParams.category;
   const { data: rents } = await getAllRents({

@@ -6,7 +6,7 @@ import { HiOutlineUser } from "react-icons/hi";
 import { Dropdown, message } from "antd";
 import { useMutation } from "@tanstack/react-query";
 import logo from "@/assets/logo/stayverz.png";
-import { menuList } from "@/utilits/menuList";
+import { useMenuList } from "@/utilits/menuList";
 import { poppins } from "@/app/font";
 import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
@@ -23,7 +23,7 @@ const Navbar = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const { user, isAuthenticated, logout: contextLogout } = useAuth();
-  console.log("user ==", user);
+  const menuList = useMenuList(); // ✅ use hook inside component
 
   const { mutate: logout } = useMutation({
     mutationFn: processLogout,
@@ -34,13 +34,10 @@ const Navbar = () => {
       localStorage.setItem("hasLoggedOut", "true");
       messageApi.success("Logout Successful");
       window.location.href = "/";
-      setTimeout(() => {
-        setLoggingOut(false);
-      }, 300);
+      setTimeout(() => setLoggingOut(false), 300);
     },
     onError: () => {
       setLoggingOut(false);
-
       messageApi.error("Logout failed");
     },
   });
@@ -88,10 +85,7 @@ const Navbar = () => {
       label: (
         <button
           className="cursor-pointer w-full text-left"
-          onClick={() => {
-            console.log("Clicked Logout");
-            logout();
-          }}
+          onClick={() => logout()}
           disabled={loggingOut}
         >
           {loggingOut ? "Logging out..." : "Logout"}
@@ -120,21 +114,78 @@ const Navbar = () => {
                 className="w-[80px] md:w-[70px]"
               />
             </div>
-
             {/* Menu Items */}
             <div className="lg:flex hidden items-center justify-center xl:gap-8 gap-6">
-              {menuList?.map((menu) => (
-                <div key={menu.id}>
-                  <Link href={menu.link}>
+              {menuList?.map((menu) => {
+                const hasDropdown = !!menu.dropdownItems;
+
+                if (hasDropdown) {
+                  return (
+                    <Dropdown
+                      key={menu.id}
+                      menu={{
+                        items: menu.dropdownItems.map((item) => ({
+                          key: item.key,
+                          label: <Link href={item.href}>{item.label}</Link>,
+                        })),
+                      }}
+                      trigger={["hover"]}
+                      placement="bottom"
+                    >
+                      <Link
+                        href={menu.link}
+                        className={`list-none text-base font-medium cursor-pointer ${poppins.className}`}
+                      >
+                        {menu.title}
+                      </Link>
+                    </Dropdown>
+                  );
+                }
+
+                return (
+                  <Link href={menu.link} key={menu.id}>
                     <li
                       className={`list-none text-base font-medium cursor-pointer ${poppins.className}`}
                     >
                       {menu.title}
                     </li>
                   </Link>
-                </div>
-              ))}
+                );
+              })}
             </div>
+
+            {/* Menu Items */}
+            {/* <div className="lg:flex hidden items-center justify-center xl:gap-8 gap-6">
+              {menuList?.map((menu) =>
+                menu.dropdownItems ? (
+                  <Dropdown
+                    key={menu.id}
+                    menu={{
+                      items: menu.dropdownItems.map((item) => ({
+                        key: item.key,
+                        label: <Link href={item.href}>{item.label}</Link>,
+                      })),
+                    }}
+                    trigger={["hover"]}
+                    placement="bottom"
+                  >
+                    <span
+                      className={`list-none text-base font-medium cursor-pointer ${poppins.className}`}
+                    >
+                      {menu.title}
+                    </span>
+                  </Dropdown>
+                ) : (
+                  <Link href={menu.link} key={menu.id}>
+                    <li
+                      className={`list-none text-base font-medium cursor-pointer ${poppins.className}`}
+                    >
+                      {menu.title}
+                    </li>
+                  </Link>
+                )
+              )}
+            </div> */}
 
             {/* Auth Buttons or User Dropdown */}
             <div
@@ -175,7 +226,7 @@ const Navbar = () => {
                     onClick={() => setShowLoginModal(true)}
                     className="flex cursor-pointer items-center gap-1 border border-primary px-4 py-1 rounded"
                   >
-                    <span className="p-1 rounded-full !bg-primary text-[#fff]">
+                    <span className="p-1 rounded-full bg-primary text-white">
                       <HiOutlineUser />
                     </span>
                     <span>Login</span>
@@ -184,7 +235,7 @@ const Navbar = () => {
                   {/* Sign Up Button */}
                   <button
                     onClick={() => setShowModal(true)}
-                    className="px-6 py-2 cursor-pointer !bg-primary !rounded !text-[#fff] hidden md:block"
+                    className="px-6 py-2 cursor-pointer bg-primary rounded text-white hidden md:block"
                   >
                     Sign Up
                   </button>
