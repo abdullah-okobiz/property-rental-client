@@ -35,7 +35,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
   >({
     mutationFn: processSignup,
     onSuccess: (data) => {
-      messageApi.success(data?.message || "Signup successful!");
+      messageApi.success("Signup successfully!");
       router.push(`/email-verification?email=${data?.data?.email}`);
 
       setTimeout(() => {
@@ -44,7 +44,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
       }, 300);
     },
     onError: (error) => {
-      messageApi.error(error?.message || "Signup failed. Please try again.");
+      messageApi.error("Email already Exist");
     },
   });
 

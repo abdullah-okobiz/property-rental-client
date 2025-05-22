@@ -11,7 +11,7 @@ export const useMenuList = () => {
     },
     {
       id: "02",
-      title: "Rent Listing",
+      title: "Rent",
       link: "/rent",
       dropdownItems: [
         {
