@@ -68,7 +68,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
         onCancel={onClose}
         footer={null}
         centered
-        destroyOnClose
+        destroyOnHidden
       >
         <div className="space-y-4 py-2">
           <div className="w-full flex justify-center items-center gap-4 mb-6">
