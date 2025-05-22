@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 import { useDateRange } from "@/contexts/DateRangeContext";
 import { HiXMark } from "react-icons/hi2";
+import useAuth from "@/hooks/useAuth";
 
 interface Props {
   dateRange: {
@@ -90,6 +91,20 @@ const Reserve: React.FC<Props> = ({
   };
 
   const subTotal = price * numberOfNights;
+
+  const { user } = useAuth();
+  // const [showMessage, setShowMessage] = useState(false);
+  const isGuest = user?.role === "guest";
+
+  // const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   if (!isGuest) {
+  //     e.preventDefault(); // Prevent navigation
+  //     setShowMessage(true);
+  //   }
+  // };
+
+  const [hoverMessage, setHoverMessage] = useState(false);
+  console.log("find user", user);
   return (
     <div className="md:mt-20 mt-10 relative  bg-[#fff]">
       <div className="border border-[#262626]/20 shadow rounded p-4">
@@ -199,11 +214,37 @@ const Reserve: React.FC<Props> = ({
               </div>
             )}
           </div>
-          <Link href={`/checkout/${slug}`}>
+          {/* <Link href={`/checkout/${slug}`}>
             <button className="py-3 rounded bg-primary text-[#fff] font-medium w-full my-2 cursor-pointer">
               Reserve
             </button>
-          </Link>
+          </Link> */}
+
+          <div
+            onMouseEnter={() => {
+              if (!isGuest) setHoverMessage(true);
+            }}
+            onMouseLeave={() => setHoverMessage(false)}
+            className="relative w-full"
+          >
+            <Link href={isGuest ? `/checkout/${slug}` : "#"} passHref>
+              <button
+                disabled={!isGuest}
+                className={`py-3 rounded text-white font-medium w-full my-2 transition-colors duration-200 ${
+                  isGuest
+                    ? "bg-primary cursor-pointer"
+                    : "bg-gray-400 cursor-not-allowed"
+                }`}
+              >
+                Reserve
+              </button>
+            </Link>
+            {!isGuest && hoverMessage && (
+              <div className="absolute top-25 left-15 text-sm text-[#fff] bg-primary px-4 py-2 rounded">
+                Please login as a guest to reserve the rent.
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="">
