@@ -43,7 +43,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
         onClose();
       }, 300);
     },
-    onError: (error) => {
+    onError: () => {
       messageApi.error("Email already Exist");
     },
   });
