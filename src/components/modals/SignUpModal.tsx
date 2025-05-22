@@ -73,7 +73,7 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
         <div className="space-y-4 py-2">
           <div className="w-full flex justify-center items-center gap-4 mb-6">
             {hostandGuest.map((type, index) => {
-              const isSelected = role === type.name.toLowerCase();
+              const isSelected = role === type?.name.toLowerCase();
               return (
                 <div
                   key={index}
@@ -98,12 +98,12 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
                     <Image
                       height={200}
                       width={200}
-                      src={type.imgSrc}
+                      src={type?.imgSrc}
                       alt="image"
                       className="w-[70px]"
                     />
                     <h4 className="text-[14px] tracking-tight font-bold text-gray-600">
-                      Sign Up as {type.name}
+                      Sign Up as {type?.name}
                     </h4>
                   </div>
                 </div>
