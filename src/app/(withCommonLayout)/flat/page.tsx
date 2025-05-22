@@ -14,13 +14,12 @@ import React from "react";
 
 interface flatProps {
   searchParams: Promise<{
-     category?: string 
+    category?: string;
   }>;
 }
 
-const Flat:React.FC<flatProps> = async ({ searchParams }) => {
-
-   const resolvedParams = await searchParams;
+const Flat: React.FC<flatProps> = async ({ searchParams }) => {
+  const resolvedParams = await searchParams;
   const { data: features } = await getAllFeature();
 
   const featuresRent = features.find(

@@ -1,9 +1,23 @@
+"use client";
 import React from "react";
-import rentImage from "@/assets/images/rentImage.jpeg";
 import Image from "next/image";
 import { poppins } from "@/app/font";
 import { HiMiniXMark } from "react-icons/hi2";
-const CheckOutRentCard = () => {
+import { IRent } from "@/types";
+import { useDateRange } from "@/contexts/DateRangeContext";
+import { apiBaseUrl } from "@/config/config";
+interface Props {
+  data: IRent;
+}
+const CheckOutRentCard: React.FC<Props> = ({ data }) => {
+  const { dateRange } = useDateRange();
+  const { startDate, endDate } = dateRange;
+  const numberOfNights =
+    startDate && endDate
+      ? (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
+      : 1;
+  const roomPrice = data.price;
+  const subTotal = roomPrice * numberOfNights;
   return (
     <div
       className={`sticky top-30 border border-[#262626]/20 shadow rounded px-4 py-4 flex flex-col gap-4 ${poppins.className}`}
@@ -11,7 +25,7 @@ const CheckOutRentCard = () => {
       <div className="flex gap-2 border-b border-[#262626]/12 pb-5">
         <div className="w-[100px] h-[100px] rounded">
           <Image
-            src={rentImage}
+            src={apiBaseUrl + data.coverImage}
             alt="rentImage"
             width={100}
             height={100}
@@ -19,7 +33,7 @@ const CheckOutRentCard = () => {
           />
         </div>
         <div className="w-[70%] line-clamp-4">
-          <p className="font-medium">Safe & Cozy Twin Deluxe Room</p>
+          <p className="font-medium capitalize">{data.title}</p>
         </div>
       </div>
 
@@ -28,25 +42,25 @@ const CheckOutRentCard = () => {
 
         <div className="flex items-center justify-between mt-3">
           <p className="flex items-center">
-            <span>৳1800</span>
+            <span>৳{data.price}</span>
             <span>
               <HiMiniXMark />
             </span>
-            <span>2 nights</span>
+            <span>{numberOfNights} nights</span>
           </p>
 
-          <p>৳3600</p>
+          <p>৳{subTotal}</p>
         </div>
 
         <div className="flex items-center justify-between mt-2">
           <p className="">Gateway fee</p>
-          <p>৳300</p>
+          <p>৳00.00</p>
         </div>
       </div>
 
       <div className="flex items-center justify-between font-semibold">
         <p className="">Total amount</p>
-        <p>৳3600</p>
+        <p>৳{subTotal}</p>
       </div>
     </div>
   );

@@ -35,6 +35,7 @@ const CleanderAndResever: React.FC<Props> = ({ title, slug, price }) => {
             numberOfNights={numberOfNights}
             slug={slug}
             price={price}
+           
           />
         </div>
       </div>

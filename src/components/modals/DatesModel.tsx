@@ -1,6 +1,8 @@
 import React from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { motion, AnimatePresence } from "framer-motion";
+import { DateRangePicker } from "react-date-range";
+import { useDateRange } from "@/contexts/DateRangeContext";
 
 const backdropVariants = {
   visible: { opacity: 1 },
@@ -18,6 +20,9 @@ const modalVariants = {
 };
 
 const DatesModel = ({ onClose }: { onClose: () => void }) => {
+  const { dateRange, setDateRange } = useDateRange();
+  // const { startDate, endDate } = dateRange;
+
   return (
     <AnimatePresence>
       <motion.div
@@ -46,7 +51,20 @@ const DatesModel = ({ onClose }: { onClose: () => void }) => {
               <HiMiniXMark className="text-xl" />
             </div>
             <div className="flex justify-center items-center h-full">
-              <h2>Here set up date picker</h2>
+              <DateRangePicker
+                onChange={(item) => {
+                  const { startDate, endDate } = item.selection;
+                  setDateRange({ startDate, endDate });
+                }}
+                moveRangeOnFirstSelection={false}
+                months={1}
+                ranges={[{ ...dateRange, key: "selection" }]}
+                direction="horizontal"
+                preventSnapRefocus={true}
+                staticRanges={[]}
+                inputRanges={[]}
+                className=" w-full"
+              />
             </div>
           </motion.div>
         </div>
