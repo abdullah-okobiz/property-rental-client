@@ -36,11 +36,7 @@ interface PageProps {
 const Page: FC<PageProps> = async ({ params }) => {
   const resolvedParams = await params;
 
-
-
-
   let resData = null;
-
 
   try {
     if (resolvedParams.details === "flat") {
@@ -246,7 +242,7 @@ const Page: FC<PageProps> = async ({ params }) => {
 
       <div className="">
         {resolvedParams.details === "rent" ? (
-          <CleanderAndResever title={title} slug={slug} price={price} />
+          <CleanderAndResever title={title} slug={slug} price={price} floorPlan={floorPlan} />
         ) : (
           <div>{/* <Appointment /> */}</div>
         )}

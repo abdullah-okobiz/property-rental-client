@@ -1,13 +1,40 @@
 "use client";
-import React from "react";
+import RentSearchModel from "@/components/modals/RentSearchModel";
+import React, { useState } from "react";
+import { GoSearch } from "react-icons/go";
+import { VscLocation } from "react-icons/vsc";
 
 const FlatSearchInputField = () => {
+  const [openModal, setOpenModal] = useState(false);
   return (
     <form className="w-full p-4 bg-white shadow-sm rounded-md">
-      <div className="flex flex-col md:flex-row items-center gap-4">
+      <div className="lg:hidden flex items-center justify-between group">
+        <p
+          onClick={() => setOpenModal(true)}
+          className="flex items-center gap-1 font-medium sm:text-base text-[13px] text-[#262626]/40"
+        >
+          <span className="text-primary">
+            <VscLocation />
+          </span>{" "}
+          <span>Search for the flat you want !</span>
+        </p>
+        <p
+          onClick={() => setOpenModal(true)}
+          className="flex items-center gap-1 text-[#262626]/50 uppercase font-medium group-hover:text-primary duration-300"
+        >
+          <span>
+            <GoSearch />
+          </span>
+          <span className="tracking-wide cursor-pointer">Search</span>
+        </p>
+      </div>
 
+      <div className="lg:flex hidden flex-col md:flex-row items-center gap-4">
         <div className="w-full md:w-1/4 bg-[#F5F5F5] border border-transparent hover:border-primary focus:border-primary focus:ring-1 focus:ring-primary rounded-md p-2">
-          <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1 tracking-wide">
+          <label
+            htmlFor="location"
+            className="block text-sm font-medium text-gray-700 mb-1 tracking-wide"
+          >
             Where do you want to stay?
           </label>
           <input
@@ -20,7 +47,10 @@ const FlatSearchInputField = () => {
         </div>
 
         <div className="w-full md:w-1/4 bg-[#F5F5F5] border border-transparent hover:border-primary focus:border-primary focus:ring-1 focus:ring-primary rounded-md p-2">
-          <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="price"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Price
           </label>
           <input
@@ -33,7 +63,10 @@ const FlatSearchInputField = () => {
         </div>
 
         <div className="w-full md:w-1/4 bg-[#F5F5F5] border border-transparent hover:border-primary focus:border-primary focus:ring-1 focus:ring-primary rounded-md p-2">
-          <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="type"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Category
           </label>
           <select
@@ -57,8 +90,8 @@ const FlatSearchInputField = () => {
             Search
           </button>
         </div>
-
       </div>
+      {openModal && <RentSearchModel onClose={() => setOpenModal(false)} />}
     </form>
   );
 };

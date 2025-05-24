@@ -1,4 +1,5 @@
 "use client";
+import { TFloorPlan } from "@/types";
 // import React, { useState } from "react";
 import Cleander from "../Cleander/Cleander";
 import Reserve from "../Reserve/Reserve";
@@ -9,8 +10,9 @@ interface Props {
   title: string;
   slug: string;
   price: number;
+  floorPlan:TFloorPlan
 }
-const CleanderAndResever: React.FC<Props> = ({ title, slug, price }) => {
+const CleanderAndResever: React.FC<Props> = ({ title, slug, price,floorPlan }) => {
   const { dateRange, setDateRange } = useDateRange();
   const { startDate, endDate } = dateRange;
   const numberOfNights =
@@ -35,6 +37,8 @@ const CleanderAndResever: React.FC<Props> = ({ title, slug, price }) => {
             numberOfNights={numberOfNights}
             slug={slug}
             price={price}
+            floorPlan={floorPlan}
+           
           />
         </div>
       </div>

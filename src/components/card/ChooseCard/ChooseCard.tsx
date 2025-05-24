@@ -45,7 +45,7 @@ const ChooseCard: React.FC<Props> = ({ choose }) => {
       <div className="border relative border-primary/5 group-hover:bg-primary/80 duration-300 cursor-pointer shadow rounded p-4 group-hover:mt-[-12px]">
         <div className="h-[50px] w-[60px]">
           <Image
-            src={apiBaseUrl+choose.whyChooseUsIcon}
+            src={apiBaseUrl + choose.whyChooseUsIcon}
             alt=""
             width={80}
             height={80}

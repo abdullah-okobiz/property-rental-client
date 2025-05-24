@@ -12,13 +12,14 @@ import { getSingleRentBySlug } from "@/services/rents";
 
 interface PageProps {
   params: Promise<{
-    slug: string;
+    checkoutSlug: string;
   }>;
 }
 
 const page: React.FC<PageProps> = async ({ params }) => {
   const resolvedParams = await params;
-  const { data } = await getSingleRentBySlug(resolvedParams.slug);
+   console.log("resolvedParams", resolvedParams);
+  const { data } = await getSingleRentBySlug(resolvedParams.checkoutSlug);
 
   console.log("find reserv single data", data);
   return (
@@ -79,7 +80,7 @@ const page: React.FC<PageProps> = async ({ params }) => {
           <RentConfirmBtn />
         </div>
         <div className="w-1/3">
-          <CheckOutRentCard />
+          <CheckOutRentCard data={data} />
         </div>
       </div>
     </div>

@@ -1,8 +1,6 @@
 import React from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { motion, AnimatePresence } from "framer-motion";
-import { DateRangePicker } from "react-date-range";
-import { useDateRange } from "@/contexts/DateRangeContext";
 
 const backdropVariants = {
   visible: { opacity: 1 },
@@ -19,10 +17,7 @@ const modalVariants = {
   exit: { opacity: 0, y: -30 },
 };
 
-const DatesModel = ({ onClose }: { onClose: () => void }) => {
-  const { dateRange, setDateRange } = useDateRange();
-  // const { startDate, endDate } = dateRange;
-
+const RentSearchModel = ({ onClose }: { onClose: () => void }) => {
   return (
     <AnimatePresence>
       <motion.div
@@ -34,7 +29,7 @@ const DatesModel = ({ onClose }: { onClose: () => void }) => {
         onClick={onClose}
       >
         <div
-          className="flex items-center justify-center w-full h-full"
+          className="flex justify-center  w-full h-full"
           onClick={(e) => e.stopPropagation()} // prevent close when clicking inside
         >
           <motion.div
@@ -50,21 +45,8 @@ const DatesModel = ({ onClose }: { onClose: () => void }) => {
             >
               <HiMiniXMark className="text-xl" />
             </div>
-            <div className="flex justify-center items-center h-full">
-              <DateRangePicker
-                onChange={(item) => {
-                  const { startDate, endDate } = item.selection;
-                  setDateRange({ startDate, endDate });
-                }}
-                moveRangeOnFirstSelection={false}
-                months={1}
-                ranges={[{ ...dateRange, key: "selection" }]}
-                direction="horizontal"
-                preventSnapRefocus={true}
-                staticRanges={[]}
-                inputRanges={[]}
-                className=" w-full"
-              />
+            <div className="flex items-center justify-center">
+              <h2>Here add function when api ready</h2>
             </div>
           </motion.div>
         </div>
@@ -73,4 +55,4 @@ const DatesModel = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-export default DatesModel;
+export default RentSearchModel;

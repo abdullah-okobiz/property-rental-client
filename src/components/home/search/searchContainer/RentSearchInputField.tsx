@@ -1,11 +1,35 @@
 "use client";
 import { DatePicker } from "antd";
-
+import { VscLocation } from "react-icons/vsc";
+import { GoSearch } from "react-icons/go";
+import { useState } from "react";
+import RentSearchModel from "@/components/modals/RentSearchModel";
 const RentSearchInputField = () => {
+  const [openModal, setOpenModal] = useState(false);
   return (
     <div>
       <form className="w-full p-4 bg-white shadow-sm rounded-md">
-        <div className="flex flex-col md:flex-row items-center gap-4">
+        <div className="lg:hidden flex items-center justify-between group">
+          <p
+            onClick={() => setOpenModal(true)}
+            className="flex items-center gap-1 font-medium sm:text-base text-[13px] text-[#262626]/40"
+          >
+            <span className="text-primary">
+              <VscLocation />
+            </span>{" "}
+            <span>Search for the location you want !</span>
+          </p>
+          <p
+            onClick={() => setOpenModal(true)}
+            className="flex items-center gap-1 text-[#262626]/50 uppercase font-medium group-hover:text-primary duration-300"
+          >
+            <span>
+              <GoSearch />
+            </span>
+            <span className="tracking-wide cursor-pointer">Search</span>
+          </p>
+        </div>
+        <div className="lg:flex flex-col md:flex-row items-center gap-4 hidden">
           <div className="w-full md:w-1/4 bg-[#F5F5F5] border border-transparent hover:border-primary focus-within:border-primary focus-within:ring-1 focus-within:ring-primary rounded-md p-2">
             <label
               htmlFor="location"
@@ -76,6 +100,8 @@ const RentSearchInputField = () => {
           </div>
         </div>
       </form>
+
+      {openModal && <RentSearchModel onClose={() => setOpenModal(false)} />}
     </div>
   );
 };
