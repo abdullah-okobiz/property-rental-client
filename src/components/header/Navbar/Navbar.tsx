@@ -98,22 +98,22 @@ const Navbar = () => {
     <>
       {contextHolder}
       <div
-        className={`w-full top-0 z-50 transition-all ease-in-out duration-300 ${
+        className={`w-full top-0 z-50 transition-all ease-in-out duration-300 border-b border-[#262626]/5 ${
           isSticky ? "fixed bg-white shadow-md" : "relative"
         }`}
       >
         <div className="Container py-2 md:py-2">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <div>
+            <Link href="/" className="w-[80px] md:w-[70px]">
               <Image
                 src={logo}
                 alt="logo"
                 width={120}
                 height={120}
-                className="w-[80px] md:w-[70px]"
+                className="w-full h-full"
               />
-            </div>
+            </Link>
             {/* Menu Items */}
             <div className="lg:flex hidden items-center justify-center xl:gap-8 gap-6">
               {menuList?.map((menu) => {
