@@ -47,6 +47,14 @@ const CategoryApis = {
     axiosClient.patch(`/host/${featureType}/${listingId}`, {
       floorPlan,
     }),
+  updateHouseAminitiesForListing: (
+    featureType: string,
+    listingId: string,
+    amenities: string[]
+  ) =>
+    axiosClient.patch(`/host/${featureType}/${listingId}`, {
+      amenities,
+    }),
 };
 
 export default CategoryApis;

@@ -12,14 +12,6 @@ import { ListingResponse } from "@/app/(hostLayout)/components/types/listing";
 // import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
 // import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
 
-// import { Feature, FeatureType } from "@/app/(hostLayout)/components/types/feature";
-// import { ListingResponse } from "@/app/(hostLayout)/components/types/listing";
-// import {
-//   Feature,
-//   FeatureType,
-// } from "@/app/(HostLayout)/components/types/feature";
-// import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
-
 const VALID_FEATURE_TYPES: FeatureType[] = ["rent", "flat", "land"];
 
 export default function FeaturePage() {
@@ -34,7 +26,8 @@ export default function FeaturePage() {
     const fetchData = async () => {
       try {
         const data = await FeatureServices.fetchFeatures();
-        setFeatures(data.data);
+        console.log("feature data === ", data?.data);
+        setFeatures(data?.data);
       } catch (err) {
         console.error("Error fetching features", err);
       }
@@ -71,7 +64,9 @@ export default function FeaturePage() {
         featureType: name,
         featureId: selected,
       });
-      setListingId(listingRes.data._id);
+      console.log("feature type =  ", name, "feature Id == ", selected);
+      setListingId(listingRes?.data?._id);
+      console.log("listingRes :::: ", listingRes);
     } catch (err) {
       console.error("Error creating listing", err);
     }

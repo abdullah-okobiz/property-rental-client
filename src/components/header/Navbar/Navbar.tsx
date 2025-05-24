@@ -23,7 +23,7 @@ const Navbar = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const { user, isAuthenticated, logout: contextLogout } = useAuth();
-  const menuList = useMenuList(); // ✅ use hook inside component
+  const menuList = useMenuList();
 
   const { mutate: logout } = useMutation({
     mutationFn: processLogout,

@@ -22,7 +22,7 @@ export default function CategoryPage() {
 
       try {
         const res = await CategoryServices.fetchCategories(featureId);
-        setCategories(res.data);
+        setCategories(res?.data);
       } catch (err) {
         console.error("Error fetching categories:", err);
       }

@@ -8,6 +8,7 @@ const {
   updateDescriptionForListing,
   updateLocationForListing,
   updateFloorPlanForListing,
+  updateHouseAminitiesForListing,
 } = CategoryApis;
 
 const CategoryServices = {
@@ -82,6 +83,18 @@ const CategoryServices = {
       featureType,
       listingId,
       floorPlan
+    );
+    return res.data;
+  },
+  updateHouseAminities: async (
+    featureType: string,
+    listingId: string,
+    amenities: string[]
+  ) => {
+    const res = await updateHouseAminitiesForListing(
+      featureType,
+      listingId,
+      amenities
     );
     return res.data;
   },
