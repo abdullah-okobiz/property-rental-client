@@ -18,7 +18,7 @@ interface PageProps {
 
 const page: React.FC<PageProps> = async ({ params }) => {
   const resolvedParams = await params;
-   console.log("resolvedParams", resolvedParams);
+  console.log("resolvedParams", resolvedParams);
   const { data } = await getSingleRentBySlug(resolvedParams.checkoutSlug);
 
   console.log("find reserv single data", data);
@@ -28,28 +28,44 @@ const page: React.FC<PageProps> = async ({ params }) => {
         className={`flex items-center gap-2 text-xl cursor-pointer ${poppins.className}`}
       >
         <p>
-          <MdArrowBackIosNew />
+          <MdArrowBackIosNew className="md:text-base text-sm" />
         </p>
-        <h1 className="text-3xl font-medium">Confirm and pay</h1>
+        <h1 className="lg:text-3xl md:text-2xl text-xl font-medium">
+          Confirm and pay
+        </h1>
       </div>
 
       <div className={`py-8  ${poppins.className}`}>
         <h2 className="text-xl font-medium">Your trip</h2>
       </div>
 
-      <div className="flex gap-8">
-        <div className="w-2/3 flex flex-col gap-12">
-          <Dates />
-          <CheckGuest />
+      <div className="">
+        <div className="flex flex-col gap-12">
+          <div className="flex gap-12 lg:flex-nowrap flex-wrap">
+            <div className="lg:w-2/3 w-full">
+              <div className="flex flex-col gap-12">
+                <Dates />
+                <CheckGuest />
+              </div>
 
-          <div
-            className={`flex justify-between border-b pb-6 border-[#262626]/30 ${poppins.className}`}
-          >
-            <div>
-              <h2 className="font-medium text-xl">Pay with</h2>
+              <div
+                className={`flex justify-between border-b  border-[#262626]/30 py-8 ${poppins.className}`}
+              >
+                <div>
+                  <h2 className="font-medium text-xl">Pay with</h2>
+                </div>
+                <div>
+                  <Image
+                    src={sslImage}
+                    alt="sslImage"
+                    width={130}
+                    height={130}
+                  />
+                </div>
+              </div>
             </div>
-            <div>
-              <Image src={sslImage} alt="sslImage" width={130} height={130} />
+            <div className="lg:w-1/3 w-full">
+              <CheckOutRentCard data={data} />
             </div>
           </div>
 
@@ -78,9 +94,6 @@ const page: React.FC<PageProps> = async ({ params }) => {
           </div>
 
           <RentConfirmBtn />
-        </div>
-        <div className="w-1/3">
-          <CheckOutRentCard data={data} />
         </div>
       </div>
     </div>

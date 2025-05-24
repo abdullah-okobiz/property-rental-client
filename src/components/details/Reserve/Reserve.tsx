@@ -1,3 +1,4 @@
+"use client";
 import { DateRangePicker } from "react-date-range";
 import React, { useEffect, useRef, useState } from "react";
 import { PiCalendarCheckThin } from "react-icons/pi";
@@ -12,29 +13,20 @@ import useAuth from "@/hooks/useAuth";
 import { TFloorPlan } from "@/types";
 
 interface Props {
-  dateRange: {
-    startDate: Date | undefined;
-    endDate: Date | undefined;
-  };
-  setDateRange: (range: {
-    startDate: Date | undefined;
-    endDate: Date | undefined;
-  }) => void;
   slug: string;
   price: number;
-  numberOfNights: number;
-  floorPlan:TFloorPlan
+
+  floorPlan: TFloorPlan;
 }
-const Reserve: React.FC<Props> = ({
-  dateRange,
-  setDateRange,
-  numberOfNights,
-  slug,
-  price,
-  floorPlan
-}) => {
+const Reserve: React.FC<Props> = ({ slug, price, floorPlan }) => {
   // this is for cleander
   const [showPicker, setShowPicker] = useState(false);
+  const { dateRange, setDateRange } = useDateRange();
+  const { startDate, endDate } = dateRange;
+  const numberOfNights =
+    startDate && endDate
+      ? (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
+      : 1;
 
   const cleanderRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -109,7 +101,7 @@ const Reserve: React.FC<Props> = ({
   const [hoverMessage, setHoverMessage] = useState(false);
   console.log("find user", user);
   return (
-    <div className="md:mt-20 mt-10 relative  bg-[#fff]">
+    <div className="">
       <div className="border border-[#262626]/20 shadow rounded p-4">
         <p className="text-primary bg-primary/20 rounded px-4 py-2 inline-flex font-medium">
           ৳{price} night
@@ -130,7 +122,7 @@ const Reserve: React.FC<Props> = ({
                 <p className="text-[12px] uppercase text-[#262626]/50">
                   Check-in
                 </p>
-                <p className="font-medium md:text-base text-sm">
+                <p className="font-medium xl:text-base text-sm">
                   {dateRange.startDate
                     ? format(dateRange.startDate, "MMM d, yyyy")
                     : "Add Dates"}
@@ -147,7 +139,7 @@ const Reserve: React.FC<Props> = ({
                   Check-out
                 </p>
                 {/* <p className="font-medium">Add Dates</p> */}
-                <p className="md:text-base text-sm">
+                <p className="xl:text-base text-sm">
                   {dateRange.endDate
                     ? format(dateRange.endDate, "MMM d, yyyy")
                     : "Add Dates"}
@@ -168,7 +160,7 @@ const Reserve: React.FC<Props> = ({
                 <p className="text-[12px] uppercase text-[#262626]/50">
                   guests
                 </p>
-                <p className="font-medium md:text-base text-sm">
+                <p className="font-medium xl:text-base text-sm">
                   <span>{guestInfo.totalGuest}</span> Guests
                 </p>
               </div>
@@ -193,7 +185,7 @@ const Reserve: React.FC<Props> = ({
             {numberOfNights && (
               <div>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1 font-medium">
+                  <div className="flex items-center gap-1 font-medium md:text-base text-sm">
                     <p>৳{price} night</p>
                     <p>
                       <HiXMark />
@@ -295,13 +287,13 @@ const Reserve: React.FC<Props> = ({
                 console.log("End Date:", endDate);
               }}
               moveRangeOnFirstSelection={false}
-              months={2}
+              months={1}
               ranges={[{ ...dateRange, key: "selection" }]}
               direction="horizontal"
               preventSnapRefocus={true}
               staticRanges={[]}
               inputRanges={[]}
-              className="w-[60%]"
+              className="lg:w-full xl:w-[90%] border-r border-[#262626]/10 relative z-50 object-cover lg:ml-[-10px]"
             />
           </div>
         </div>

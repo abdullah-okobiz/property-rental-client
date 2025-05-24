@@ -1,4 +1,3 @@
-
 "use server";
 
 import RentCard from "@/components/card/RentCard/RentCard";
@@ -8,8 +7,6 @@ import { getAllFeature } from "@/services/feature";
 import { getAllRents } from "@/services/rents";
 import { IListingFor, IRent } from "@/types";
 import React from "react";
-
-
 
 interface RentProps {
   searchParams: Promise<{
@@ -40,10 +37,30 @@ const Rent: React.FC<RentProps> = async ({ searchParams }) => {
         selectedCategoryId={categoryId || "all"}
       />
 
-      <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
-        {rents?.slice(0, 8).map((rent: IRent) => (
-          <RentCard key={rent._id} rent={rent} linkPrefix="rent" />
-        ))}
+      {/* <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
+        {rents
+          ?.filter((rent: IRent) => rent.status === "published")
+          .slice(0, 8)
+          .map((rent: IRent) => (
+            <RentCard key={rent._id} rent={rent} linkPrefix="rent" />
+          ))}
+      </div> */}
+
+      <div className="mt-8">
+        {rents?.filter((rent: IRent) => rent.status === "published").length ===
+        0 ? (
+          <p className="text-center text-gray-500 lg:py-60 py-20">
+            No published rents available at the moment.
+          </p>
+        ) : (
+          <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
+            {rents
+              ?.filter((rent: IRent) => rent.status === "published")
+              .map((rent: IRent) => (
+                <RentCard key={rent._id} rent={rent} linkPrefix="rent" />
+              ))}
+          </div>
+        )}
       </div>
     </div>
   );

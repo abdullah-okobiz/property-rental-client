@@ -17,8 +17,16 @@ interface Props {
 }
 
 const RentCard: React.FC<Props> = ({ rent, linkPrefix }) => {
-  const { title, coverImage, floorPlan, price, location, slug, buildingYear } =
-    rent;
+  const {
+    title,
+    coverImage,
+    floorPlan,
+    price,
+    location,
+    slug,
+    buildingYear,
+    status,
+  } = rent;
   const href = `/${linkPrefix}/${slug}`;
   return (
     <div
@@ -47,11 +55,11 @@ const RentCard: React.FC<Props> = ({ rent, linkPrefix }) => {
               {location}
             </span>
           </p>
-          <p className=" mt-4">
+          <div className=" mt-4 flex items-center0">
             <span className="font-medium text-xl">৳ {price}</span>
 
-            <span>/night</span>
-          </p>
+            <p>{status && <span>/night</span>}</p>
+          </div>
 
           <div className="flex items-center flex-wrap gap-2 my-2 text-sm text-[#262626]/60">
             {floorPlan && (

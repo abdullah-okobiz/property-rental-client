@@ -33,7 +33,9 @@ const CheckOutRentCard: React.FC<Props> = ({ data }) => {
           />
         </div>
         <div className="w-[70%] line-clamp-4">
-          <p className="font-medium capitalize">{data.title}</p>
+          <p className="font-medium capitalize md:text-base text-sm">
+            {data.title}
+          </p>
         </div>
       </div>
 

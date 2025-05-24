@@ -25,27 +25,35 @@ const ChooseSection: React.FC<Props> = ({ chooses }) => {
       </div>
       <div>
         <div className="mt-8">
-          <Swiper
-            modules={[Pagination]}
-            spaceBetween={8}
-            slidesPerView={1}
-            loop={true}
-            pagination={{ el: ".custom-pagination3", clickable: true }}
-            breakpoints={{
-              640: { slidesPerView: 2 },
-              768: { slidesPerView: 3 },
-              1024: { slidesPerView: 4 },
-              1280: { slidesPerView: 4 },
-              1536: { slidesPerView: 4 },
-            }}
-          >
-            {chooses?.map((choose) => (
-              <SwiperSlide key={choose._id} className="py-2 px-1">
-                <ChooseCard choose={choose} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className="custom-pagination3 flex justify-center gap-2 mt-4"></div>
+          {chooses?.length > 0 ? (
+            <>
+              <Swiper
+                modules={[Pagination]}
+                spaceBetween={8}
+                slidesPerView={1}
+                loop={true}
+                pagination={{ el: ".custom-pagination3", clickable: true }}
+                breakpoints={{
+                  640: { slidesPerView: 2 },
+                  768: { slidesPerView: 3 },
+                  1024: { slidesPerView: 4 },
+                  1280: { slidesPerView: 4 },
+                  1536: { slidesPerView: 4 },
+                }}
+              >
+                {chooses.map((choose) => (
+                  <SwiperSlide key={choose._id} className="py-2 px-1">
+                    <ChooseCard choose={choose} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <div className="custom-pagination3 flex justify-center gap-2 mt-4"></div>
+            </>
+          ) : (
+            <p className="text-center text-gray-500 mt-4">
+              No information available at the moment.
+            </p>
+          )}
         </div>
       </div>
     </div>

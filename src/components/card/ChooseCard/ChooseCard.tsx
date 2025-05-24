@@ -67,9 +67,7 @@ const ChooseCard: React.FC<Props> = ({ choose }) => {
           <button
             onClick={openModal}
             className="text-primary group-hover:text-[#262626] mt-2 text-sm font-medium absolute top-2 right-3 cursor-pointer"
-          >
-            More
-          </button>
+          ></button>
         )}
       </div>
       {isModalOpen && <ChooseModal closeModal={closeModal} choose={choose} />}

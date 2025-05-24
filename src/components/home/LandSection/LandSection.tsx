@@ -23,27 +23,39 @@ const LandSection: React.FC<Props> = ({ lands }) => {
       </div>
       <div>
         <div className="pt-4">
-          <Swiper
-            modules={[Pagination]}
-            spaceBetween={8}
-            slidesPerView={1}
-            loop={true}
-            pagination={{ el: ".custom-pagination", clickable: true }}
-            breakpoints={{
-              640: { slidesPerView: 2 },
-              768: { slidesPerView: 3 },
-              1024: { slidesPerView: 4 },
-              1280: { slidesPerView: 4 },
-              1536: { slidesPerView: 4 },
-            }}
-          >
-            {lands?.slice(0, 8).map((land) => (
-              <SwiperSlide key={land._id} className="py-2 px-1">
-                <RentCard rent={land} linkPrefix="land" />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className="custom-pagination   flex justify-center gap-2 mt-4"></div>
+          {lands?.some((land) => land.publishStatus === "published") ? (
+            <>
+              <Swiper
+                modules={[Pagination]}
+                spaceBetween={8}
+                slidesPerView={1}
+                loop={true}
+                pagination={{ el: ".custom-pagination", clickable: true }}
+                breakpoints={{
+                  640: { slidesPerView: 2 },
+                  768: { slidesPerView: 3 },
+                  1024: { slidesPerView: 4 },
+                  1280: { slidesPerView: 4 },
+                  1536: { slidesPerView: 4 },
+                }}
+              >
+                {lands
+                  ?.filter((land) => land.publishStatus === "published")
+                  .slice(0, 8)
+                  .map((land) => (
+                    <SwiperSlide key={land._id} className="py-2 px-1">
+                      <RentCard rent={land} linkPrefix="land" />
+                    </SwiperSlide>
+                  ))}
+              </Swiper>
+
+              <div className="custom-pagination flex justify-center gap-2 mt-4"></div>
+            </>
+          ) : (
+            <div className="text-center text-gray-500 py-8">
+              <p>No published lands available at the moment.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -42,11 +42,38 @@ const Flat: React.FC<flatProps> = async ({ searchParams }) => {
         selectedCategoryId={categoryId || "all"}
       />
 
-      <div>
+      {/* <div>
         <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
           {flats?.slice(0, 8).map((rent: IRent) => (
             <RentCard key={rent._id} rent={rent} linkPrefix="flat"></RentCard>
           ))}
+
+          {flats
+            ?.filter((rent: IRent) => rent.publishStatus === "published")
+            .slice(0, 8)
+            .map((rent: IRent) => (
+              <RentCard key={rent._id} rent={rent} linkPrefix="rent" />
+            ))}
+        </div>
+      </div> */}
+
+      <div>
+        <div className="mt-8">
+          {flats?.filter((rent: IRent) => rent.publishStatus === "published")
+            .length === 0 ? (
+            <p className="text-center text-gray-500 lg:py-60 py-20">
+              No published flats available at the moment.
+            </p>
+          ) : (
+            <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
+              {flats
+                ?.filter((rent: IRent) => rent.publishStatus === "published")
+                .slice(0, 8)
+                .map((rent: IRent) => (
+                  <RentCard key={rent._id} rent={rent} linkPrefix="rent" />
+                ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -24,27 +24,35 @@ const BlogSection: React.FC<Props> = ({ blogs }) => {
       </div>
       <div>
         <div className="mt-8">
-          <Swiper
-            modules={[Pagination]}
-            spaceBetween={8}
-            slidesPerView={1}
-            loop={true}
-            pagination={{ el: ".custom-pagination2", clickable: true }}
-            breakpoints={{
-              640: { slidesPerView: 2 },
-              768: { slidesPerView: 3 },
-              1024: { slidesPerView: 4 },
-              1280: { slidesPerView: 4 },
-              1536: { slidesPerView: 4 },
-            }}
-          >
-            {blogs?.map((blog) => (
-              <SwiperSlide key={blog._id} className="py-2 px-1">
-                <BlogCard blog={blog} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          {/* <div className="custom-pagination flex justify-center gap-2 mt-4"></div> */}
+          {blogs && blogs.length > 0 ? (
+            <>
+              <Swiper
+                modules={[Pagination]}
+                spaceBetween={8}
+                slidesPerView={1}
+                loop={true}
+                pagination={{ el: ".custom-pagination2", clickable: true }}
+                breakpoints={{
+                  640: { slidesPerView: 2 },
+                  768: { slidesPerView: 3 },
+                  1024: { slidesPerView: 4 },
+                  1280: { slidesPerView: 4 },
+                  1536: { slidesPerView: 4 },
+                }}
+              >
+                {blogs.map((blog) => (
+                  <SwiperSlide key={blog._id} className="py-2 px-1">
+                    <BlogCard blog={blog} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <div className="custom-pagination2 flex justify-center gap-2 mt-4"></div>
+            </>
+          ) : (
+            <p className="text-center text-gray-500 text-lg">
+              There are no blogs, blogs are coming....
+            </p>
+          )}
         </div>
       </div>
     </div>

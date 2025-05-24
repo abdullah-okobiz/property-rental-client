@@ -34,7 +34,7 @@ const ImageModel: React.FC<Props> = ({ images, setOpenGallery }) => {
       <div className="flex flex-col gap-4 items-center">
         {/* Main Image */}
         <div
-          className="h-[420px] w-[810px] max-w-full cursor-pointer"
+          className="md:h-[420px] h-[280px] w-[810px] max-w-full cursor-pointer"
           onClick={() => openLightbox(0)}
         >
           <Image
@@ -51,7 +51,7 @@ const ImageModel: React.FC<Props> = ({ images, setOpenGallery }) => {
           {images.map((img, index) => (
             <div
               key={index}
-              className="h-[205px] w-[400px] max-w-full cursor-pointer"
+              className="md:h-[205px] h-[160px] w-[400px] max-w-full cursor-pointer"
               onClick={() => openLightbox(index)}
             >
               <Image
