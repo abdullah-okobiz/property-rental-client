@@ -19,7 +19,11 @@ export const TabMenuList = [
     title: "Menu",
     link: "#",
     dropdownItems: [
-      { key: "listing", label: "Listings", href: "/host-dashboard/listings" },
+      {
+        key: "listing",
+        label: "My Listings",
+        href: "/host-dashboard/listings",
+      },
       {
         key: "reservations",
         label: "Reservations",
