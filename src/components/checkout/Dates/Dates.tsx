@@ -9,6 +9,7 @@ const Dates = () => {
   const [openModal, setOpenModal] = useState(false);
   const { dateRange } = useDateRange();
   const { startDate, endDate } = dateRange;
+
   return (
     <div>
       <div
