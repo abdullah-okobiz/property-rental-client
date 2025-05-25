@@ -64,9 +64,7 @@ export default function FeaturePage() {
       const listingId = listingRes?.data?._id;
 
       if (listingId) {
-        router.push(
-          `/create-listing/become-a-host/category?listingId=${listingId}`
-        );
+        localStorage.setItem("listingId", listingId);
       }
       setListingId(listingId);
     } catch (err) {
