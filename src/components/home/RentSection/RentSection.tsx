@@ -38,7 +38,7 @@ const RentSection: React.FC<Props> = ({ rents }) => {
             No published rents available at the moment.
           </p>
         ) : (
-          <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
+          <div className="grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-4">
             {rents
               ?.filter((rent: IRent) => rent.status === "published")
               .map((rent: IRent) => (

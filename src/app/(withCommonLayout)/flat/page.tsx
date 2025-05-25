@@ -65,12 +65,12 @@ const Flat: React.FC<flatProps> = async ({ searchParams }) => {
               No published flats available at the moment.
             </p>
           ) : (
-            <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
+            <div className="grid xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-4">
               {flats
                 ?.filter((rent: IRent) => rent.publishStatus === "published")
                 .slice(0, 8)
                 .map((rent: IRent) => (
-                  <RentCard key={rent._id} rent={rent} linkPrefix="rent" />
+                  <RentCard key={rent._id} rent={rent} linkPrefix="flat" />
                 ))}
             </div>
           )}

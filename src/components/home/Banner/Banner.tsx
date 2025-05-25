@@ -20,7 +20,7 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
   const swiperRef = useRef<SwiperClass | null>(null);
 
   return (
-    <div className="relative mt-[-15px]">
+    <div className="relative mt-[-2px]">
       <Swiper
         spaceBetween={1}
         slidesPerView={1}
@@ -45,6 +45,8 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      
 
       {/* Custom Navigation Buttons */}
       {/* <button

@@ -2,7 +2,7 @@
 
 @layer base {
   .Container {
-    @apply 2xl:px-60 xl:px-30 lg:px-4 md:px-4 px-4;
+    @apply 2xl:px-60 xl:px-30 lg:px-10 md:px-4 px-4;
   }
 }
 

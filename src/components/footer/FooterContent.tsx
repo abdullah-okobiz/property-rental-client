@@ -1,7 +1,8 @@
 import Image from "next/image";
-import FooterImg from "../../assets/logo/stayverz.png";
+import FooterImg from "@/assets/logo/homzystay.png";
 import Link from "next/link";
 import { poppins } from "@/app/font";
+import DownFooter from "./DownFooter/DownFooter";
 
 const footerLinks = [
   {
@@ -54,8 +55,8 @@ const FooterContent = () => {
           <Image
             src={FooterImg}
             alt="Stayverz Logo"
-            width={140}
-            height={140}
+            width={180}
+            height={180}
             className="object-contain"
           />
           <p className="mt-4 text-sm text-gray-500 max-w-xs">
@@ -90,6 +91,8 @@ const FooterContent = () => {
       <div className="border-t mt-12 pt-6 text-center text-sm text-gray-500">
         © {new Date().getFullYear()} Okobiz.com. All rights reserved.
       </div>
+
+      <DownFooter />
     </div>
   );
 };
