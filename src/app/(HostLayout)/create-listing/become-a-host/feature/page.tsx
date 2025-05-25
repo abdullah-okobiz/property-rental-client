@@ -5,11 +5,10 @@ import { useListingStepContext } from "@/contexts/ListingStepContext";
 import { useEffect, useState } from "react";
 import { Building2, Home, Landmark } from "lucide-react";
 import FeatureServices from "@/services/feature/feature.services";
-
 import { Feature } from "@/types/blogTypes/blogTypes";
 import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
 import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Skeleton } from "antd";
 
 export default function FeaturePage() {
