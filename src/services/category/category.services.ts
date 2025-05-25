@@ -12,6 +12,8 @@ const {
   getSingleStepTitleFieldForRentListing,
   updateListingPriceApi,
   getSingleStepLocationFieldForRentListing,
+  updateLandForListing,
+  getSingleStepLandFieldForLandListing,
 } = CategoryApis;
 
 const CategoryServices = {
@@ -34,6 +36,14 @@ const CategoryServices = {
       listingId,
       categoryId
     );
+    return res.data;
+  },
+  updateListingLandSize: async (
+    featureType: string,
+    listingId: string,
+    landSize: number
+  ) => {
+    const res = await updateLandForListing(featureType, listingId, landSize);
     return res.data;
   },
 
@@ -60,6 +70,14 @@ const CategoryServices = {
     );
     return res?.data;
   },
+  getListingLandSize: async (featureType: string, listingId: string) => {
+    const res = await getSingleStepLandFieldForLandListing(
+      featureType,
+      listingId
+    );
+    return res?.data;
+  },
+
   updateListingPrice: async (
     featureType: string,
     listingId: string,
