@@ -5,31 +5,32 @@ import { useListingStepContext } from "@/contexts/ListingStepContext";
 import { useEffect, useState } from "react";
 import { Building2, Home, Landmark } from "lucide-react";
 import FeatureServices from "@/services/feature/feature.services";
-
 import { Feature } from "@/types/blogTypes/blogTypes";
-import { FeatureType } from "@/app/(hostLayout)/components/types/feature";
-import { ListingResponse } from "@/app/(hostLayout)/components/types/listing";
-// import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
-// import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
-
-const VALID_FEATURE_TYPES: FeatureType[] = ["rent", "flat", "land"];
+import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
+import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
+import { useRouter } from "next/navigation";
+import { Skeleton } from "antd";
 
 export default function FeaturePage() {
   const [features, setFeatures] = useState<Feature[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const { setFeatureId, setFeatureType, setListingId } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
+  const router = useRouter();
 
   const [selected, setSelected] = useState<string | null>(null);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const data = await FeatureServices.fetchFeatures();
-        console.log("feature data === ", data?.data);
-        setFeatures(data?.data);
+        setFeatures(data?.data || []);
       } catch (err) {
         console.error("Error fetching features", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -49,11 +50,6 @@ export default function FeaturePage() {
 
     const featureNameLower = selectedFeature.featureName.toLowerCase();
 
-    if (!VALID_FEATURE_TYPES.includes(featureNameLower as FeatureType)) {
-      console.error("Invalid feature type:", featureNameLower);
-      return;
-    }
-
     const name = featureNameLower as FeatureType;
 
     setFeatureId(selected);
@@ -64,9 +60,15 @@ export default function FeaturePage() {
         featureType: name,
         featureId: selected,
       });
-      console.log("feature type =  ", name, "feature Id == ", selected);
-      setListingId(listingRes?.data?._id);
-      console.log("listingRes :::: ", listingRes);
+
+      const listingId = listingRes?.data?._id;
+
+      if (listingId) {
+        router.push(
+          `/create-listing/become-a-host/category?listingId=${listingId}`
+        );
+      }
+      setListingId(listingId);
     } catch (err) {
       console.error("Error creating listing", err);
     }
@@ -100,32 +102,45 @@ export default function FeaturePage() {
           <div className="text-red-500 text-sm text-center">{error}</div>
         )}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {features.map((feature) => (
-            <div
-              key={feature._id}
-              onClick={() => setSelected(feature._id)}
-              className={`relative cursor-pointer border rounded-2xl p-4 flex flex-col items-center gap-3 transition-all duration-200 ${
-                selected === feature._id
-                  ? "border-primary ring-0 ring-primary"
-                  : "border-gray-200"
-              }`}
-            >
-              <div className="absolute top-2 right-2 w-5 h-5 border-1 rounded border-gray-300 flex items-center justify-center bg-white">
-                {selected === feature._id && (
-                  <span className="text-primary text-xs font-bold leading-none">
-                    ✔
-                  </span>
-                )}
-              </div>
+        {loading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <Skeleton.Button
+                key={idx}
+                active
+                block
+                style={{ height: 150, borderRadius: 16 }}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {features.map((feature) => (
+              <div
+                key={feature._id}
+                onClick={() => setSelected(feature._id)}
+                className={`relative cursor-pointer border rounded-2xl p-4 flex flex-col items-center gap-3 transition-all duration-200 ${
+                  selected === feature._id
+                    ? "border-primary ring-0 ring-primary"
+                    : "border-gray-200"
+                }`}
+              >
+                <div className="absolute top-2 right-2 w-5 h-5 border-1 rounded border-gray-300 flex items-center justify-center bg-white">
+                  {selected === feature._id && (
+                    <span className="text-primary text-xs font-bold leading-none">
+                      ✔
+                    </span>
+                  )}
+                </div>
 
-              <div className="flex flex-col items-center space-y-2">
-                {getIcon(feature.featureName)}
-                <span className="font-medium">{feature.featureName}</span>
+                <div className="flex flex-col items-center space-y-2">
+                  {getIcon(feature.featureName)}
+                  <span className="font-medium">{feature.featureName}</span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

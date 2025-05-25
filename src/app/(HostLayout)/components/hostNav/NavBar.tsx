@@ -38,10 +38,6 @@ const NavBar = () => {
 
       messageApi.success("Logout Successful");
       window.location.href = "/";
-
-      // setTimeout(() => {
-      //   router.push("/");
-      // }, 300);
     },
     onError: () => {
       messageApi.error("Logout failed");

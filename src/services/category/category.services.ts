@@ -9,6 +9,9 @@ const {
   updateLocationForListing,
   updateFloorPlanForListing,
   updateHouseAminitiesForListing,
+  getSingleStepTitleFieldForRentListing,
+  updateListingPriceApi,
+  getSingleStepLocationFieldForRentListing,
 } = CategoryApis;
 
 const CategoryServices = {
@@ -43,6 +46,28 @@ const CategoryServices = {
     return res.data;
   },
 
+  getListingTitle: async (featureType: string, listingId: string) => {
+    const res = await getSingleStepTitleFieldForRentListing(
+      featureType,
+      listingId
+    );
+    return res?.data;
+  },
+  getListingLocation: async (featureType: string, listingId: string) => {
+    const res = await getSingleStepLocationFieldForRentListing(
+      featureType,
+      listingId
+    );
+    return res?.data;
+  },
+  updateListingPrice: async (
+    featureType: string,
+    listingId: string,
+    price: number
+  ) => {
+    const res = await updateListingPriceApi(featureType, listingId, price);
+    return res;
+  },
   updateListingDescription: async (
     featureType: string,
     listingId: string,

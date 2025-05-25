@@ -33,7 +33,11 @@ const CategoryApis = {
     listingId: string,
     location: string
   ) => axiosClient.patch(`/host/${featureType}/${listingId}`, { location }),
-
+  updateListingPriceApi: (
+    featureType: string,
+    listingId: string,
+    price: number
+  ) => axiosClient.patch(`/host/${featureType}/${listingId}`, { price }),
   updateFloorPlanForListing: (
     featureType: string,
     listingId: string,
@@ -55,6 +59,14 @@ const CategoryApis = {
     axiosClient.patch(`/host/${featureType}/${listingId}`, {
       amenities,
     }),
+  getSingleStepTitleFieldForRentListing: (
+    featureType: string,
+    listingId: string
+  ) => axiosClient.get(`/host/${featureType}/${listingId}/field/title`),
+  getSingleStepLocationFieldForRentListing: (
+    featureType: string,
+    listingId: string
+  ) => axiosClient.get(`/host/${featureType}/${listingId}/field/location`),
 };
 
 export default CategoryApis;

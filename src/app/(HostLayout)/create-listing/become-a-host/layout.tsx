@@ -16,11 +16,9 @@ export default function BecomeAHostLayout({
       <ListingStepProvider>
         <div className="flex flex-col min-h-screen">
           <TopNavWithAction />
-          <main className="flex-grow w-full mx-auto p-4">
-            {children}
-          </main>
+          <main className="flex-grow w-full mx-auto p-4">{children}</main>
 
-          <div className="sticky bottom-0 bg-white border border-t-gray-300 p-4 shadow-md z-50">
+          <div className="sticky bottom-0 bg-white border border-gray-300 p-4 shadow-md z-50">
             <div className="max-w-6xl mx-auto">
               <StepNavigation />
             </div>
