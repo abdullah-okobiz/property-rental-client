@@ -1,14 +1,18 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { stepRoutes } from "../listing-utils/steps";
 import { useListingStepContext } from "@/contexts/ListingStepContext";
+import { useListingContext } from "@/contexts/ListingContext";
+import { getStepsForFeatureType } from "../listing-utils/steps";
 
 export default function StepNavigation() {
   const pathname = usePathname();
   const router = useRouter();
-  const { onNextSubmit } = useListingStepContext();
 
+  const { onNextSubmit } = useListingStepContext();
+  const { featureType } = useListingContext();
+
+  const stepRoutes = getStepsForFeatureType(featureType);
   const currentIndex = stepRoutes.findIndex((route) => pathname === route);
   const isFirst = currentIndex === 0;
   const isLast = currentIndex === stepRoutes.length - 1;
