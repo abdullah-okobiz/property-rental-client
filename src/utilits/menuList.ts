@@ -11,7 +11,7 @@ export const useMenuList = () => {
     },
     {
       id: "02",
-      title: "Rent",
+      title: "Room",
       link: "/rent",
       dropdownItems: [
         {
@@ -28,34 +28,40 @@ export const useMenuList = () => {
     },
     {
       id: "03",
-      title: "Buy/Sale",
-      link: "#",
-      dropdownItems: [
-        {
-          key: "flat",
-          label: "Flat Listing",
-          href: `/flat`,
-        },
-        {
-          key: "land",
-          label: "Land Listing",
-          href: `/land`,
-        },
-      ],
+      title: "Flat",
+      link: "/flat",
+      // dropdownItems: [
+      //   {
+      //     key: "flat",
+      //     label: "Flat Listing",
+      //     href: `/flat`,
+      //   },
+      //   {
+      //     key: "land",
+      //     label: "Land Listing",
+      //     href: `/land`,
+      //   },
+      // ],
     },
 
     {
       id: "04",
+      title: "Land",
+      link: "/land",
+    },
+
+    {
+      id: "05",
       title: "About",
       link: "/about",
     },
     {
-      id: "05",
+      id: "06",
       title: "Blogs",
       link: "/blogs",
     },
     {
-      id: "06",
+      id: "07",
       title: "Contact",
       link: "/contact",
     },

@@ -45,10 +45,10 @@ const LandCategory: React.FC<Props> = ({
                 ${
                   isSelected
                     ? "border-primary bg-primary text-white"
-                    : "border-[#262626]/40 text-black"
+                    : "border-[#262626]/30 text-[#262626]/70 font-medium"
                 }
                 hover:border-primary hover:text-white hover:bg-primary 
-                duration-300 rounded px-2 py-1 text-sm font-medium cursor-pointer 
+                 duration-300 rounded-full px-4 py-2 capitalize  text-sm  cursor-pointer 
                 ${poppins.className}
               `}
             >

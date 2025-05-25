@@ -5,7 +5,7 @@ import Link from "next/link";
 import { HiOutlineUser } from "react-icons/hi";
 import { Dropdown, message } from "antd";
 import { useMutation } from "@tanstack/react-query";
-import logo from "@/assets/logo/stayverz.png";
+import logo from "@/assets/logo/homzystay.png";
 import { useMenuList } from "@/utilits/menuList";
 import { poppins } from "@/app/font";
 import SignupModal from "@/components/modals/SignUpModal";
@@ -98,49 +98,49 @@ const Navbar = () => {
     <>
       {contextHolder}
       <div
-        className={`w-full top-0 z-50 transition-all ease-in-out duration-300 border-b border-[#262626]/5 ${
-          isSticky ? "fixed bg-white shadow-md" : "relative"
+        className={`w-full top-0 z-50 transition-all ease-in-out duration-300 border-b py-2 border-[#262626]/5 ${
+          isSticky ? "fixed bg-white shadow-md py-2" : "relative"
         }`}
       >
         <div className="Container py-2 md:py-2">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="w-[80px] md:w-[70px]">
+            <Link href="/" className="w-[140px] md:w-[180px]">
               <Image
                 src={logo}
                 alt="logo"
-                width={120}
-                height={120}
+                width={160}
+                height={160}
                 className="w-full h-full"
               />
             </Link>
             {/* Menu Items */}
             <div className="lg:flex hidden items-center justify-center xl:gap-8 gap-6">
               {menuList?.map((menu) => {
-                const hasDropdown = !!menu.dropdownItems;
+                // const hasDropdown = !!menu.dropdownItems;
 
-                if (hasDropdown) {
-                  return (
-                    <Dropdown
-                      key={menu.id}
-                      menu={{
-                        items: menu.dropdownItems.map((item) => ({
-                          key: item.key,
-                          label: <Link href={item.href}>{item.label}</Link>,
-                        })),
-                      }}
-                      trigger={["hover"]}
-                      placement="bottom"
-                    >
-                      <Link
-                        href={menu.link}
-                        className={`list-none text-base font-medium cursor-pointer ${poppins.className}`}
-                      >
-                        {menu.title}
-                      </Link>
-                    </Dropdown>
-                  );
-                }
+                // if (hasDropdown) {
+                //   return (
+                //     <Dropdown
+                //       key={menu.id}
+                //       menu={{
+                //         items: menu.dropdownItems.map((item) => ({
+                //           key: item.key,
+                //           label: <Link href={item.href}>{item.label}</Link>,
+                //         })),
+                //       }}
+                //       trigger={["hover"]}
+                //       placement="bottom"
+                //     >
+                //       <Link
+                //         href={menu.link}
+                //         className={`list-none text-base font-medium cursor-pointer ${poppins.className}`}
+                //       >
+                //         {menu.title}
+                //       </Link>
+                //     </Dropdown>
+                //   );
+                // }
 
                 return (
                   <Link href={menu.link} key={menu.id}>
@@ -199,7 +199,7 @@ const Navbar = () => {
                     trigger={["hover"]}
                     placement="bottomLeft"
                   >
-                    <button className="px-4 py-2 bg-primary text-white rounded">
+                    <button className="md:px-4 px-2 md:py-2 py-2 bg-primary text-white rounded md:text-base text-sm">
                       Switch Profile
                     </button>
                   </Dropdown>
