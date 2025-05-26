@@ -11,7 +11,7 @@ const {
   updateHouseAminitiesForListing,
   getSingleStepTitleFieldForRentListing,
   updateListingPriceApi,
-  getSingleStepLocationFieldForRentListing,
+  getSingleStepLocationFieldForRentListing,  
 } = CategoryApis;
 
 const CategoryServices = {
