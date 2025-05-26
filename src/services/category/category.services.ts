@@ -1,4 +1,4 @@
-import { CategoryResponse } from "@/app/(hostLayout)/components/types/category";
+import { CategoryResponse } from "@/app/(HostLayout)/components/types/category";
 import CategoryApis from "@/app/apis/category.apis";
 
 const {
@@ -14,6 +14,7 @@ const {
   updateLandForListing,
   getSingleStepLandFieldForLandListing,
   getSingleStepLocationFieldForRentListing,
+  getSingleDescriptionforlistedItem,
 } = CategoryApis;
 
 const CategoryServices = {
@@ -68,6 +69,10 @@ const CategoryServices = {
       featureType,
       listingId
     );
+    return res?.data;
+  },
+  getListingDescription: async (featureType: string, listingId: string) => {
+    const res = await getSingleDescriptionforlistedItem(featureType, listingId);
     return res?.data;
   },
   getListingLandSize: async (featureType: string, listingId: string) => {

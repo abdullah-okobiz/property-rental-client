@@ -1,28 +1,17 @@
 "use client";
+
 import { InputNumber } from "antd";
+import { useEffect, useState } from "react";
 import { useListingContext } from "@/contexts/ListingContext";
 import { useListingStepContext } from "@/contexts/ListingStepContext";
-import { useEffect, useState } from "react";
 import CategoryServices from "@/services/category/category.services";
 
 export default function LandSizePage() {
-  const { listingId: contextId, featureType } = useListingContext();
+  const { listingId, featureType } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
 
-  const [listingId, setListingId] = useState<string | null>(contextId ?? null);
   const [landSize, setLandSize] = useState<number | null>(null);
 
-  // On mount, fallback to localStorage if context has no ID
-  useEffect(() => {
-    if (!contextId) {
-      const storedId = localStorage.getItem("listingId");
-      if (storedId) {
-        setListingId(storedId);
-      }
-    }
-  }, [contextId]);
-
-  // Fetch land size once listingId and featureType are available
   useEffect(() => {
     const fetchLandSize = async () => {
       if (!listingId || !featureType) return;
@@ -31,7 +20,8 @@ export default function LandSizePage() {
           featureType,
           listingId
         );
-        setLandSize(res?.landSize ?? null);
+        console.log("Fetched land size:", res);
+        setLandSize(res?.data?.landSize ?? null);
       } catch (error) {
         console.error("Error fetching land size:", error);
       }
@@ -42,11 +32,12 @@ export default function LandSizePage() {
   const handleSubmit = async () => {
     if (!listingId || !featureType || landSize === null) return;
     try {
-      await CategoryServices.updateListingLandSize(
+      const res = await CategoryServices.updateListingLandSize(
         featureType,
         listingId,
         landSize
       );
+      console.log("Land size updated:", res);
     } catch (error) {
       console.error("Error updating land size:", error);
     }

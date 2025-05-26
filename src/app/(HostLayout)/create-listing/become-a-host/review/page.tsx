@@ -1,7 +1,6 @@
 "use client";
 
 import { CheckCircle } from "lucide-react";
-import Link from "next/link";
 
 export default function ReviewMainPage() {
   return (
@@ -20,13 +19,6 @@ export default function ReviewMainPage() {
         করছি। <br />
         Homzstay-এর একজন প্রতিনিধি আপনাকে কল করবেন অতি শীঘ্রই।
       </div>
-
-      <Link
-        href="/host-dashboard"
-        className="mt-6 px-6 py-2 bg-primary text-white rounded-lg shadow hover:bg-primary/90 transition"
-      >
-        ড্যাশবোর্ডে ফিরে যান
-      </Link>
     </div>
   );
 }

@@ -17,12 +17,12 @@ export default function TitlePage() {
     const fetchTitle = async () => {
       if (!listingId || !featureType) return;
       try {
-        const res:any = await CategoryServices.getListingTitle(
+        const res: any = await CategoryServices.getListingTitle(
           featureType,
           listingId
         );
-        console.log(res, "response title ");
-        setTitle(res?.title || "");
+        console.log(res?.data?.title, "response title ");
+        setTitle(res?.data?.title || "");
       } catch (error) {
         console.error("Error fetching title:", error);
       }
