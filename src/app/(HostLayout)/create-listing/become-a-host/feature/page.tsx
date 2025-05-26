@@ -6,10 +6,12 @@ import { useEffect, useState } from "react";
 import { Building2, Home, Landmark } from "lucide-react";
 import FeatureServices from "@/services/feature/feature.services";
 import { Feature } from "@/types/blogTypes/blogTypes";
-import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
-import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
+// import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
+// import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
 import { useRouter } from "next/navigation";
 import { Skeleton } from "antd";
+import { FeatureType } from "@/app/(hostLayout)/components/types/feature";
+import { ListingResponse } from "@/app/(hostLayout)/components/types/listing";
 
 export default function FeaturePage() {
   const [features, setFeatures] = useState<Feature[]>([]);

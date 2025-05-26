@@ -11,7 +11,6 @@ const {
   updateHouseAminitiesForListing,
   getSingleStepTitleFieldForRentListing,
   updateListingPriceApi,
-  getSingleStepLocationFieldForRentListing,
   updateLandForListing,
   getSingleStepLandFieldForLandListing,
   getSingleStepLocationFieldForRentListing,
