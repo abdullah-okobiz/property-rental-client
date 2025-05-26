@@ -6,11 +6,13 @@ import { poppins } from "@/app/font";
 import GuestsModal from "@/components/modals/GuestsModal";
 import { IoIosArrowDown } from "react-icons/io";
 import { format } from "date-fns";
-import Link from "next/link";
+// import Link from "next/link";
 import { useDateRange } from "@/contexts/DateRangeContext";
 import { HiXMark } from "react-icons/hi2";
 import useAuth from "@/hooks/useAuth";
 import { TFloorPlan } from "@/types";
+import LoginModal from "@/components/modals/LoginModal";
+import { useRouter } from "next/navigation";
 
 interface Props {
   slug: string;
@@ -21,8 +23,10 @@ interface Props {
 const Reserve: React.FC<Props> = ({ slug, price, floorPlan }) => {
   // this is for cleander
   const [showPicker, setShowPicker] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const { dateRange, setDateRange } = useDateRange();
   const { startDate, endDate } = dateRange;
+  const router = useRouter();
   const numberOfNights =
     startDate && endDate
       ? (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24)
@@ -209,12 +213,6 @@ const Reserve: React.FC<Props> = ({ slug, price, floorPlan }) => {
               </div>
             )}
           </div>
-          {/* <Link href={`/checkout/${slug}`}>
-            <button className="py-3 rounded bg-primary text-[#fff] font-medium w-full my-2 cursor-pointer">
-              Reserve
-            </button>
-          </Link> */}
-
           <div
             onMouseEnter={() => {
               if (!isGuest) setHoverMessage(true);
@@ -222,18 +220,23 @@ const Reserve: React.FC<Props> = ({ slug, price, floorPlan }) => {
             onMouseLeave={() => setHoverMessage(false)}
             className="relative w-full"
           >
-            <Link href={isGuest ? `/checkout/${slug}` : "#"} passHref>
-              <button
-                disabled={!isGuest}
-                className={`py-3 rounded text-white font-medium w-full my-2 transition-colors duration-200 ${
-                  isGuest
-                    ? "bg-primary cursor-pointer"
-                    : "bg-gray-400 cursor-not-allowed"
-                }`}
-              >
-                Reserve
-              </button>
-            </Link>
+            <button
+              onClick={() => {
+                if (isGuest) {
+                  router.push(`/checkout/${slug}`);
+                } else {
+                  setShowLoginModal(true);
+                }
+              }}
+              className={`py-3 rounded text-white font-medium w-full my-2 transition-colors duration-200 ${
+                isGuest
+                  ? "bg-primary cursor-pointer"
+                  : "bg-gray-400 cursor-not-allowed"
+              }`}
+            >
+              Reserve
+            </button>
+
             {!isGuest && hoverMessage && (
               <div className="absolute top-25 left-15 text-sm text-[#fff] bg-primary px-4 py-2 rounded">
                 Please login as a guest to reserve the rent.
@@ -298,6 +301,13 @@ const Reserve: React.FC<Props> = ({ slug, price, floorPlan }) => {
           </div>
         </div>
       </div>
+
+      {showLoginModal && (
+        <LoginModal
+          open={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+        />
+      )}
     </div>
   );
 };
