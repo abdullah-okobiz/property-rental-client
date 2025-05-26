@@ -21,7 +21,6 @@ const initialForm = {
 };
 
 const LoginModal = ({ open, onClose }: LoginModalProps) => {
-  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(initialForm);
   const [messageApi, contextHolder] = message.useMessage();
@@ -47,9 +46,9 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
 
         login({ accessToken });
         if (role === "host") {
-          router.replace("/host-dashboard");
+          window.location.href = "/host-dashboard";
         } else {
-          router.replace("/");
+          window.location.href = "/";
         }
 
         setTimeout(() => {
