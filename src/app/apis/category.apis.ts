@@ -1,5 +1,5 @@
 import axiosClient from "@/lib/axios.config";
-import { CategoryResponse } from "../(hostLayout)/components/types/category";
+import { CategoryResponse } from "../(HostLayout)/components/types/category";
 
 const CategoryApis = {
   getCategoriesByFeatureId: (featureId: string) =>
@@ -79,6 +79,8 @@ const CategoryApis = {
     featureType: string,
     listingId: string
   ) => axiosClient.get(`/host/${featureType}/${listingId}/field/location`),
+  getSingleDescriptionforlistedItem: (featureType: string, listingId: string) =>
+    axiosClient.get(`/host/${featureType}/${listingId}/field/description`),
 };
 
 export default CategoryApis;

@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { Input, Typography } from "antd";
 import { useListingContext } from "@/contexts/ListingContext";
 import { useListingStepContext } from "@/contexts/ListingStepContext";
-import { Input, Typography } from "antd";
-import { useEffect, useState } from "react";
 import CategoryServices from "@/services/category/category.services";
 
 const { TextArea } = Input;
@@ -14,14 +14,35 @@ export default function DescriptionStep() {
   const { setOnNextSubmit } = useListingStepContext();
   const [description, setDescription] = useState("");
 
+  useEffect(() => {
+    const fetchDescription = async () => {
+      if (!listingId || !featureType) return;
+      try {
+        const res: any = await CategoryServices.getListingDescription(
+          featureType,
+          listingId
+        );
+        console.log("Fetched description:", res);
+        setDescription(res?.data?.description || "");
+      } catch (error) {
+        console.error("Error fetching description:", error);
+      }
+    };
+    fetchDescription();
+  }, [listingId, featureType]);
+
   const handleSubmit = async () => {
     if (!listingId || !featureType) return;
-    const res = await CategoryServices.updateListingDescription(
-      featureType,
-      listingId,
-      description
-    );
-    console.log("res==== ", res);
+    try {
+      const res = await CategoryServices.updateListingDescription(
+        featureType,
+        listingId,
+        description
+      );
+      console.log("Description updated:", res);
+    } catch (error) {
+      console.error("Error updating description:", error);
+    }
   };
 
   useEffect(() => {
