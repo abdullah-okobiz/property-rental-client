@@ -8,7 +8,6 @@ import FeatureServices from "@/services/feature/feature.services";
 import { Feature } from "@/types/blogTypes/blogTypes";
 import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
 import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
-import { useRouter } from "next/navigation";
 import { Skeleton } from "antd";
 
 export default function FeaturePage() {
@@ -16,7 +15,6 @@ export default function FeaturePage() {
   const [loading, setLoading] = useState<boolean>(true);
   const { setFeatureId, setFeatureType, setListingId } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
-  const router = useRouter();
 
   const [selected, setSelected] = useState<string | null>(null);
   const [error, setError] = useState<string>("");

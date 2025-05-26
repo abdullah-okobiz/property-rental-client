@@ -1,6 +1,4 @@
-export const getStepsForFeatureType = (
-  featureType: "rent" | "flat" | "land" | null
-) => {
+export const getStepsForFeatureType = (featureType: string | null) => {
   const baseSteps = [
     "/create-listing/become-a-host",
     "/create-listing/become-a-host/feature",
@@ -9,7 +7,6 @@ export const getStepsForFeatureType = (
 
   const sharedSteps = [
     "/create-listing/become-a-host/location",
-    "/create-listing/become-a-host/land-size",
     "/create-listing/become-a-host/title",
     "/create-listing/become-a-host/description",
     "/create-listing/become-a-host/upload-image",
@@ -17,14 +14,22 @@ export const getStepsForFeatureType = (
     "/create-listing/become-a-host/review",
   ];
 
+  const landSizeStep = "/create-listing/become-a-host/land-size";
   const amenitiesStep = "/create-listing/become-a-host/animities";
   const floorPlanStep = "/create-listing/become-a-host/floor-plan";
 
-  if (featureType === "land") {
-    return [...baseSteps, ...sharedSteps];
+  const type = featureType?.toLowerCase();
+
+  if (type === "land") {
+    return [
+      ...baseSteps,
+      "/create-listing/become-a-host/location",
+      landSizeStep,
+      ...sharedSteps.slice(1),
+    ];
   }
 
-  if (featureType === "rent" || featureType === "flat") {
+  if (type === "rent" || type === "flat") {
     return [...baseSteps, amenitiesStep, floorPlanStep, ...sharedSteps];
   }
 
