@@ -189,7 +189,7 @@ const Navbar = () => {
 
             {/* Auth Buttons or User Dropdown */}
             <div
-              className={`flex items-center justify-center lg:gap-2 font-medium text-sm ${poppins.className}`}
+              className={`flex items-center justify-center lg:gap-2 font-medium text-[12px] ${poppins.className}`}
             >
               {isAuthenticated && (user as any)?.isVerified ? (
                 <>
@@ -199,7 +199,7 @@ const Navbar = () => {
                     trigger={["hover"]}
                     placement="bottomLeft"
                   >
-                    <button className="md:px-4 px-2 md:py-2 py-2 bg-primary text-white rounded md:text-base text-sm">
+                    <button className="md:px-4 px-2 md:py-2 py-2 bg-primary text-white rounded md:text-base text-[12px]">
                       Switch Profile
                     </button>
                   </Dropdown>
@@ -211,7 +211,7 @@ const Navbar = () => {
                     placement="bottomLeft"
                   >
                     <div className="flex space-x-3 items-center lg:border border-[#DDDDDD] cursor-pointer p-[.5rem] lg:rounded-full">
-                      <div className="lg:w-8 lg:h-8 w-9 h-9 flex items-center justify-center lg:rounded-full rounded bg-primary text-white text-sm uppercase">
+                      <div className="lg:w-8 lg:h-8 w-8.5 h-8.5 flex items-center justify-center lg:rounded-full rounded bg-primary text-white text-sm uppercase">
                         {(user as any)?.name?.charAt(0) ??
                           (user as any)?.role?.charAt(0)}
                       </div>

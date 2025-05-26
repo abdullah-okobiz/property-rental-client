@@ -1,3 +1,4 @@
+"use server";
 import BlogDetails from "@/components/blog/blogContainer/BlogDetails";
 import { getSingleBlogBySlug } from "@/services/blog";
 import { IBlog } from "@/components/blog/types";

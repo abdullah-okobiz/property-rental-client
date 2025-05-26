@@ -17,13 +17,16 @@ const BlogCard: React.FC<Props> = ({ blog }) => {
     <Link href={`/blogs/${blog?.slug}`} className="block">
       <div className="rounded cursor-pointer border-0 overflow-hidden group shadow-sm hover:shadow-md transition duration-300">
         <div className="aspect-w-16 aspect-h-9 bg-gray-100 relative overflow-hidden">
-          <Image
-            src={`${apiBaseUrl}${blog?.blogImage}`}
-            alt="image"
-            width={300}
-            height={300}
-            className="w-full h-64 object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-          />
+          {blog?.blogImage && (
+            <Image
+              src={`${apiBaseUrl}${blog?.blogImage}`}
+              alt={blog.blogTitle}
+              width={300}
+              height={300}
+              priority
+              className="w-full h-64 object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+            />
+          )}
           <div className="absolute inset-0 bg-gray-400 bg-opacity-40 opacity-20 group-hover:opacity-0 transition-opacity duration-300 pointer-events-none"></div>
         </div>
 

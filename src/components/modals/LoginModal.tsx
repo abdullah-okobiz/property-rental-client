@@ -56,14 +56,12 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
           messageApi.success(data.message || "Login successful!");
           onClose();
           setFormData(initialForm);
-        }, 300); 
-
+        }, 300);
       } catch (error) {
         console.error("Invalid token", error);
         messageApi.error("Invalid token.");
       }
-    }
-    ,
+    },
     onError: (error) => {
       messageApi.error(error.message || "Login failed. Please try again.");
     },

@@ -20,7 +20,6 @@ import { notFound } from "next/navigation";
 import RulesRent from "@/components/details/RulesRent/RulesRent";
 import AmenitiesForRent from "@/components/details/Amenities/AmenitiesForRent/AmenitiesForRent";
 import AmenitiesForFlat from "@/components/details/AmenitiesForFlat/AmenitiesForFlat";
-import FlatAndLandVideo from "@/components/details/FlatAndLandVideo/FlatAndLandVideo";
 import { apiBaseUrl } from "@/config/config";
 import Appointment from "@/components/details/Appointment/Appointment";
 
@@ -101,7 +100,7 @@ const Page: FC<PageProps> = async ({ params }) => {
           </div>
         </div>
 
-        <ImagesGallary images={images} />
+        <ImagesGallary images={images} video={video} />
 
         <div className="flex flex-col lg:hidden mt-4">
           <h2 className="xl:text-2xl lg:text-xl md:text-lg text-base font-medium capitalize">
@@ -118,7 +117,7 @@ const Page: FC<PageProps> = async ({ params }) => {
           </div>
         </div>
 
-        <div className="flex md:items-center items-baseline gap-4 border-b border-[#262626]/30 pb-4 xl:w-[60%] w-full">
+        <div className="flex md:items-center items-baseline gap-4 border-b border-[#262626]/30 pb-4 xl:w-[70%] w-full">
           <div>
             {host && (
               <div className="border-2 border-[#262626]/40 rounded-full">
@@ -233,7 +232,7 @@ const Page: FC<PageProps> = async ({ params }) => {
               <Reserve slug={slug} price={price} floorPlan={floorPlan} />
             )}
           </div>
-          {video && <FlatAndLandVideo video={video} />}
+          {/* {video && <FlatAndLandVideo video={video} />} */}
         </div>
 
         <div>

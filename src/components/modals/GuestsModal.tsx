@@ -12,6 +12,7 @@ interface GuestsModalProps {
   setShowGuests: (value: boolean) => void;
   floorPlan: TFloorPlan;
 }
+
 const GuestsModal: React.FC<GuestsModalProps> = ({
   adults,
   setAdults,
@@ -22,12 +23,17 @@ const GuestsModal: React.FC<GuestsModalProps> = ({
   setShowGuests,
   floorPlan,
 }) => {
-  console.log(floorPlan);
+  const totalGuests = adults + younger + infants;
+
+  const isMaxReached =
+    floorPlan.guestCount !== undefined && totalGuests >= floorPlan.guestCount;
+
   return (
     <div
       className={`border bg-[#fff] rounded shadow py-4 px-4 relative pb-10 ${poppins.className}`}
     >
       <div className="flex flex-col gap-4">
+        {/* Adults */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="font-medium text-base">Adults</h2>
@@ -42,14 +48,22 @@ const GuestsModal: React.FC<GuestsModalProps> = ({
             </p>
             <span className="text-lg">{adults}</span>
             <p
-              onClick={() => setAdults(adults + 1)}
-              className="text-xl w-[30px] h-[30px] text-center rounded-full border cursor-pointer text-[#262626]/50"
+              onClick={() => {
+                if (isMaxReached) return;
+                setAdults(adults + 1);
+              }}
+              className={`text-xl w-[30px] h-[30px] text-center rounded-full border ${
+                isMaxReached
+                  ? "cursor-not-allowed text-[#262626]/20"
+                  : "cursor-pointer text-[#262626]/50"
+              }`}
             >
               +
             </p>
           </div>
         </div>
 
+        {/* Children */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="font-medium text-base">Children</h2>
@@ -64,14 +78,22 @@ const GuestsModal: React.FC<GuestsModalProps> = ({
             </p>
             <span className="text-lg">{younger}</span>
             <p
-              onClick={() => setYounger(younger + 1)}
-              className="text-xl w-[30px] h-[30px] text-center rounded-full border cursor-pointer text-[#262626]/50"
+              onClick={() => {
+                if (isMaxReached) return;
+                setYounger(younger + 1);
+              }}
+              className={`text-xl w-[30px] h-[30px] text-center rounded-full border ${
+                isMaxReached
+                  ? "cursor-not-allowed text-[#262626]/20"
+                  : "cursor-pointer text-[#262626]/50"
+              }`}
             >
               +
             </p>
           </div>
         </div>
 
+        {/* Infants */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="font-medium text-base">Infants</h2>
@@ -86,14 +108,22 @@ const GuestsModal: React.FC<GuestsModalProps> = ({
             </p>
             <span className="text-lg">{infants}</span>
             <p
-              onClick={() => setInfants(infants + 1)}
-              className="text-xl w-[30px] h-[30px] text-center rounded-full border cursor-pointer text-[#262626]/50"
+              onClick={() => {
+                if (isMaxReached) return;
+                setInfants(infants + 1);
+              }}
+              className={`text-xl w-[30px] h-[30px] text-center rounded-full border ${
+                isMaxReached
+                  ? "cursor-not-allowed text-[#262626]/20"
+                  : "cursor-pointer text-[#262626]/50"
+              }`}
             >
               +
             </p>
           </div>
         </div>
 
+        {/* Close Button */}
         <div
           className="right-5 bottom-2 absolute cursor-pointer"
           onClick={() => setShowGuests(false)}

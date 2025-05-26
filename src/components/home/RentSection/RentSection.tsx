@@ -58,10 +58,10 @@ const RentSection: React.FC<Props> = ({ rents }) => {
               ))} */}
       </div>
 
-      <div className="flex items-center justify-center py-8 text-[#fff]">
+      <div className="flex items-center justify-center md:py-8 pt-4 text-[#fff]">
         <Link href="/rent">
           <button
-            className={`bg-primary px-6 py-3 rounded font-medium cursor-pointer  ${poppins.className}`}
+            className={`bg-primary md:px-6 px-4 md:py-3 py-2 rounded md:text-base text-sm font-medium cursor-pointer  ${poppins.className}`}
           >
             Load more..
           </button>

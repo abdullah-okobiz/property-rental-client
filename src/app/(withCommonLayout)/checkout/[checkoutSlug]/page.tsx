@@ -2,12 +2,12 @@ import { poppins } from "@/app/font";
 import CheckGuest from "@/components/checkout/CheckGuest/CheckGuest";
 import Dates from "@/components/checkout/Dates/Dates";
 import React from "react";
-import { MdArrowBackIosNew } from "react-icons/md";
 import sslImage from "@/assets/images/sslcommerz.png";
 import Image from "next/image";
 import RentConfirmBtn from "@/components/action/RentConfirmBtn/RentConfirmBtn";
 import CheckOutRentCard from "@/components/card/CheckOutRentCard/CheckOutRentCard";
 import { getSingleRentBySlug } from "@/services/rents";
+import CheckOutPageBack from "@/components/action/CheckOutPageBack/CheckOutPageBack";
 // import { useDateRange } from "@/contexts/DateRangeContext";
 
 interface PageProps {
@@ -24,16 +24,7 @@ const page: React.FC<PageProps> = async ({ params }) => {
   console.log("find reserv single data", data);
   return (
     <div className="py-12 Container">
-      <div
-        className={`flex items-center gap-2 text-xl cursor-pointer ${poppins.className}`}
-      >
-        <p>
-          <MdArrowBackIosNew className="md:text-base text-sm" />
-        </p>
-        <h1 className="lg:text-3xl md:text-2xl text-xl font-medium">
-          Confirm and pay
-        </h1>
-      </div>
+      <CheckOutPageBack />
 
       <div className={`py-8  ${poppins.className}`}>
         <h2 className="text-xl font-medium">Your trip</h2>

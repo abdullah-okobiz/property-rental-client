@@ -10,7 +10,7 @@ const SearchTabs = () => {
   const items = [
     {
       key: "rent",
-      label: <div className={tabClass}>Rent</div>,
+      label: <div className={tabClass}>Home</div>,
       children: <RentSearchInputField />,
     },
     {
