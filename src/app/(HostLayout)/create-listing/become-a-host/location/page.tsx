@@ -20,7 +20,7 @@ export default function LocationPage() {
           listingId
         );
         console.log(res, "response Location ");
-        setLocation(res?.location || "");
+        setLocation(res?.data.location || "");
       } catch (error) {
         console.error("Error fetching Location:", error);
       }

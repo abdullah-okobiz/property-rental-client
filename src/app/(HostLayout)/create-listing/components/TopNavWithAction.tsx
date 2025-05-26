@@ -10,6 +10,7 @@ const TopNavWithAction = () => {
 
   const handleNext = () => {
     router.push("/host-dashboard");
+    localStorage.removeItem("listingId");
   };
 
   return (

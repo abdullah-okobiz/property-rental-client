@@ -6,9 +6,8 @@ import { useEffect, useState } from "react";
 import { Building2, Home, Landmark } from "lucide-react";
 import FeatureServices from "@/services/feature/feature.services";
 import { Feature } from "@/types/blogTypes/blogTypes";
-// import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
-// import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
-import { useRouter } from "next/navigation";
+import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
+import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
 import { Skeleton } from "antd";
 import { FeatureType } from "@/app/(hostLayout)/components/types/feature";
 import { ListingResponse } from "@/app/(hostLayout)/components/types/listing";
@@ -18,7 +17,6 @@ export default function FeaturePage() {
   const [loading, setLoading] = useState<boolean>(true);
   const { setFeatureId, setFeatureType, setListingId } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
-  const router = useRouter();
 
   const [selected, setSelected] = useState<string | null>(null);
   const [error, setError] = useState<string>("");
@@ -66,9 +64,7 @@ export default function FeaturePage() {
       const listingId = listingRes?.data?._id;
 
       if (listingId) {
-        router.push(
-          `/create-listing/become-a-host/category?listingId=${listingId}`
-        );
+        localStorage.setItem("listingId", listingId);
       }
       setListingId(listingId);
     } catch (err) {

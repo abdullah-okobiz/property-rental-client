@@ -6,11 +6,23 @@ import { useEffect, useState } from "react";
 import CategoryServices from "@/services/category/category.services";
 
 export default function LandSizePage() {
-  const { listingId, featureType } = useListingContext();
+  const { listingId: contextId, featureType } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
 
+  const [listingId, setListingId] = useState<string | null>(contextId ?? null);
   const [landSize, setLandSize] = useState<number | null>(null);
 
+  // On mount, fallback to localStorage if context has no ID
+  useEffect(() => {
+    if (!contextId) {
+      const storedId = localStorage.getItem("listingId");
+      if (storedId) {
+        setListingId(storedId);
+      }
+    }
+  }, [contextId]);
+
+  // Fetch land size once listingId and featureType are available
   useEffect(() => {
     const fetchLandSize = async () => {
       if (!listingId || !featureType) return;
