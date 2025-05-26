@@ -1,3 +1,4 @@
+"use server";
 import BlogTabs from "@/components/blog/blogContainer/BlogTabs";
 import { getAllBlogs, getFeatures } from "@/services/blog";
 import { BlogData, Feature } from "@/types/blogTypes/blogTypes";

@@ -36,8 +36,8 @@ const ChooseSection: React.FC<Props> = ({ chooses }) => {
                 breakpoints={{
                   640: { slidesPerView: 2 },
                   768: { slidesPerView: 3 },
-                  1024: { slidesPerView: 4 },
-                  1280: { slidesPerView: 4 },
+                  1024: { slidesPerView: 3 },
+                  1280: { slidesPerView: 3 },
                   1536: { slidesPerView: 4 },
                 }}
               >

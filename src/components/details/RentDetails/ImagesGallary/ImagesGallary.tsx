@@ -1,16 +1,20 @@
 "use client";
 import ImageModel from "@/components/modals/ImageModel";
+import VideoModal from "@/components/modals/VideoModal";
 import { apiBaseUrl } from "@/config/config";
 import Image from "next/image";
 import React, { useState } from "react";
+import { IoPlay } from "react-icons/io5";
 import { TbGridDots } from "react-icons/tb";
 
 interface ImagesGalleryProps {
   images: string[];
+  video: string;
 }
 
-const ImagesGallery: React.FC<ImagesGalleryProps> = ({ images }) => {
+const ImagesGallery: React.FC<ImagesGalleryProps> = ({ images, video }) => {
   const [openGallery, setOpenGallery] = useState(false);
+  const [openVideo, setOpenVideo] = useState(false);
   const isLoading = images.length === 0;
 
   return (
@@ -62,17 +66,26 @@ const ImagesGallery: React.FC<ImagesGalleryProps> = ({ images }) => {
         </div>
 
         {/* "Show all photos" button */}
-        {!isLoading && (
+
+        <div className="flex items-center gap-1 absolute lg:bottom-5 bottom-2 right-2 lg:right-5">
+          {video && (
+            <div
+              onClick={() => setOpenVideo(true)}
+              className="lg:px-3 lg:py-[9px] px-1 py-[5px] rounded text-[#FFFFFF] bg-[#FF0033] border border-[#262626]/70"
+            >
+              <IoPlay className="lg:text-lg text-base" />
+            </div>
+          )}
           <div
             onClick={() => setOpenGallery(true)}
-            className="flex items-center lg:gap-2 gap-1 border rounded lg:px-2 lg:py-2 p-1  cursor-pointer md:text-sm text-[12px] font-medium  absolute lg:bottom-5 bottom-2 right-2 lg:right-5 bg-[#fff]"
+            className="flex items-center lg:gap-2 gap-1 border border-[#262626]/40 rounded lg:px-2 lg:py-2 p-1  cursor-pointer md:text-sm text-[12px] font-medium   bg-[#fff]"
           >
             <p>
               <TbGridDots />
             </p>
             <p>Show all photos</p>
           </div>
-        )}
+        </div>
       </div>
 
       {/* Modal */}
@@ -84,6 +97,16 @@ const ImagesGallery: React.FC<ImagesGalleryProps> = ({ images }) => {
         }`}
       >
         <ImageModel images={images} setOpenGallery={setOpenGallery} />
+      </div>
+
+      <div
+        className={`w-full h-full bg-white fixed top-0 left-0 z-50 p-6 overflow-y-auto overflow-x-hidden scrollbar-hide transition-all duration-300 ${
+          openVideo
+            ? "opacity-100 translate-y-0 visible"
+            : "opacity-0 -translate-y-4 invisible"
+        }`}
+      >
+        <VideoModal setOpenVideo={setOpenVideo} video={video} />
       </div>
     </div>
   );

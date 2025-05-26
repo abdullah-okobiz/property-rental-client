@@ -246,7 +246,7 @@ const Reserve: React.FC<Props> = ({ slug, price, floorPlan }) => {
           <div
             ref={modalRef}
             className={`
-      absolute w-full left-0 -bottom-24 transition-all px-4 duration-300 ease-in-out
+      absolute w-full left-0 -bottom-12 transition-all px-4  duration-300 ease-in-out
       ${
         showGuests
           ? "opacity-100 translate-y-0 visible"

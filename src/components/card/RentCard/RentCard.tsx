@@ -34,13 +34,18 @@ const RentCard: React.FC<Props> = ({ rent, linkPrefix }) => {
     >
       <Link href={href}>
         <div className="h-[280px] overflow-hidden relative group">
-          <Image
+        {
+          coverImage && (
+              <Image
             src={apiBaseUrl + coverImage}
-            alt="image"
+            alt={title}
+            priority
             width={300}
             height={300}
             className="w-full h-full rounded-t object-cover transition-transform duration-700 group-hover:scale-110"
           />
+          )
+        }
           <div className="absolute top-[-100%] left-0 w-full h-full bg-[#fff]/16 transition-all duration-700 group-hover:top-0"></div>
         </div>
       </Link>

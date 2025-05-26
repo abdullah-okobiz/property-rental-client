@@ -32,11 +32,12 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
       >
         {banners?.map((banner: TBanner) => (
           <SwiperSlide key={banner._id}>
-            <div className="2xl:h-[500px] xl:h-[400px] lg:h-[400px] h-[280px]  relative">
+            <div className="2xl:h-[500px] xl:h-[400px] lg:h-[400px] md:h-[280px] h-[220px]  relative">
               <Image
                 src={apiBaseUrl + banner.bannerImage || ""}
                 // src="https://i.ibb.co.com/BH68QtdS/slider-1.webp"
                 alt="Banner"
+                priority
                 width={1600}
                 height={600}
                 className="w-full h-full"
@@ -45,8 +46,6 @@ const BannerSlider: React.FC<BannerProps> = ({ banners }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-
-      
 
       {/* Custom Navigation Buttons */}
       {/* <button
