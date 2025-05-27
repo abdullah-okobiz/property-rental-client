@@ -21,6 +21,7 @@ const initialForm = {
 };
 
 const LoginModal = ({ open, onClose }: LoginModalProps) => {
+  const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState(initialForm);
   const [messageApi, contextHolder] = message.useMessage();
@@ -45,22 +46,19 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
         const role = decoded.role;
 
         login({ accessToken });
-        if (role === "host") {
-          window.location.href = "/host-dashboard";
-        } else {
-          window.location.href = "/";
-        }
 
-        setTimeout(() => {
-          messageApi.success(data.message || "Login successful!");
-          onClose();
-          setFormData(initialForm);
-        }, 300);
+        messageApi.success(data.message || "Login successful!");
+        onClose();
+        setFormData(initialForm);
+
+        // Client-side redirect
+        router.push(role === "host" ? "/host-dashboard" : "/");
       } catch (error) {
         console.error("Invalid token", error);
         messageApi.error("Invalid token.");
       }
     },
+
     onError: (error) => {
       messageApi.error(error.message || "Login failed. Please try again.");
     },

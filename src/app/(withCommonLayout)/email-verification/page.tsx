@@ -31,29 +31,32 @@ const EmailVerification = () => {
     onSuccess: (data) => {
       const accessToken = data?.accessToken;
 
-      if (accessToken) {
-        try {
-          const decoded = jwtDecode<DecodedJwtPayload>(accessToken);
-          const role = decoded?.role;
+      if (!accessToken) {
+        messageApi.error("Access token is missing.");
+        return;
+      }
 
-          login({ accessToken });
+      try {
+        const decoded = jwtDecode<DecodedJwtPayload>(accessToken);
+        const role = decoded?.role;
 
-          messageApi.success(data?.message || "Email verified successfully!");
-          form.resetFields();
+        console.log(role, "role");
 
+        login({ accessToken });
+
+        messageApi.success(data?.message || "Email verified successfully!");
+        form.resetFields();
+
+        setTimeout(() => {
           if (role === "host") {
-            // router.replace("/host-dashboard");
             window.location.href = "/host-dashboard";
           } else {
-            // router.replace("/");
             window.location.href = "/";
           }
-        } catch (error) {
-          console.error("Invalid token", error);
-          messageApi.error("Invalid token.");
-        }
-      } else {
-        messageApi.error("Access token is missing.");
+        }, 300);
+      } catch (error) {
+        console.error("Invalid token", error);
+        messageApi.error("Invalid token.");
       }
     },
     onError: (error) => {
