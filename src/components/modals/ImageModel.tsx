@@ -37,32 +37,37 @@ const ImageModel: React.FC<Props> = ({ images, setOpenGallery }) => {
           className="md:h-[420px] h-[280px] w-[810px] max-w-full cursor-pointer"
           onClick={() => openLightbox(0)}
         >
-          <Image
-            src={apiBaseUrl + images[0]}
-            alt="Main Image"
-            width={810}
-            height={420}
-            className="w-full h-full object-cover rounded"
-          />
+          {images && (
+            <Image
+              src={apiBaseUrl + images[0]}
+              alt="Main Image"
+              width={810}
+              height={420}
+              className="w-full h-full object-cover rounded"
+            />
+          )}
         </div>
 
         {/* Grid of Images */}
         <div className="grid grid-cols-2 gap-4">
-          {images.map((img, index) => (
-            <div
-              key={index}
-              className="md:h-[205px] h-[160px] w-[400px] max-w-full cursor-pointer"
-              onClick={() => openLightbox(index)}
-            >
-              <Image
-                src={apiBaseUrl + img}
-                alt={`Image ${index + 1}`}
-                width={400}
-                height={205}
-                className="w-full h-full object-cover rounded"
-              />
-            </div>
-          ))}
+          {images &&
+            images?.map((img, index) => (
+              <div
+                key={index}
+                className="md:h-[205px] h-[160px] w-[400px] max-w-full cursor-pointer"
+                onClick={() => openLightbox(index)}
+              >
+                {img && (
+                  <Image
+                    src={apiBaseUrl + img}
+                    alt={`Image ${index + 1}`}
+                    width={400}
+                    height={205}
+                    className="w-full h-full object-cover rounded"
+                  />
+                )}
+              </div>
+            ))}
         </div>
       </div>
 
@@ -71,7 +76,7 @@ const ImageModel: React.FC<Props> = ({ images, setOpenGallery }) => {
         open={lightboxOpen}
         close={() => setLightboxOpen(false)}
         index={lightboxIndex}
-        slides={images.map((img) => ({ src: apiBaseUrl + img }))}
+        slides={images?.map((img) => ({ src: apiBaseUrl + img }))}
         plugins={[Zoom]}
       />
     </div>

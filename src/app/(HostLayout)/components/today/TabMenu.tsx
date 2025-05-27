@@ -9,7 +9,7 @@ const tabs: { key: TabKey; label: string }[] = [
   { key: "currentHosting", label: "Current Hosting" },
   { key: "checking", label: "Checking" },
   { key: "checkout", label: "Checkout" },
-  { key: "arriving", label: "Arriving" },
+  // { key: "arriving", label: "Arriving" },
   { key: "upcoming", label: "Upcoming" },
   { key: "pending", label: "Pending" },
 ];

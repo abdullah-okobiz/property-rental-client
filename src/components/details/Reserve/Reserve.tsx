@@ -1,7 +1,7 @@
 "use client";
 import { DateRangePicker } from "react-date-range";
 import React, { useEffect, useRef, useState } from "react";
-import { PiCalendarCheckThin } from "react-icons/pi";
+import { PiCalendarCheckThin, PiSpinnerGapBold } from "react-icons/pi";
 import { poppins } from "@/app/font";
 import GuestsModal from "@/components/modals/GuestsModal";
 import { IoIosArrowDown } from "react-icons/io";
@@ -24,6 +24,7 @@ const Reserve: React.FC<Props> = ({ slug, price, floorPlan }) => {
   // this is for cleander
   const [showPicker, setShowPicker] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { dateRange, setDateRange } = useDateRange();
   const { startDate, endDate } = dateRange;
   const router = useRouter();
@@ -223,18 +224,27 @@ const Reserve: React.FC<Props> = ({ slug, price, floorPlan }) => {
             <button
               onClick={() => {
                 if (isGuest) {
+                  setLoading(true); // Start loading
                   router.push(`/checkout/${slug}`);
                 } else {
                   setShowLoginModal(true);
                 }
               }}
+              disabled={loading} // Optional: disable button when loading
               className={`py-3 rounded text-white font-medium w-full my-2 transition-colors duration-200 ${
                 isGuest
                   ? "bg-primary cursor-pointer"
                   : "bg-gray-400 cursor-not-allowed"
               }`}
             >
-              Reserve
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <PiSpinnerGapBold className="animate-spin" />
+                  <span>Processing...</span>
+                </div>
+              ) : (
+                "Reserve"
+              )}
             </button>
 
             {!isGuest && hoverMessage && (

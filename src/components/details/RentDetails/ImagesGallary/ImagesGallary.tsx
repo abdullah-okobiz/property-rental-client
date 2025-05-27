@@ -15,7 +15,7 @@ interface ImagesGalleryProps {
 const ImagesGallery: React.FC<ImagesGalleryProps> = ({ images, video }) => {
   const [openGallery, setOpenGallery] = useState(false);
   const [openVideo, setOpenVideo] = useState(false);
-  const isLoading = images.length === 0;
+  const isLoading = images?.length === 0;
 
   return (
     <div>
@@ -25,16 +25,34 @@ const ImagesGallery: React.FC<ImagesGalleryProps> = ({ images, video }) => {
           onClick={() => !isLoading && setOpenGallery(true)}
           className="w-full xl:h-[430px] lg:h-[350px] md:h-[320px] h-[240px]"
         >
-          {isLoading ? (
+          {/* {isLoading ? (
             <div className="w-full h-full bg-gray-200 animate-pulse rounded" />
           ) : (
-            <Image
+            {
+              images?.[0] && (
+                <Image
               src={apiBaseUrl + images[0]}
               alt="Main Image"
               width={500}
               height={500}
               className="w-full h-full object-cover rounded"
             />
+              )
+            }
+          )} */}
+
+          {isLoading ? (
+            <div className="w-full h-full bg-gray-200 animate-pulse rounded" />
+          ) : (
+            images && (
+              <Image
+                src={apiBaseUrl + images[0]}
+                alt="Main Image"
+                width={500}
+                height={500}
+                className="w-full h-full object-cover rounded"
+              />
+            )
           )}
         </div>
 
@@ -52,15 +70,17 @@ const ImagesGallery: React.FC<ImagesGalleryProps> = ({ images, video }) => {
                     className="w-full xl:h-[210px] lg:h-[165px] bg-gray-200 animate-pulse rounded"
                   />
                 ))
-            : images.slice(1, 5).map((img, index) => (
+            : images?.slice(1, 5).map((img, index) => (
                 <div key={index} className="w-full xl:h-[210px] lg:h-[165px]">
-                  <Image
-                    src={apiBaseUrl + img}
-                    alt={`Image ${index + 2}`}
-                    width={300}
-                    height={300}
-                    className="w-full h-full object-cover rounded"
-                  />
+                  {img && (
+                    <Image
+                      src={apiBaseUrl + img}
+                      alt={`Image ${index + 2}`}
+                      width={300}
+                      height={300}
+                      className="w-full h-full object-cover rounded"
+                    />
+                  )}
                 </div>
               ))}
         </div>
