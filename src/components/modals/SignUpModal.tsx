@@ -34,14 +34,11 @@ const SignupModal = ({ open, onClose }: SignupModalProps) => {
     SignupFormValues
   >({
     mutationFn: processSignup,
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       messageApi.success("Signup successfully!");
-      router.push(`/email-verification?email=${data?.data?.email}`);
-
-      setTimeout(() => {
-        form.resetFields();
-        onClose();
-      }, 300);
+      await router.push(`/email-verification?email=${data?.data?.email}`);
+      form.resetFields();
+      onClose();
     },
     onError: () => {
       messageApi.error("Email already Exist");
