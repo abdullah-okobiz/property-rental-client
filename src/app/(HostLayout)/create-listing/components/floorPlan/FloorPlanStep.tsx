@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import { useListingContext } from "@/contexts/ListingContext";
 import { useListingStepContext } from "@/contexts/ListingStepContext";
 import CategoryServices from "@/services/category/category.services";
+import { message } from "antd";
 
 export default function FloorPlanStep() {
   const { listingId, featureType } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
-
+  const [messageApi, contextHolder] = message.useMessage();
   const [bedrooms, setBedrooms] = useState(0);
   const [bathrooms, setBathrooms] = useState(0);
   const [beds, setBeds] = useState(0);
@@ -34,9 +35,11 @@ export default function FloorPlanStep() {
         listingId,
         floorPlan
       );
+      messageApi.success(`${featureType} Updated Successfully`);
       console.log("Submitted floor plan:", res);
     } catch (error) {
       console.error("Failed to submit floor plan:", error);
+      messageApi.error("Updated Failed");
     }
   };
 
@@ -50,6 +53,7 @@ export default function FloorPlanStep() {
     onChange: (val: number) => void
   ) => (
     <div className="flex items-center justify-between">
+      {contextHolder}
       <div>
         <h2 className="font-medium text-base">{label}</h2>
       </div>

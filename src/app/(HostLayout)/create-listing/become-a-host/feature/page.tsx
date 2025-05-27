@@ -7,7 +7,7 @@ import { Building2, Home, Landmark } from "lucide-react";
 import FeatureServices from "@/services/feature/feature.services";
 import { Feature } from "@/types/blogTypes/blogTypes";
 
-import { Skeleton } from "antd";
+import { Skeleton, message } from "antd";
 import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
 import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
 
@@ -16,6 +16,7 @@ export default function FeaturePage() {
   const [loading, setLoading] = useState<boolean>(true);
   const { setFeatureId, setFeatureType, setListingId } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const [selected, setSelected] = useState<string | null>(null);
   const [error, setError] = useState<string>("");
@@ -59,6 +60,7 @@ export default function FeaturePage() {
         featureType: name,
         featureId: selected,
       });
+      messageApi.success(`${name} initialize Successfully`);
 
       const listingId = listingRes?.data?._id;
 
@@ -68,6 +70,7 @@ export default function FeaturePage() {
       setListingId(listingId);
     } catch (err) {
       console.error("Error creating listing", err);
+      messageApi.error("Failed to Initialized");
     }
   };
 
@@ -90,6 +93,7 @@ export default function FeaturePage() {
 
   return (
     <div className="min-h-[calc(80vh-100px)] flex items-center justify-center">
+      {contextHolder}
       <div className="w-full max-w-6xl space-y-6">
         <h2 className="text-xl font-semibold tracking-wide mb-4 text-center">
           Which of these best describes your place?

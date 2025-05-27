@@ -5,13 +5,13 @@ import { useListingStepContext } from "@/contexts/ListingStepContext";
 import { useEffect, useState } from "react";
 import CategoryServices from "@/services/category/category.services";
 import { Home, Building2, Landmark, Warehouse } from "lucide-react";
-import { Skeleton } from "antd";
+import { Skeleton, message } from "antd";
 import { Category } from "@/app/(HostLayout)/components/types/category";
 
 export default function CategoryPage() {
   const { featureId, listingId, featureType } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
-
+  const [messageApi, contextHolder] = message.useMessage();
   const [categories, setCategories] = useState<Category[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -51,9 +51,11 @@ export default function CategoryPage() {
         listingId,
         categoryId: selected,
       });
+      messageApi.success(`${featureType} category Selected  Successfully`);
       console.log("categoryPatchRes ==", categoryPatchRes);
     } catch (err) {
       console.error("Error setting listing category:", err);
+      messageApi.error("Failed to Select Category");
     }
   };
 
@@ -79,6 +81,7 @@ export default function CategoryPage() {
 
   return (
     <div className="min-h-[calc(80vh-100px)] flex items-center justify-center">
+      {contextHolder}
       <div className="w-full max-w-6xl space-y-6">
         <h2 className="text-xl font-semibold tracking-wide mb-6 text-center">
           Which category best describes your place?
