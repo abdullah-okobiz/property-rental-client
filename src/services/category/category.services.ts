@@ -15,6 +15,7 @@ const {
   getSingleStepLandFieldForLandListing,
   getSingleStepLocationFieldForRentListing,
   getSingleDescriptionforlistedItem,
+  getAllAmenitiesProcess,
 } = CategoryApis;
 
 const CategoryServices = {
@@ -145,6 +146,10 @@ const CategoryServices = {
       amenities
     );
     return res.data;
+  },
+  getAmenities: async () => {
+    const result = await getAllAmenitiesProcess();
+    return result?.data;
   },
 };
 

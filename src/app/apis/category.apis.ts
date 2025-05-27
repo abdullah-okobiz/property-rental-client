@@ -6,6 +6,7 @@ const CategoryApis = {
     axiosClient.get<CategoryResponse>(
       `/admin/category?feature_id=${featureId}`
     ),
+  getAllAmenitiesProcess: () => axiosClient.get("/admin/amenities"),
 
   updateCategoryForListing: (
     featureType: string,
