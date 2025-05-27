@@ -1,55 +1,64 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useListingContext } from "@/contexts/ListingContext";
 import { useListingStepContext } from "@/contexts/ListingStepContext";
 import CategoryServices from "@/services/category/category.services";
-import { Skeleton } from "antd";
 
-const HOUSE_RULES = [
-  "Hot tub",
-  "Patio",
-  "Lake access",
-  "Beach access",
-  "Outdoor shower",
-  "BBQ grill",
-  "Indoor fireplace",
-];
+import { Skeleton, message, Image } from "antd";
+import { Amenity } from "@/app/(HostLayout)/components/types/category";
 
-export default function Animities() {
-  const [selectedRules, setSelectedRules] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true); // ✅ loading state
+export default function Amenities() {
+  const [amenities, setAmenities] = useState<Amenity[]>([]);
+  const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const { listingId, featureType } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
 
-  const toggleRule = (rule: string) => {
-    setSelectedRules((prev) =>
-      prev.includes(rule) ? prev.filter((r) => r !== rule) : [...prev, rule]
+  const toggleAmenity = (id: string) => {
+    setSelectedAmenities((prev) =>
+      prev.includes(id) ? prev.filter((r) => r !== id) : [...prev, id]
     );
   };
 
   const handleSubmit = async () => {
     if (!listingId || !featureType) return;
-    const res = await CategoryServices.updateHouseAminities(
-      featureType,
-      listingId,
-      selectedRules
-    );
-    console.log("House rules updated:", res);
+    try {
+      await CategoryServices.updateHouseAminities(
+        featureType,
+        listingId,
+        selectedAmenities
+      );
+      messageApi.success("Amenities updated successfully");
+    } catch (err) {
+      messageApi.error("Failed to update amenities");
+    }
   };
 
   useEffect(() => {
     setOnNextSubmit(handleSubmit);
-  }, [selectedRules, listingId, featureType]);
+  }, [selectedAmenities]);
 
   useEffect(() => {
-    // Simulate loading (replace this with API call if needed)
-    const timer = setTimeout(() => setLoading(false), 1000);
-    return () => clearTimeout(timer);
+    const fetchAmenities = async () => {
+      try {
+        const data: any = await CategoryServices.getAmenities();
+        setAmenities(data?.data);
+      } catch (err) {
+        messageApi.error("Failed to load amenities");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAmenities();
   }, []);
 
   return (
     <div className="min-h-[calc(80vh-100px)] flex items-center justify-center">
+      {contextHolder}
       <div className="w-full max-w-6xl space-y-6">
         <h2 className="text-xl font-semibold tracking-wide mb-4 text-center">
           Tell guests what your place has to offer
@@ -71,24 +80,31 @@ export default function Animities() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {HOUSE_RULES.map((rule) => (
+            {amenities?.map((amenity) => (
               <div
-                key={rule}
-                onClick={() => toggleRule(rule)}
+                key={amenity._id}
+                onClick={() => toggleAmenity(amenity._id)}
                 className={`relative cursor-pointer border rounded-2xl p-4 text-center transition-all duration-200 ${
-                  selectedRules.includes(rule)
+                  selectedAmenities.includes(amenity._id)
                     ? "border-primary ring-0 ring-primary"
                     : "border-gray-200"
                 }`}
               >
                 <div className="absolute top-2 right-2 w-5 h-5 border rounded border-gray-300 flex items-center justify-center bg-white">
-                  {selectedRules.includes(rule) && (
+                  {selectedAmenities.includes(amenity._id) && (
                     <span className="text-primary text-xs font-bold leading-none">
                       ✔
                     </span>
                   )}
                 </div>
-                <span className="font-medium">{rule}</span>
+                <Image
+                  src={amenity.amenitiesImage.replace("/public", "")}
+                  alt={amenity.amenitiesLabel}
+                  height={50}
+                  preview={false}
+                  className="mx-auto mb-2"
+                />
+                <span className="font-medium">{amenity.amenitiesLabel}</span>
               </div>
             ))}
           </div>

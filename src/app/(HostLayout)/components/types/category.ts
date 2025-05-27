@@ -13,3 +13,10 @@ export interface CategoryResponse {
   message: string;
   data: Category[];
 }
+export interface Amenity {
+  _id: string;
+  amenitiesLabel: string;
+  amenitiesImage: string;
+  createdAt: string;
+  updatedAt: string;
+}
