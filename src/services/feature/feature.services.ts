@@ -1,15 +1,9 @@
-// import { CreateListingPayload, FeatureResponse } from "@/app/(hostLayout)/components/types/feature";
-// import { ListingResponse } from "@/app/(hostLayout)/components/types/listing";
-// import {
-//   CreateListingPayload,
-//   FeatureResponse,
-// } from "@/app/(HostLayout)/components/types/feature";
-// import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
-// import { CreateListingPayload, FeatureResponse } from "@/app/(hostLayout)/components/types/feature";
-import { CreateListingPayload, FeatureResponse } from "@/app/(hostLayout)/components/types/feature";
+import {
+  CreateListingPayload,
+  FeatureResponse,
+} from "@/app/(hostLayout)/components/types/feature";
 import { ListingResponse } from "@/app/(hostLayout)/components/types/listing";
 import FeatureApis from "@/app/apis/feature.apis";
-// import FeatureApis from "@/app/apis/feature.apis";
 
 const { getAllFeatures, createNewListing } = FeatureApis;
 
