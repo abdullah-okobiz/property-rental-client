@@ -1,6 +1,6 @@
 "use client";
 
-import { InputNumber } from "antd";
+import { InputNumber, message } from "antd";
 import { useEffect, useState } from "react";
 import { useListingContext } from "@/contexts/ListingContext";
 import { useListingStepContext } from "@/contexts/ListingStepContext";
@@ -9,6 +9,7 @@ import CategoryServices from "@/services/category/category.services";
 export default function LandSizePage() {
   const { listingId, featureType } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const [landSize, setLandSize] = useState<number | null>(null);
 
@@ -37,9 +38,11 @@ export default function LandSizePage() {
         listingId,
         landSize
       );
+      messageApi.success(`Land Size Updated Successfully`);
       console.log("Land size updated:", res);
     } catch (error) {
       console.error("Error updating land size:", error);
+      messageApi.error(`Land Size Updated Failed`);
     }
   };
 
@@ -49,6 +52,7 @@ export default function LandSizePage() {
 
   return (
     <div className="min-h-[calc(80vh-100px)] flex items-center justify-center">
+      {contextHolder}
       <div className="w-full max-w-3xl space-y-6">
         <div className="text-center">
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-800">

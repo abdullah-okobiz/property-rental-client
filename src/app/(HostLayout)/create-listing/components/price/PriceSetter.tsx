@@ -5,6 +5,7 @@ import { Pencil } from "lucide-react";
 import { useListingContext } from "@/contexts/ListingContext";
 import { useListingStepContext } from "@/contexts/ListingStepContext";
 import CategoryServices from "@/services/category/category.services";
+import { message } from "antd";
 
 export default function PriceSetter() {
   const [price, setPrice] = useState<number>(0);
@@ -13,6 +14,7 @@ export default function PriceSetter() {
   const total = price + guestFee;
   const { listingId, featureType } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
+  const [messageApi, contextHolder] = message.useMessage();
 
   // useEffect(() => {
   //   const fetchTitle = async () => {
@@ -33,12 +35,18 @@ export default function PriceSetter() {
 
   const handleSubmit = async () => {
     if (!listingId || !featureType) return;
-    const res = await CategoryServices.updateListingPrice(
-      featureType,
-      listingId,
-      price
-    );
-    console.log("result price ", res);
+    try {
+      const res = await CategoryServices.updateListingPrice(
+        featureType,
+        listingId,
+        price
+      );
+      messageApi.success(`Price Updated Successfully`);
+      console.log("result price ", res);
+    } catch (error) {
+      console.error("Price updated failed");
+      messageApi.error("Price Updated Failed ");
+    }
   };
 
   useEffect(() => {
@@ -47,6 +55,7 @@ export default function PriceSetter() {
 
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center space-y-6">
+      {contextHolder}
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-semibold">Now, set your price</h2>
         <p className="text-gray-500">You can change it anytime</p>

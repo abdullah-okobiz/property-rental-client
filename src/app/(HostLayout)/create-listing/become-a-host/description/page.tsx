@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Input, Typography } from "antd";
+import { Input, message, Typography } from "antd";
 import { useListingContext } from "@/contexts/ListingContext";
 import { useListingStepContext } from "@/contexts/ListingStepContext";
 import CategoryServices from "@/services/category/category.services";
@@ -13,6 +13,7 @@ export default function DescriptionStep() {
   const { listingId, featureType } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
   const [description, setDescription] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
     const fetchDescription = async () => {
@@ -39,9 +40,11 @@ export default function DescriptionStep() {
         listingId,
         description
       );
+      messageApi.success(`Description Updated Successfully`);
       console.log("Description updated:", res);
     } catch (error) {
       console.error("Error updating description:", error);
+      messageApi.error(`Description Update Failed`);
     }
   };
 
@@ -51,6 +54,7 @@ export default function DescriptionStep() {
 
   return (
     <div className="min-h-[calc(100vh-150px)] flex items-center justify-center">
+      {contextHolder}
       <div className="w-full max-w-3xl px-4 space-y-4">
         <Title level={3}>Add Description</Title>
         <Text type="secondary">

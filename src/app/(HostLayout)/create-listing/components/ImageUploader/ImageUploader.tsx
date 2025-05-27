@@ -3,7 +3,7 @@
 import React, { useState, useRef } from "react";
 import { useListingContext } from "@/contexts/ListingContext";
 import ListingImageApis from "@/services/imageListing/imageListing.service";
-import { Typography } from "antd";
+import { message, Typography } from "antd";
 
 const { Title, Text } = Typography;
 
@@ -12,6 +12,7 @@ const ImageUploader: React.FC = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -27,10 +28,13 @@ const ImageUploader: React.FC = () => {
         listingId,
         formData
       );
+      messageApi.success("Image Upload Successfully");
+
       console.log("res == ", res);
       setPreview(URL.createObjectURL(file));
     } catch (error) {
       console.error("Upload failed", error);
+      messageApi.error("Image Upload Failed");
     } finally {
       setLoading(false);
     }
@@ -54,6 +58,7 @@ const ImageUploader: React.FC = () => {
 
   return (
     <div className="space-y-4">
+      {contextHolder}
       <div>
         <Title level={3}>Share some photos of your place</Title>
         <Text type="secondary">You can add more later.</Text>

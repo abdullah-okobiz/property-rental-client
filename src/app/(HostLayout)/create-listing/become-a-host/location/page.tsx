@@ -1,5 +1,5 @@
 "use client";
-import { Input } from "antd";
+import { Input, message } from "antd";
 import { EnvironmentOutlined } from "@ant-design/icons";
 import { useListingContext } from "@/contexts/ListingContext";
 import { useListingStepContext } from "@/contexts/ListingStepContext";
@@ -9,7 +9,7 @@ import CategoryServices from "@/services/category/category.services";
 export default function LocationPage() {
   const { listingId, featureType } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
-
+  const [messageApi, contextHolder] = message.useMessage();
   const [location, setLocation] = useState("");
   useEffect(() => {
     const fetchLocation = async () => {
@@ -36,9 +36,11 @@ export default function LocationPage() {
         listingId,
         location
       );
+      messageApi.success(`Location Updated successfully`);
       console.log("Location updated:", res);
     } catch (err) {
       console.error("Error updating location:", err);
+      messageApi.error("Location updated Failed");
     }
   };
 
@@ -48,6 +50,7 @@ export default function LocationPage() {
 
   return (
     <div className="min-h-[calc(80vh-100px)] flex items-center justify-center">
+      {contextHolder}
       <div className="w-full max-w-3xl space-y-6">
         <div className="text-center">
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-800">
