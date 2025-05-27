@@ -6,7 +6,8 @@ import { useListingStepContext } from "@/contexts/ListingStepContext";
 import CategoryServices from "@/services/category/category.services";
 
 import { Skeleton, message, Image } from "antd";
-import { Amenity } from "@/app/(HostLayout)/components/types/category";
+import { Amenity } from "@/app/(hostLayout)/components/types/category";
+
 
 export default function Amenities() {
   const [amenities, setAmenities] = useState<Amenity[]>([]);

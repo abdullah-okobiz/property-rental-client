@@ -9,6 +9,7 @@ import { Skeleton } from "antd";
 import { Category } from "@/app/(hostLayout)/components/types/category";
 
 
+
 export default function CategoryPage() {
   const { featureId, listingId, featureType } = useListingContext();
   const { setOnNextSubmit } = useListingStepContext();
