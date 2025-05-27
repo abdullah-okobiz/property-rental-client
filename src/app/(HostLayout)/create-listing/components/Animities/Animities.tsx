@@ -33,6 +33,7 @@ export default function Amenities() {
       );
       messageApi.success("Amenities updated successfully");
     } catch (err) {
+      console.error(err);
       messageApi.error("Failed to update amenities");
     }
   };
@@ -47,6 +48,7 @@ export default function Amenities() {
         const data: any = await CategoryServices.getAmenities();
         setAmenities(data?.data);
       } catch (err) {
+        console.error(err);
         messageApi.error("Failed to load amenities");
       } finally {
         setLoading(false);

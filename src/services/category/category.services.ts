@@ -1,7 +1,4 @@
-import {
-  Amenity,
-  CategoryResponse,
-} from "@/app/(HostLayout)/components/types/category";
+import { CategoryResponse } from "@/app/(HostLayout)/components/types/category";
 import CategoryApis from "@/app/apis/category.apis";
 
 const {
