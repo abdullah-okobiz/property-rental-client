@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import CategoryServices from "@/services/category/category.services";
 import { Home, Building2, Landmark, Warehouse } from "lucide-react";
 import { Skeleton } from "antd";
-import { Category } from "@/app/(HostLayout)/components/types/category";
+import { Category } from "@/app/(hostLayout)/components/types/category";
+
 
 export default function CategoryPage() {
   const { featureId, listingId, featureType } = useListingContext();

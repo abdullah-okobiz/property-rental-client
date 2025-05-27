@@ -1,13 +1,5 @@
-
-
 "use client";
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 import { addDays } from "date-fns";
 
 interface DateRange {
@@ -33,65 +25,32 @@ const DateRangeContext = createContext<DateRangeContextType | undefined>(
   undefined
 );
 
-const LOCAL_STORAGE_KEY = {
-  DATE_RANGE: "reservation-date-range",
-  GUEST_INFO: "reservation-guest-info",
-};
-
 export const DateRangeProvider = ({ children }: { children: ReactNode }) => {
-  const [dateRange, setDateRangeState] = useState<DateRange | null>(null);
-  const [guestInfoState, setGuestInfoState] = useState<Omit<
-    GuestInfo,
-    "totalGuest"
-  > | null>(null);
+  const [dateRange, setDateRange] = useState<DateRange>({
+    startDate: new Date(),
+    endDate: addDays(new Date(), 0),
+  });
 
-  // Hydrate from localStorage on client
-  useEffect(() => {
-    const getInitialDateRange = (): DateRange => {
-      const stored = localStorage.getItem(LOCAL_STORAGE_KEY.DATE_RANGE);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        return {
-          startDate: parsed.startDate ? new Date(parsed.startDate) : undefined,
-          endDate: parsed.endDate ? new Date(parsed.endDate) : undefined,
-        };
-      }
-      return { startDate: new Date(), endDate: addDays(new Date(), 0) };
-    };
-
-    const getInitialGuestInfo = (): Omit<GuestInfo, "totalGuest"> => {
-      const stored = localStorage.getItem(LOCAL_STORAGE_KEY.GUEST_INFO);
-      if (stored) return JSON.parse(stored);
-      return { adults: 0, younger: 0, infants: 0 };
-    };
-
-    setDateRangeState(getInitialDateRange());
-    setGuestInfoState(getInitialGuestInfo());
-  }, []);
-
-  const setDateRange = (range: DateRange) => {
-    setDateRangeState(range);
-    localStorage.setItem(LOCAL_STORAGE_KEY.DATE_RANGE, JSON.stringify(range));
-  };
+  const [guestInfo, setGuestInfoState] = useState<
+    Omit<GuestInfo, "totalGuest">
+  >({
+    adults: 0,
+    younger: 0,
+    infants: 0,
+  });
 
   const setGuestInfo = (info: Omit<GuestInfo, "totalGuest">) => {
     setGuestInfoState(info);
-    localStorage.setItem(LOCAL_STORAGE_KEY.GUEST_INFO, JSON.stringify(info));
   };
 
-  if (!dateRange || !guestInfoState) {
-    return null; // or <Loading /> component
-  }
-
-  const totalGuest =
-    guestInfoState.adults + guestInfoState.younger + guestInfoState.infants;
+  const totalGuest = guestInfo.adults + guestInfo.younger + guestInfo.infants;
 
   return (
     <DateRangeContext.Provider
       value={{
         dateRange,
         setDateRange,
-        guestInfo: { ...guestInfoState, totalGuest },
+        guestInfo: { ...guestInfo, totalGuest },
         setGuestInfo,
       }}
     >

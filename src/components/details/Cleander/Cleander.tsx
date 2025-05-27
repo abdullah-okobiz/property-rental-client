@@ -30,6 +30,12 @@ const Cleander: React.FC<CleanderProps> = ({
 
   const [monthsToShow, setMonthsToShow] = useState(2);
 
+  // Clear localStorage on first mount
+  // useEffect(() => {
+  //   localStorage.removeItem("startDate");
+  //   localStorage.removeItem("endDate");
+  // }, []);
+
   useEffect(() => {
     const handleResize = () => {
       setMonthsToShow(window.innerWidth <= 768 ? 1 : 2);
@@ -43,15 +49,13 @@ const Cleander: React.FC<CleanderProps> = ({
   return (
     <div className="overflow-x-hidden py-6 border-b border-[#262626]/30 pb-12 lg:w-[90%]">
       <h2 className="md:text-xl text-base font-medium capitalize">
-        {numberOfNights && <span>{numberOfNights.toFixed(0)} nights in</span>}
+        {numberOfNights && <span>{numberOfNights.toFixed(0)} nights in </span>}
         <span>{title}</span>
       </h2>
+
       <p className="mt-1 text-[#262626]/60 text-sm font-medium">
-        Arrival Date - Leaving Date
-      </p>
-      <p className="mt-1 text-[#262626]/60 text-sm font-medium">
-        {startDate ? format(startDate, "MMM d, yyyy") : "Select a start date"} -{" "}
-        {endDate ? format(endDate, "MMM d, yyyy") : "Select an end date"}
+        {startDate ? format(startDate, "MMM d, yyyy") : "Arrival Date"} -{" "}
+        {endDate ? format(endDate, "MMM d, yyyy") : "Leaving Date"}
       </p>
 
       <div className="mt-8 w-full">
