@@ -1,11 +1,13 @@
 "use server";
 import RentCard from "@/components/card/RentCard/RentCard";
 import FlatCategory from "@/components/flat/FlatCategory/FlatCategory";
+import FlatSearchInputField from "@/components/home/search/searchContainer/FlatSearchInputField";
 import { getAllCategory } from "@/services/category";
 
 import { getAllFeature } from "@/services/feature";
 import { getAllFlats } from "@/services/flats";
 import { IListingFor, IRent } from "@/types";
+import { Tabs } from "antd";
 import React from "react";
 
 // interface flatProps {
@@ -35,12 +37,24 @@ const Flat: React.FC<flatProps> = async ({ searchParams }) => {
   const { data: flats } = await getAllFlats({
     category: categoryId !== "all" ? categoryId : undefined,
   });
+  const tabClass =
+    "text-white bg-[#F2693C] !inline-block lg:px-4 px-2 py-1 lg:py-2 rounded lg:w-[60px] w-[50px]";
+  const items = [
+    {
+      key: "Flat",
+      label: <div className={tabClass}>Flat</div>,
+      children: <FlatSearchInputField params={resolvedParams} />,
+    },
+  ];
   return (
-    <div className="Container mt-16">
-      <FlatCategory
-        rentCategories={rentCategories}
-        selectedCategoryId={categoryId || "all"}
-      />
+    <div className="Container mt-8 md:my-10">
+      <Tabs defaultActiveKey="Flat" type="card" items={items} />
+      <div className="md:my-4">
+        <FlatCategory
+          rentCategories={rentCategories}
+          selectedCategoryId={categoryId || "all"}
+        />
+      </div>
 
       {/* <div>
         <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">

@@ -39,6 +39,16 @@ const CategoryServices = {
     const res = await getCategoriesByFeatureId(landFeature._id);
     return res?.data;
   },
+  fetchFlatCategories: async () => {
+    const featureRes: any = await getAllFeatureResponse();
+    const featureData = featureRes?.data?.data;
+    const flatFeature = featureData.find(
+      (feature: any) => feature.featureName?.toLowerCase().trim() === "flat"
+    );
+    if (!flatFeature?._id) throw new Error("Land feature not found");
+    const res = await getCategoriesByFeatureId(flatFeature._id);
+    return res?.data;
+  },
   setListingCategory: async ({
     featureType,
     listingId,

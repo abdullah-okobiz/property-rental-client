@@ -88,13 +88,13 @@ const LandSearchInputField: React.FC<LandSearchInputFieldProps> = ({
         </p>
       </div>
 
-      <div className="lg:flex hidden flex-col md:flex-row items-center justify-center gap-4">
+      <div className="lg:flex hidden flex-col md:flex-row items-center gap-4">
         <div className="w-full md:w-1/4 bg-[#F5F5F5]  border border-transparent hover:border-primary focus-within:border-primary focus-within:ring-1 focus-within:ring-primary rounded-md p-2">
           <label
             htmlFor="location"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Where’s your place located?
+            Enter the location where you want land
           </label>
           <input
             type="text"
