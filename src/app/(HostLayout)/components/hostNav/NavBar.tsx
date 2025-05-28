@@ -7,12 +7,10 @@ import { usePathname } from "next/navigation";
 import { HiOutlineUser, HiMenu, HiX } from "react-icons/hi";
 import { Dropdown, Button, Drawer, message, MenuProps } from "antd";
 import { useMutation } from "@tanstack/react-query";
-
-import logo from "@/assets/logo/stayverz.png";
+import logo from "@/assets/logo/homzystay.png";
 import { poppins } from "@/app/font";
 import useAuth from "@/hooks/useAuth";
 import { AuthServices } from "@/services/auth/auth.service";
-
 import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
 import { TabMenuList } from "./nav.utils";
@@ -79,13 +77,13 @@ const NavBar = () => {
         }`}
       >
         <div className="Container py-2 flex items-center justify-between shadow-md">
-          <Link href="/">
+          <Link href="/" className="w-[140px] md:w-[180px]">
             <Image
               src={logo}
-              alt="Stayverz logo"
-              width={80}
-              height={80}
-              className="h-[65px] w-[67px]"
+              alt="logo"
+              width={160}
+              height={160}
+              className="w-full h-full"
             />
           </Link>
 

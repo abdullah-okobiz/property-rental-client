@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "antd";
-import logo from "@/assets/logo/stayverz.png";
+import logo from "@/assets/logo/homzystay.png";
+import Link from "next/link";
 
 const TopNavWithAction = () => {
   const router = useRouter();
@@ -15,13 +16,15 @@ const TopNavWithAction = () => {
 
   return (
     <div className="Container bg-white sticky-top shadow-sm py-3 px-4 md:px-10 flex justify-between items-center">
-      <Image
-        src={logo}
-        alt="Stayverz Logo"
-        width={80}
-        height={80}
-        className="h-[60px] w-[70px]"
-      />
+      <Link href={"#"} className="w-[140px] md:w-[180px]">
+        <Image
+          src={logo}
+          alt="logo"
+          width={160}
+          height={160}
+          className="w-full h-full"
+        />
+      </Link>
 
       <Button
         onClick={handleNext}
