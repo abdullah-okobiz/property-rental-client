@@ -1,11 +1,12 @@
 import axiosClient from "@/lib/axios.config";
-import { CategoryResponse } from "../(hostLayout)/components/types/category";
+import { CategoryResponse } from "../(HostLayout)/components/types/category";
 
 const CategoryApis = {
   getCategoriesByFeatureId: (featureId: string) =>
     axiosClient.get<CategoryResponse>(
       `/admin/category?feature_id=${featureId}`
     ),
+  getAllFeatureResponse: () => axiosClient.get(`/admin/feature`),
   getAllAmenitiesProcess: () => axiosClient.get("/admin/amenities"),
 
   updateCategoryForListing: (

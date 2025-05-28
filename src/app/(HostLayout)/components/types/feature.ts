@@ -8,7 +8,7 @@ export interface Feature {
 
 export interface FeatureResponse {
   status: string;
-  message: string;
+  message?: string;
   data: Feature[];
 }
 export type FeatureType = "flat" | "rent" | "land";

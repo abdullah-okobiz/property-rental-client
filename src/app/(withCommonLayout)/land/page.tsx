@@ -1,15 +1,13 @@
 "use server";
 import RentCard from "@/components/card/RentCard/RentCard";
+import LandSearchInputField from "@/components/home/search/searchContainer/LandSearchInputField";
 import LandCategory from "@/components/land/LandCategory/LandCategory";
 import { getAllCategory } from "@/services/category";
 
 import { getAllFeature } from "@/services/feature";
 import { getAllLands } from "@/services/land";
 import { IListingFor, IRent } from "@/types";
-
-// interface landProps {
-//   searchParams: { category?: string };
-// }
+import { Tabs } from "antd";
 
 interface landProps {
   searchParams: Promise<{
@@ -19,6 +17,8 @@ interface landProps {
 
 const Land: React.FC<landProps> = async ({ searchParams }) => {
   const resolvedParams = await searchParams;
+  console.log("params data =", resolvedParams);
+
   const { data: features } = await getAllFeature();
 
   const featuresRent = features.find(
@@ -34,12 +34,24 @@ const Land: React.FC<landProps> = async ({ searchParams }) => {
   const { data: lands } = await getAllLands({
     category: categoryId !== "all" ? categoryId : undefined,
   });
+  const tabClass =
+    "text-white bg-[#F2693C] !inline-block lg:px-4 px-2 py-1 lg:py-2 rounded lg:w-[60px] w-[50px]";
+  const items = [
+    {
+      key: "land",
+      label: <div className={tabClass}>Land</div>,
+      children: <LandSearchInputField params={resolvedParams} />,
+    },
+  ];
   return (
-    <div className="Container mt-16">
-      <LandCategory
-        rentCategories={rentCategories}
-        selectedCategoryId={categoryId || "all"}
-      />
+    <div className="Container mt-8 md:my-10">
+      <Tabs defaultActiveKey="land" type="card" items={items} />
+      <div className="md:my-4">
+        <LandCategory
+          rentCategories={rentCategories}
+          selectedCategoryId={categoryId || "all"}
+        />
+      </div>
 
       {/* <div>
         <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">

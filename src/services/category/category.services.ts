@@ -1,6 +1,8 @@
-
-
-import { CategoryResponse } from "@/app/(hostLayout)/components/types/category";
+import {
+  Category,
+  CategoryResponse,
+} from "@/app/(HostLayout)/components/types/category";
+import { FeatureResponse } from "@/app/(HostLayout)/components/types/feature";
 import CategoryApis from "@/app/apis/category.apis";
 
 const {
@@ -18,6 +20,7 @@ const {
   getSingleStepLocationFieldForRentListing,
   getSingleDescriptionforlistedItem,
   getAllAmenitiesProcess,
+  getAllFeatureResponse,
 } = CategoryApis;
 
 const CategoryServices = {
@@ -26,6 +29,16 @@ const CategoryServices = {
     return res.data;
   },
 
+  fetchLandCategories: async () => {
+    const featureRes: any = await getAllFeatureResponse();
+    const featureData = featureRes?.data?.data;
+    const landFeature = featureData.find(
+      (feature: any) => feature.featureName?.toLowerCase().trim() === "land"
+    );
+    if (!landFeature?._id) throw new Error("Land feature not found");
+    const res = await getCategoriesByFeatureId(landFeature._id);
+    return res?.data;
+  },
   setListingCategory: async ({
     featureType,
     listingId,
