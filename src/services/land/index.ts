@@ -7,6 +7,10 @@ type GetAllLandsParams = {
   status?: string;
   sort?: number;
   category?: string;
+
+  location?: string;
+  minPrice?: number;
+  maxPrice?: number;
 };
 
 export const getAllLands = async ({
@@ -14,6 +18,9 @@ export const getAllLands = async ({
   status,
   sort,
   category,
+  location,
+  minPrice,
+  maxPrice,
 }: GetAllLandsParams = {}) => {
   const params = new URLSearchParams();
 
@@ -21,6 +28,9 @@ export const getAllLands = async ({
   if (status) params.append("status", status);
   if (sort !== undefined) params.append("sort", sort.toString());
   if (category) params.append("category", category);
+  if (location) params.append("location", location);
+  if (minPrice !== undefined) params.append("minPrice", minPrice.toString());
+  if (maxPrice !== undefined) params.append("maxPrice", maxPrice.toString());
 
   const url = `${apiBaseUrl}/land?${params.toString()}`;
 
@@ -32,26 +42,6 @@ export const getAllLands = async ({
 export const getSingleLandBySlug = async (slug: string) => {
   const res = await fetch(`${apiBaseUrl}/land/${slug}`);
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch land");
-  }
-
-  return res.json();
-};
-export const searchLandListings = async (params: {
-  location?: string;
-  category?: string;
-  maxPrice?: number;
-  minPrice?: number;
-}): Promise<LandSearchResponse> => {
-  const query = new URLSearchParams();
-
-  if (params.location) query.append("location", params.location);
-  if (params.category) query.append("category", params.category);
-  if (params.maxPrice) query.append("maxPrice", params.maxPrice.toString());
-  if (params.minPrice) query.append("minPrice", params.minPrice.toString());
-
-  const res = await fetch(`${apiBaseUrl}/land-search?${query.toString()}`);
   if (!res.ok) {
     throw new Error("Failed to fetch land");
   }

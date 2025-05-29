@@ -10,14 +10,17 @@ import { IListingFor, IRent } from "@/types";
 import { Tabs } from "antd";
 
 interface landProps {
-  searchParams: Promise<{
+  searchParams: {
+    location?: string;
     category?: string;
-  }>;
+    minPrice?: string;
+    maxPrice?: string;
+  };
 }
 
 const Land: React.FC<landProps> = async ({ searchParams }) => {
   const resolvedParams = await searchParams;
-  console.log("params data =", resolvedParams);
+  const { location, category, minPrice, maxPrice } = resolvedParams;
 
   const { data: features } = await getAllFeature();
 
@@ -32,7 +35,10 @@ const Land: React.FC<landProps> = async ({ searchParams }) => {
   const categoryId = resolvedParams.category;
 
   const { data: lands } = await getAllLands({
-    category: categoryId !== "all" ? categoryId : undefined,
+    location,
+    category: category !== "all" ? category : undefined,
+    minPrice: minPrice ? Number(minPrice) : undefined,
+    maxPrice: maxPrice ? Number(maxPrice) : undefined,
   });
   const tabClass =
     "text-white bg-[#F2693C] !inline-block lg:px-4 px-2 py-1 lg:py-2 rounded lg:w-[60px] w-[50px]";

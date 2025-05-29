@@ -96,7 +96,7 @@ const FlatSearchInputField: React.FC<FlatSearchInputFieldProps> = ({
             htmlFor="location"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Location you're interested in
+            Location you&apos;re interested in
           </label>
           <input
             type="text"

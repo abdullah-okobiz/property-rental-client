@@ -16,12 +16,16 @@ import React from "react";
 
 interface flatProps {
   searchParams: Promise<{
+    location?: string;
     category?: string;
+    minPrice?: string;
+    maxPrice?: string;
   }>;
 }
 
 const Flat: React.FC<flatProps> = async ({ searchParams }) => {
   const resolvedParams = await searchParams;
+  const { location, category, minPrice, maxPrice } = resolvedParams;
   const { data: features } = await getAllFeature();
 
   const featuresRent = features.find(
@@ -35,7 +39,10 @@ const Flat: React.FC<flatProps> = async ({ searchParams }) => {
   const categoryId = resolvedParams.category;
 
   const { data: flats } = await getAllFlats({
-    category: categoryId !== "all" ? categoryId : undefined,
+    location,
+    category: category !== "all" ? category : undefined,
+    minPrice: minPrice ? Number(minPrice) : undefined,
+    maxPrice: maxPrice ? Number(maxPrice) : undefined,
   });
   const tabClass =
     "text-white bg-[#F2693C] !inline-block lg:px-4 px-2 py-1 lg:py-2 rounded lg:w-[60px] w-[50px]";

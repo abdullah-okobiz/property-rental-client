@@ -6,6 +6,9 @@ type GetAllFlatsParams = {
   status?: string;
   sort?: number;
   category?: string;
+  location?: string;
+  minPrice?: number;
+  maxPrice?: number;
 };
 
 export const getAllFlats = async ({
@@ -13,6 +16,9 @@ export const getAllFlats = async ({
   status,
   sort,
   category,
+  location,
+  minPrice,
+  maxPrice,
 }: GetAllFlatsParams = {}) => {
   const params = new URLSearchParams();
   console.log("-------------------", params);
@@ -22,6 +28,9 @@ export const getAllFlats = async ({
   if (status) params.append("status", status);
   if (sort !== undefined) params.append("sort", sort.toString());
   if (category) params.append("category", category);
+  if (location) params.append("location", location);
+  if (minPrice !== undefined) params.append("minPrice", minPrice.toString());
+  if (maxPrice !== undefined) params.append("maxPrice", maxPrice.toString());
 
   const url = `${apiBaseUrl}/flat?${params.toString()}`;
 

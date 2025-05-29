@@ -1,8 +1,4 @@
-import {
-  Category,
-  CategoryResponse,
-} from "@/app/(HostLayout)/components/types/category";
-import { FeatureResponse } from "@/app/(HostLayout)/components/types/feature";
+import { CategoryResponse } from "@/app/(HostLayout)/components/types/category";
 import CategoryApis from "@/app/apis/category.apis";
 
 const {

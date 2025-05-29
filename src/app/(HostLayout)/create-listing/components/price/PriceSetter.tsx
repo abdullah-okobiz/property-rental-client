@@ -44,7 +44,7 @@ export default function PriceSetter() {
       messageApi.success(`Price Updated Successfully`);
       console.log("result price ", res);
     } catch (error) {
-      console.error("Price updated failed");
+      console.log("Price updated failed", error);
       messageApi.error("Price Updated Failed ");
     }
   };
