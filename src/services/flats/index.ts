@@ -21,11 +21,9 @@ export const getAllFlats = async ({
   maxPrice,
 }: GetAllFlatsParams = {}) => {
   const params = new URLSearchParams();
-  console.log("-------------------", params);
-  // const res = await fetch(`${apiBaseUrl}/flat`);
 
   params.append("page", page.toString());
-  if (status) params.append("status", status);
+  if (status) params.append("publishStatus", status);
   if (sort !== undefined) params.append("sort", sort.toString());
   if (category) params.append("category", category);
   if (location) params.append("location", location);
