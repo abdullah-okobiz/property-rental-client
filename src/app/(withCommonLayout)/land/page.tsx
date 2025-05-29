@@ -10,12 +10,12 @@ import { IListingFor, IRent } from "@/types";
 import { Tabs } from "antd";
 
 interface landProps {
-  searchParams: {
+  searchParams: Promise<{
     location?: string;
     category?: string;
     minPrice?: string;
     maxPrice?: string;
-  };
+  }>;
 }
 
 const Land: React.FC<landProps> = async ({ searchParams }) => {

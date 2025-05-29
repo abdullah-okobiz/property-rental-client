@@ -10,10 +10,6 @@ import { IListingFor, IRent } from "@/types";
 import { Tabs } from "antd";
 import React from "react";
 
-// interface flatProps {
-//   searchParams: { category?: string };
-// }
-
 interface flatProps {
   searchParams: Promise<{
     location?: string;

@@ -1,6 +1,5 @@
 "use server";
 import { apiBaseUrl } from "@/config/config";
-import { LandSearchResponse } from "@/types/landTypes/landTypes";
 
 type GetAllLandsParams = {
   page?: number;
