@@ -40,6 +40,7 @@ const Land: React.FC<landProps> = async ({ searchParams }) => {
     minPrice: minPrice ? Number(minPrice) : undefined,
     maxPrice: maxPrice ? Number(maxPrice) : undefined,
   });
+  console.log("lands data ====", lands);
   const tabClass =
     "text-white bg-[#F2693C] !inline-block lg:px-4 px-2 py-1 lg:py-2 rounded lg:w-[60px] w-[50px]";
   const items = [
