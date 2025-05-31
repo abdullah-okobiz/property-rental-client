@@ -1,10 +1,5 @@
 import AuthApis from "@/app/apis/auth.apis";
-import {
-  ChangedPassResponse,
-  LoginResponse,
-  OtpResponse,
-  SignupResponse,
-} from "@/types/authTypes";
+import { LoginResponse, OtpResponse, SignupResponse } from "@/types/authTypes";
 
 const {
   loginApi,

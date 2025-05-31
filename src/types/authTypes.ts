@@ -1,5 +1,3 @@
-import { message } from "antd";
-
 export interface LoginPayload {
   email: string;
   password: string;
