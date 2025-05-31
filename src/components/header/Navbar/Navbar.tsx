@@ -12,6 +12,7 @@ import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
 import useAuth from "@/hooks/useAuth";
 import { AuthServices } from "@/services/auth/auth.service";
+import ChangePasswordModal from "@/components/modals/ChangePasswordModal";
 
 const { processLogout } = AuthServices;
 
@@ -21,6 +22,7 @@ const Navbar = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const [openChangePassword, setOpenChangePassword] = useState(false);
 
   const { user, isAuthenticated, logout: contextLogout } = useAuth();
   const menuList = useMenuList();
@@ -80,6 +82,17 @@ const Navbar = () => {
           },
         ]
       : []),
+    {
+      key: "change-password",
+      label: (
+        <button
+          className="cursor-pointer w-full text-left"
+          onClick={() => setOpenChangePassword(true)}
+        >
+          Change Password
+        </button>
+      ),
+    },
     {
       key: "logout",
       label: (
@@ -253,6 +266,10 @@ const Navbar = () => {
       <LoginModal
         open={showLoginModal}
         onClose={() => setShowLoginModal(false)}
+      />
+      <ChangePasswordModal
+        open={openChangePassword}
+        onClose={() => setOpenChangePassword(false)}
       />
     </>
   );

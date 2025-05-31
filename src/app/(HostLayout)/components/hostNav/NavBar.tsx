@@ -15,6 +15,7 @@ import SignupModal from "@/components/modals/SignUpModal";
 import LoginModal from "@/components/modals/LoginModal";
 import { TabMenuList } from "./nav.utils";
 import { HiChevronDown } from "react-icons/hi";
+import ChangePasswordModal from "@/components/modals/ChangePasswordModal";
 
 const { processLogout } = AuthServices;
 
@@ -24,6 +25,7 @@ const NavBar = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
+  const [openChangePassword, setOpenChangePassword] = useState(false);
 
   const { user, isAuthenticated } = useAuth();
   const pathname = usePathname();
@@ -58,8 +60,15 @@ const NavBar = () => {
         label: <Link href="/profile">Profile</Link>,
       },
       {
-        key: "settings",
-        label: <Link href="/settings">Settings</Link>,
+        key: "change-password",
+        label: (
+          <button
+            className="cursor-pointer w-full text-left"
+            onClick={() => setOpenChangePassword(true)}
+          >
+            Change Password
+          </button>
+        ),
       },
       {
         key: "logout",
@@ -249,6 +258,10 @@ const NavBar = () => {
       <LoginModal
         open={showLoginModal}
         onClose={() => setShowLoginModal(false)}
+      />
+      <ChangePasswordModal
+        open={openChangePassword}
+        onClose={() => setOpenChangePassword(false)}
       />
     </>
   );

@@ -1,11 +1,12 @@
 import axiosClient from "@/lib/axios.config";
 
-
 const AuthApis = {
   loginApi: (payload: { email: string; password: string }) => {
     return axiosClient.post("/login", payload);
   },
-
+  changedPassApi: (payload: { oldPassword: string; newPassword: string }) => {
+    return axiosClient.patch(`/user/change-password`, payload);
+  },
   logoutApi: () => {
     return axiosClient.post("/logout");
   },
@@ -14,15 +15,20 @@ const AuthApis = {
     return axiosClient.post("/refresh");
   },
 
-  signupApi: (payload: { name: string; email: string; password: string; role: 'guest' | 'host' }) => {
+  signupApi: (payload: {
+    name: string;
+    email: string;
+    password: string;
+    role: "guest" | "host";
+  }) => {
     return axiosClient.post("/signup", payload);
   },
-  verifyEmailOtpApi:(payload:{email: string; otp: string;})=>{
+  verifyEmailOtpApi: (payload: { email: string; otp: string }) => {
     return axiosClient.post("/verify", payload);
   },
-  otpResendApi:(payload:{email:string})=>{
+  otpResendApi: (payload: { email: string }) => {
     return axiosClient.post("/resend", payload);
-  }
+  },
 };
 
 export default AuthApis;

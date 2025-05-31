@@ -1,3 +1,5 @@
+import { message } from "antd";
+
 export interface LoginPayload {
   email: string;
   password: string;
@@ -59,4 +61,8 @@ export interface RefreshTokenResponse {
   status: string;
   message: string;
   accessToken: string;
+}
+export interface ChangedPassResponse {
+  status: string;
+  message: string;
 }

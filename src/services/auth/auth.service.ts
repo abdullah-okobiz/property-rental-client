@@ -1,5 +1,10 @@
 import AuthApis from "@/app/apis/auth.apis";
-import { LoginResponse, OtpResponse, SignupResponse } from "@/types/authTypes";
+import {
+  ChangedPassResponse,
+  LoginResponse,
+  OtpResponse,
+  SignupResponse,
+} from "@/types/authTypes";
 
 const {
   loginApi,
@@ -8,6 +13,7 @@ const {
   signupApi,
   verifyEmailOtpApi,
   otpResendApi,
+  changedPassApi,
 } = AuthApis;
 
 export const AuthServices = {
@@ -25,6 +31,21 @@ export const AuthServices = {
         throw error;
       } else {
         throw new Error("Unknown error occurred in processSignup");
+      }
+    }
+  },
+  processChangePassword: async (payload: {
+    oldPassword: string;
+    newPassword: string;
+  }) => {
+    try {
+      const response = await changedPassApi(payload);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("Unknown error occurred in processChangedPass");
       }
     }
   },
