@@ -29,11 +29,11 @@ const RentSearchModel = ({ onClose }: { onClose: () => void }) => {
         onClick={onClose}
       >
         <div
-          className="flex justify-center  w-full h-full"
+          className="flex   w-full h-full"
           onClick={(e) => e.stopPropagation()} // prevent close when clicking inside
         >
           <motion.div
-            className="bg-[#fff] w-[600px] h-[400px] rounded shadow relative"
+            className="bg-[#fff] w-full h-full rounded shadow fixed top-0"
             variants={modalVariants}
             initial="hidden"
             animate="visible"

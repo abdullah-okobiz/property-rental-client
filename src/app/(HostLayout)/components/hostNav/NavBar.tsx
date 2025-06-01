@@ -82,7 +82,7 @@ const NavBar = () => {
       {contextHolder}
       <nav
         className={`w-full top-0 z-50 transition-all duration-300 ${
-          isSticky ? "fixed bg-white shadow-sm" : "relative"
+          isSticky ? "fixed bg-white shadow" : "relative"
         }`}
       >
         <div className="Container py-2 flex items-center justify-between shadow-md">

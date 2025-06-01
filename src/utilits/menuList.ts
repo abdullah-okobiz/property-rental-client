@@ -30,18 +30,6 @@ export const useMenuList = () => {
       id: "03",
       title: "Flat",
       link: "/flat",
-      // dropdownItems: [
-      //   {
-      //     key: "flat",
-      //     label: "Flat Listing",
-      //     href: `/flat`,
-      //   },
-      //   {
-      //     key: "land",
-      //     label: "Land Listing",
-      //     href: `/land`,
-      //   },
-      // ],
     },
 
     {
