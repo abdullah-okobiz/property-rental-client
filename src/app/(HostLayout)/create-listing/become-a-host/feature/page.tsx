@@ -8,8 +8,8 @@ import FeatureServices from "@/services/feature/feature.services";
 import { Feature } from "@/types/blogTypes/blogTypes";
 
 import { Skeleton, message } from "antd";
-import { FeatureType } from "@/app/(hostLayout)/components/types/feature";
-import { ListingResponse } from "@/app/(hostLayout)/components/types/listing";
+import { FeatureType } from "@/app/(HostLayout)/components/types/feature";
+import { ListingResponse } from "@/app/(HostLayout)/components/types/listing";
 
 export default function FeaturePage() {
   const [features, setFeatures] = useState<Feature[]>([]);
