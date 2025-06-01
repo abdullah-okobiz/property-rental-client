@@ -6,7 +6,7 @@ import { VscLocation } from "react-icons/vsc";
 import RentSearchModel from "@/components/modals/RentSearchModel";
 import { useRouter } from "next/navigation";
 import CategoryServices from "@/services/category/category.services";
-import { Category } from "@/app/(HostLayout)/components/types/category";
+import { Category } from "@/app/(hostLayout)/components/types/category";
 
 interface FlatSearchInputFieldProps {
   params?: {

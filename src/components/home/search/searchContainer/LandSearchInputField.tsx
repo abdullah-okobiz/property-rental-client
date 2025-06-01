@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { GoSearch } from "react-icons/go";
 import { VscLocation } from "react-icons/vsc";
 import RentSearchModel from "@/components/modals/RentSearchModel";
-import { Category } from "@/app/(HostLayout)/components/types/category";
 import CategoryServices from "@/services/category/category.services";
 import { useRouter } from "next/navigation";
+import { Category } from "@/app/(hostLayout)/components/types/category";
 interface LandSearchInputFieldProps {
   params?: {
     category?: string;
