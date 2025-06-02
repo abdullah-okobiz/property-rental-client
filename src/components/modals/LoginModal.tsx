@@ -120,6 +120,15 @@ const LoginModal = ({ open, onClose }: LoginModalProps) => {
           >
             Continue
           </Button>
+          <Button
+            type="link"
+            onClick={() => {
+              router.push("/forgot-password");
+              onClose();
+            }}
+          >
+            Forgot Password?
+          </Button>
           <div className="text-center">
             <h3>
               Don’t have an account?{" "}

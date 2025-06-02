@@ -9,6 +9,9 @@ const {
   verifyEmailOtpApi,
   otpResendApi,
   changedPassApi,
+  forgotPasswordApi,
+  resetPasswordApi,
+  resendForgotPasswordOtpApi,
 } = AuthApis;
 
 export const AuthServices = {
@@ -114,11 +117,27 @@ export const AuthServices = {
       }
     }
   },
+  processForgotPassword: async (payload: { email: string }) => {
+    const response = await forgotPasswordApi(payload);
+    return response?.data;
+  },
+
+  processResetPassword: async (payload: {
+    email: string;
+    otp: string;
+    newPassword: string;
+  }) => {
+    const response = await resetPasswordApi(payload);
+    return response?.data;
+  },
+
+  processResendForgotOtp: async (payload: { email: string }) => {
+    const response = await resendForgotPasswordOtpApi(payload);
+    return response?.data;
+  },
 };
 
 export const getUser = async () => {
   const token = localStorage.getItem("accessToken");
   return token;
 };
-
-// export default AuthServices;

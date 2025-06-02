@@ -29,6 +29,19 @@ const AuthApis = {
   otpResendApi: (payload: { email: string }) => {
     return axiosClient.post("/resend", payload);
   },
+  forgotPasswordApi: (payload: { email: string }) => {
+    return axiosClient.post("/forgot-password", payload);
+  },
+  resetPasswordApi: (payload: {
+    email: string;
+    otp: string;
+    newPassword: string;
+  }) => {
+    return axiosClient.post("/reset-password", payload);
+  },
+  resendForgotPasswordOtpApi: (payload: { email: string }) => {
+    return axiosClient.post("/resend-forgot-password", payload);
+  },
 };
 
 export default AuthApis;
