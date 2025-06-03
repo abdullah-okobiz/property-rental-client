@@ -46,3 +46,33 @@ export const getSingleFlatBySlug = async (slug: string) => {
 
   return res.json();
 };
+
+interface Flat {
+  flat: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+export const createFlat = async (flatData: Flat, accessToken: string) => {
+  console.log(flatData);
+  
+  const res = await fetch(`${apiBaseUrl}/flat/booking`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(flatData),
+  });
+
+  console.log("--------res----------", res);
+
+  // Optionally handle error
+  if (!res.ok) {
+    throw new Error("Failed to create flat");
+  }
+
+  return res.json();
+};
