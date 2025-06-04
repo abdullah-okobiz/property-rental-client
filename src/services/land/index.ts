@@ -47,3 +47,33 @@ export const getSingleLandBySlug = async (slug: string) => {
 
   return res.json();
 };
+
+interface land {
+  land: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+export const createLand = async (landData: land, accessToken: string) => {
+  console.log(landData);
+
+  const res = await fetch(`${apiBaseUrl}/land/booking`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify(landData),
+  });
+
+  console.log("--------land----------", res);
+
+  // Optionally handle error
+  if (!res.ok) {
+    throw new Error("Failed to create land");
+  }
+
+  return res.json();
+};

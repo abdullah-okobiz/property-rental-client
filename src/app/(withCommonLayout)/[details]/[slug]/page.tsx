@@ -26,6 +26,7 @@ import Appointment from "@/components/details/Appointment/Appointment";
 import { FC } from "react";
 import Reserve from "@/components/details/Reserve/Reserve";
 import ReservFooterBtn from "@/components/details/ReservFooterBtn/ReservFooterBtn";
+import LandAppointment from "@/components/details/LandAppointment/LandAppointment";
 
 interface PageProps {
   params: Promise<{
@@ -219,11 +220,21 @@ const Page: FC<PageProps> = async ({ params }) => {
               </div>
             </div>
 
-            <div>
+            {/* <div>
               {resolvedParams.details === "rent" ? (
                 ""
               ) : (
                 <Appointment title={title} flatId={_id} />
+              )}
+            </div> */}
+            <div>
+              {resolvedParams.details === "flat" && (
+                <Appointment title={title} flatId={_id} />
+              )}
+
+              {resolvedParams.details === "land" && (
+                // <Appointment title={title} landId={_id} />
+                <LandAppointment title={title} landId={_id} />
               )}
             </div>
           </div>
