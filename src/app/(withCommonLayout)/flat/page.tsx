@@ -52,7 +52,7 @@ const Flat: React.FC<flatProps> = async ({ searchParams }) => {
   return (
     <div className="Container mt-8 md:my-10">
       <Tabs defaultActiveKey="Flat" type="card" items={items} />
-      <div className="md:my-4">
+      <div className="my-4">
         <FlatCategory
           rentCategories={rentCategories}
           selectedCategoryId={categoryId || "all"}

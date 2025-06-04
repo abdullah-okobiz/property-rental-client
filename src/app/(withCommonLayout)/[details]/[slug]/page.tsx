@@ -69,6 +69,7 @@ const Page: FC<PageProps> = async ({ params }) => {
     location,
     images,
     title,
+    _id,
     description,
     amenities,
     allowableThings,
@@ -88,6 +89,9 @@ const Page: FC<PageProps> = async ({ params }) => {
         <div className="lg:flex flex-col hidden">
           <h2 className="xl:text-2xl lg:text-xl md:text-base text-base font-medium">
             {title}
+          </h2>
+          <h2 className="xl:text-2xl lg:text-xl md:text-base text-base font-medium">
+            {_id}
           </h2>
           <div className="flex items-center justify-between py-2">
             <p className="flex items-center gap-1 font-medium text-[#262626]/60 text-base">
@@ -219,7 +223,7 @@ const Page: FC<PageProps> = async ({ params }) => {
               {resolvedParams.details === "rent" ? (
                 ""
               ) : (
-                <Appointment title={title} />
+                <Appointment title={title} flatId={_id} />
               )}
             </div>
           </div>

@@ -6,8 +6,9 @@ import { MdWhatsapp } from "react-icons/md";
 
 interface Props {
   title: string;
+  flatId: string;
 }
-const Appointment: React.FC<Props> = ({ title }) => {
+const Appointment: React.FC<Props> = ({ title, flatId }) => {
   const [appintment, setAppintment] = useState(false);
 
   const appintmentRef = useRef<HTMLDivElement>(null);
@@ -53,6 +54,7 @@ const Appointment: React.FC<Props> = ({ title }) => {
           <div ref={appintmentRef}>
             <AppointmentModel
               title={title}
+              flatId={flatId}
               onClose={() => setAppintment(false)}
             />
           </div>
