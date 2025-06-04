@@ -19,7 +19,7 @@ const ChooseSection: React.FC<Props> = ({ chooses }) => {
     <div className="Container pt-12">
       <div>
         <SectionTitle
-          title="Choose From Our Diverse Range of Lands"
+          title="Why Choose Us"
           subTitle="From individual stays to family getaways, our properties cater to all your accommodation needs."
         />
       </div>

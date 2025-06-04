@@ -22,7 +22,7 @@ const RentSection: React.FC<Props> = ({ rents }) => {
     <div className="Container pt-28">
       <div>
         <SectionTitle
-          title="Choose From Our Diverse Range of Properties"
+          title="Choose From Our Diverse Range of Room"
           subTitle="From individual stays to family getaways, our properties cater to all your accommodation needs."
         />
       </div>

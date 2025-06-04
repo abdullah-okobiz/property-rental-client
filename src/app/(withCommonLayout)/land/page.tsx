@@ -59,22 +59,6 @@ const Land: React.FC<landProps> = async ({ searchParams }) => {
           selectedCategoryId={categoryId || "all"}
         />
       </div>
-
-      {/* <div>
-        <div className="mt-8 grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4">
-          {lands?.slice(0, 8).map((rent: IRent) => (
-            <RentCard key={rent._id} rent={rent} linkPrefix="land"></RentCard>
-          ))}
-
-          {lands
-            ?.filter((rent: IRent) => rent.publishStatus === "published")
-            .slice(0, 8)
-            .map((rent: IRent) => (
-              <RentCard key={rent._id} rent={rent} linkPrefix="rent" />
-            ))}
-        </div>
-      </div> */}
-
       <div>
         <div className="mt-8">
           {lands?.filter((rent: IRent) => rent.publishStatus === "published")
